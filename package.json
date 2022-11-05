@@ -17,7 +17,7 @@
     "url": "https://github.com/Pr0gger1/2nd-course-univesity-project/issues"
   },
   "homepage": "https://github.com/Pr0gger1/2nd-course-univesity-project#readme",
-  "dependencies": {
-    "concurrently": "^7.4.0"
+  "devDependencies": {
+    "concurrently": "^7.5.0"
   }
 }
