@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Pr0gger1/2nd-course-univesity-project.git"
+    "url": "git+https://github.com/Pr0gger1/producitfy-university-project.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Pr0gger1/2nd-course-univesity-project/issues"
+    "url": "https://github.com/Pr0gger1/producitfy-university-project/issues"
   },
-  "homepage": "https://github.com/Pr0gger1/2nd-course-univesity-project#readme",
+  "homepage": "https://github.com/Pr0gger1/producitfy-university-project#readme",
   "devDependencies": {
     "concurrently": "^7.5.0"
   }

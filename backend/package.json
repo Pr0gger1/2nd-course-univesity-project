@@ -7,20 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon src/server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Pr0gger1/2nd-course-univesity-project.git"
-  },
   "keywords": [
     "todo",
     "web-app"
   ],
   "author": "Pr0gger1, gfroge",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Pr0gger1/2nd-course-univesity-project/issues"
-  },
-  "homepage": "https://github.com/Pr0gger1/2nd-course-univesity-project#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
