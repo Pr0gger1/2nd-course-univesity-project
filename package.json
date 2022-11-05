@@ -1,0 +1,23 @@
+{
+  "name": "todo-app-project",
+  "version": "1.0.0",
+  "description": "todo app project",
+  "scripts": {
+    "app": "concurrently \"npm run server\" \"npm run client\"",
+    "client": "npm run start --prefix ./frontend",
+    "server": "npm run start --prefix ./backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pr0gger1/2nd-course-univesity-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pr0gger1/2nd-course-univesity-project/issues"
+  },
+  "homepage": "https://github.com/Pr0gger1/2nd-course-univesity-project#readme",
+  "dependencies": {
+    "concurrently": "^7.4.0"
+  }
+}

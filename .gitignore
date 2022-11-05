@@ -2,7 +2,7 @@
 .idea/
 
 # file environment
-/*env
+**/.env
 
 
 # dependencies
