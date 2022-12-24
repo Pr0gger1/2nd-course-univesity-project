@@ -1,0 +1,28 @@
+.auth__form {
+    display: flex;
+    flex-direction: column;
+}
+.auth__form button i {
+    vertical-align: middle;
+    margin-left: 0.2rem;
+}
+
+.auth__form > button:hover {
+    box-shadow: 0 15px 30px rgba(20, 140, 252, 0.7) !important;
+    transition: .5s;
+}
+.email__block {
+    margin-bottom: 2rem;
+}
+.password__block {
+    margin-bottom: 3rem;
+}
+.auth__form div label {
+    display: block;
+    margin-bottom: 15px;
+    font-weight: 400;
+}
+#create_account {
+    margin-top: 2rem;
+    text-align: center;
+}

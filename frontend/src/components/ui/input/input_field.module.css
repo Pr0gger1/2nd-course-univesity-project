@@ -1,0 +1,10 @@
+.input__field {
+    padding: 12px 35px;
+
+    border-radius: 10px;
+    border: 1px solid #999;
+    box-sizing: border-box;
+
+    width: 100%;
+    transition: all 1s;
+}

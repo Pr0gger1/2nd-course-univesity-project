@@ -3,6 +3,7 @@
 
 # file environment
 **/.env
+./dist
 
 
 # dependencies
