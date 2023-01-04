@@ -4,9 +4,10 @@
   "description": "todo app project",
   "scripts": {
     "app-dev": "concurrently \"npm run server\" \"npm run client\"",
-    "client-dev": "webpack-dev-server --mode development --open --hot --history-api-fallback",
+    "client-webpack": "webpack-dev-server --mode development",
+    "client-webpack-prod": "npx webpack --mode production",
     "server-dev": "npm run start --prefix ./backend",
-    "client": "npx webpack --mode production"
+    "client": "react-scripts start"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "babel-loader": "^9.1.0",
     "clean-webpack-plugin": "^4.0.0",
     "concurrently": "^7.5.0",
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",

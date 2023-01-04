@@ -1,14 +1,15 @@
 import React from 'react';
-import {AuthForm} from '../components/forms/AuthForm';
-import styles from './styles/auth_page.module.css';
-import logo from '../assets/img/Logo vector white.svg';
+import AuthForm from '../forms/AuthForm';
 
-const LoginPage = () => {
+import styles from './styles/auth_page.module.css';
+import logo from '../../assets/img/logo_vector_white.svg';
+
+const AuthPage = ({type = 'login'}) => {
     return (
         <div className={styles.container}>
             <div className={styles.login__form}>
-                <h1>Авторизация</h1>
-                <AuthForm/>
+                <h1>{type === 'login' ? 'Авторизация' : 'Регистрация'}</h1>
+                <AuthForm type={type}/>
             </div>
 
             <div className={styles.introduce__block}>
@@ -22,4 +23,5 @@ const LoginPage = () => {
         </div>
     )
 }
-export default LoginPage;
+
+export default AuthPage;

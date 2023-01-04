@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const {CleanWebpackPlugin} = require("clean-webpack-plugin");
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     entry: path.resolve(__dirname, 'frontend', 'src', 'index.js'),
@@ -16,7 +17,7 @@ module.exports = {
     module: {
         rules:  [
             {
-                test: /\.(js|jsx)$/,
+                test: /\.js|\.jsx$/,
                 exclude: /node_modules/,
                 loader: "babel-loader",
                 options: {
@@ -24,12 +25,13 @@ module.exports = {
                 }
             },
             {
-                test: /\.svg$/,
+                test: /\.svg|\.ico$/,
                 loader: 'file-loader',
                 options: {
-                    outputPath: 'assets/images',
+                    outputPath: 'src/assets',
                     name: "[name].[hash].[ext]"
                 }
+
             },
             {
                 test: /\.css$/,
@@ -50,17 +52,19 @@ module.exports = {
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             title: "Productify App",
+            favicon: "./frontend/public/favicon.ico",
             template: "./frontend/public/index.html"
-        })
+        }),
     ],
     devServer: {
         historyApiFallback: true,
         static: {
-            directory: path.join(__dirname, './'),
+            directory: path.join(__dirname, 'frontend/src/assets'),
             watch: true
         },
         port: 3000,
         hot: true,
+        open: true
     },
     mode: "development"
 }

@@ -1,28 +1,31 @@
 .auth__form {
     display: flex;
     flex-direction: column;
+    gap: 2rem;
 }
 .auth__form button i {
     vertical-align: middle;
     margin-left: 0.2rem;
+}
+.form__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .auth__form > button:hover {
     box-shadow: 0 15px 30px rgba(20, 140, 252, 0.7) !important;
     transition: .5s;
 }
-.email__block {
-    margin-bottom: 2rem;
+.auth__form .form__fields label > input {
+    margin-top: 1rem;
 }
-.password__block {
-    margin-bottom: 3rem;
-}
-.auth__form div label {
-    display: block;
-    margin-bottom: 15px;
+.auth__form .form__fields label:not(:last-child) {
+    display: inline-block;
+    margin-bottom: 1rem;
+    /*margin-bottom: 15px;*/
     font-weight: 400;
 }
 #create_account {
-    margin-top: 2rem;
     text-align: center;
 }
