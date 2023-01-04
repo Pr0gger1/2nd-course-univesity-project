@@ -1,0 +1,38 @@
+{
+  // These tasks will run in order when initializing your CodeSandbox project.
+  "setupTasks": [
+    {
+      "name": "Install Dependencies",
+      "command": "npm install"
+    }
+  ],
+
+  // These tasks can be run from CodeSandbox. Running one will open a log in the app.
+  "tasks": {
+    "app-dev": {
+      "name": "app-dev",
+      "command": "npm run app-dev",
+      "runAtStart": false
+    },
+    "client-webpack": {
+      "name": "client-webpack",
+      "command": "npm run client-webpack",
+      "runAtStart": false
+    },
+    "client-webpack-prod": {
+      "name": "client-webpack-prod",
+      "command": "npm run client-webpack-prod",
+      "runAtStart": true
+    },
+    "server-dev": {
+      "name": "server-dev",
+      "command": "npm run server-dev",
+      "runAtStart": false
+    },
+    "client": {
+      "name": "client",
+      "command": "npm run client",
+      "runAtStart": false
+    }
+  }
+}
