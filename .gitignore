@@ -1,5 +1,6 @@
 # Jetbrains project settings
 .idea/
+.codesandbox/
 
 # file environment
 **/.env
