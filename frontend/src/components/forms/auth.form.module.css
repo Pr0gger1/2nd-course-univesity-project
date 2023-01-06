@@ -23,9 +23,21 @@
 .auth__form .form__fields label:not(:last-child) {
     display: inline-block;
     margin-bottom: 1rem;
-    /*margin-bottom: 15px;*/
     font-weight: 400;
 }
 #create_account {
     text-align: center;
+}
+
+.email_icon {
+    background-image: url("../../assets/img/icons/email_icon.svg");
+    background-repeat: no-repeat;
+    background-size: 2rem 2rem;
+    background-position: 0.5rem 50%;
+}
+.password_icon {
+    background-image: url("../../assets/img/icons/passowrd_icon.svg");
+    background-repeat: no-repeat;
+    background-size: 2rem 2rem;
+    background-position: 0.5rem 50%;
 }
