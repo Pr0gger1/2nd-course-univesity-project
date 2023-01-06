@@ -32,10 +32,15 @@
 .introduce__slogan {
     color: white;
     font-weight: 200;
-    font-size: 2.5rem;
+    font-size: 3rem;
     text-align: center;
 
-    width: 100%;
+    padding: 0 2rem;
+    box-sizing: border-box;
+}
+.introduce__slogan p {
+    margin-top: 1rem;
+    margin-bottom: 0;
 }
 .logo {
     background-repeat: no-repeat;
@@ -45,7 +50,14 @@
 .logo img {
     width: 70%;
 }
-
+form span a {
+    font-weight: bold;
+}
+@media screen and (max-width: 1000px) {
+    .introduce__slogan {
+        font-size: 2.5rem;
+    }
+}
 @media screen and (max-width: 900px) {
     .container {
         height: 100vh;
@@ -81,9 +93,9 @@
     form span:not(a) {
         color: white;
     }
-    form span a {
-        color: #1a2dd7;
-    }
+    /*form span a {*/
+    /*    color: #6977f3;*/
+    /*}*/
     form button {
         margin-top: 20%;
     }

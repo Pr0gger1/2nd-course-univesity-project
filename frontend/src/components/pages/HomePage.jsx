@@ -1,8 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
+import {ToastContext} from "../../context/toast.context";
+
 const HomePage = () => {
+    const {toastElement} = useContext(ToastContext)
+
     return (
         <div>
-            Home page
+            <button onClick={() => new toastElement('desc', 'title').success}>Click</button>
         </div>
     )
 }

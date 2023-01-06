@@ -4,12 +4,12 @@ import AuthForm from '../forms/AuthForm';
 import styles from './styles/auth_page.module.css';
 import logo from '../../assets/img/logo_vector_white.svg';
 
-const AuthPage = ({type = 'login'}) => {
+const AuthPage = ({register = false}) => {
     return (
         <div className={styles.container}>
             <div className={styles.login__form}>
-                <h1>{type === 'login' ? 'Авторизация' : 'Регистрация'}</h1>
-                <AuthForm type={type}/>
+                <h1>{!register ? 'Авторизация' : 'Регистрация'}</h1>
+                <AuthForm register={register}/>
             </div>
 
             <div className={styles.introduce__block}>
@@ -17,7 +17,8 @@ const AuthPage = ({type = 'login'}) => {
                     <img src={logo} alt="Productify"/>
                 </div>
                 <div className={styles.introduce__slogan}>
-                    Начните планировать свой день уже сегодня
+                    <p>Начните планировать свой день уже сегодня</p>
+
                 </div>
             </div>
         </div>
