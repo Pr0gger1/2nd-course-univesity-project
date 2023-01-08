@@ -13,7 +13,7 @@ import {ToastContext} from './context/toast.context';
 
 function App() {
     const {login, logout, token, userData} = useAuth();
-    const [isAuth, setIsAuth] = useState(true);
+    const [isAuth, setIsAuth] = useState(!!token);
 
     const {toastList, setToastList, toastElement} = useToast();
 

@@ -3,8 +3,10 @@
 
 # file environment
 **/.env
-./dist
 
+#production bundle
+**/dist
+**/build
 
 # dependencies
 **/node_modules/
