@@ -4,12 +4,12 @@ export const useToast = () => {
     const [toastList, setToastList] = useState([]);
 
     class toastElement {
-        constructor(description, title) {
+        constructor(description = '', title = '') {
             this.properties = {
                 id: toastList.length,
-                title: title,
-                description: description,
-                type: "default"
+                title,
+                description,
+                type: "info"
             };
         }
         get info() {

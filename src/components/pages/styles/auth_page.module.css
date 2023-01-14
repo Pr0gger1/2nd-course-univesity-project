@@ -43,16 +43,13 @@
     margin-bottom: 0;
 }
 .logo {
-    background-repeat: no-repeat;
     display: flex;
     justify-content: center;
 }
 .logo img {
     width: 70%;
 }
-form span a {
-    font-weight: bold;
-}
+
 @media screen and (max-width: 1000px) {
     .introduce__slogan {
         font-size: 2.5rem;
@@ -62,7 +59,7 @@ form span a {
     .container {
         height: 100vh;
         grid-template-columns: none;
-        grid-template-rows: 1fr 9fr;
+        grid-template-rows: 1fr 3fr;
         background-image: linear-gradient(180deg, rgba(228, 165, 3, 0.6) 0%, rgba(235, 113, 88, 0.6) 100%),
                 url("../../../assets/img/login_page_stock_mobile.jpg");
         background-size: cover;
@@ -73,18 +70,33 @@ form span a {
         grid-row: 2;
         height: 100%;
     }
+
+    .login__form form {
+        background-color: transparent;
+        width: 80%;
+        padding: 1rem 1rem;
+        backdrop-filter: blur(2rem);
+    }
+
+    .auth__header {
+        text-decoration: underline;
+    }
+
     .introduce__block {
         grid-row: 1;
         border-radius: 0 0 0 0;
         background-image: none;
     }
+
     .introduce__block .introduce__slogan {
         display: none;
     }
+
     .logo img {
-        width: 80%;
+        width: 90%;
     }
-    h1 {
+
+    .auth__header {
         color: white;
     }
     label {
@@ -92,15 +104,5 @@ form span a {
     }
     form span:not(a) {
         color: white;
-    }
-    /*form span a {*/
-    /*    color: #6977f3;*/
-    /*}*/
-    form button {
-        margin-top: 20%;
-    }
-    .login__form form {
-        background-color: transparent;
-        width: 80%;
     }
 }

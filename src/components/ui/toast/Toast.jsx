@@ -1,6 +1,7 @@
 import {useCallback, useContext, useEffect} from "react";
-import classes from "./toast.module.css";
 import {ToastContext} from "../../../context/toast.context";
+
+import styles from "./toast.module.css";
 
 const Toast = ({position = "top_right", fade_time = 3000}) => {
     let isPosCorrect = ["top_right", "top_left", "top_center", "bottom_right", "bottom_left", "bottom_center"]
@@ -16,7 +17,7 @@ const Toast = ({position = "top_right", fade_time = 3000}) => {
     // toast disappearance mechanism
     useEffect(() => {
         if (toastList.length) {
-            let interval = setInterval(() => {
+            const interval = setInterval(() => {
                 deleteToast(toastList[0].id);
             }, fade_time);
 
@@ -26,22 +27,19 @@ const Toast = ({position = "top_right", fade_time = 3000}) => {
 
     return (
         <div className={
-            `${classes.toast_container} ${isPosCorrect ? classes[position] : classes["top_right"] }`
+            `${styles.toast_container} ${isPosCorrect ? styles[position] : styles["top_right"] }`
         }>
             {
                 toastList.map((toast, index) => (
                    <div key={index}
-                        className={`${classes.toast} ${classes[toast.type]}
-                         ${isPosCorrect ? classes[position] : classes["top_right"]}`
+                        className={`${styles.toast} ${styles[toast.type]}
+                         ${isPosCorrect ? styles[position] : styles["top_right"]}`
                    }>
-                       <span className={classes.close} onClick={() => deleteToast(toast.id)}></span>
+                       <span className={styles.close} onClick={() => deleteToast(toast.id)}></span>
                        <div>
-                           <p className={classes.title}>{toast.title}</p>
-                           <p className={classes.description}>{toast.description}</p>
+                           <p className={styles.title}>{toast.title}</p>
+                           <p className={styles.description}>{toast.description}</p>
                        </div>
-                       {/*frozen component*/}
-                       {/*<div className={classes.progress_bar}></div>*/}
-
                    </div>
                 ))
             }
