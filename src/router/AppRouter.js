@@ -9,7 +9,7 @@ const AppRouter = ( {isAuth = false} ) => {
     const UnauthorizedRoutes = [
         { path: "/login", element: <AuthPage register={false}/> },
         { path: "/register", element: <AuthPage register={true}/> },
-        { path: "*", element: <AuthPage/> }
+        { path: "*", element: <AuthPage register={false}/> }
     ];
 
     const AuthorizedRoutes = [

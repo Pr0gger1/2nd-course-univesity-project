@@ -5,7 +5,7 @@ import InputField from '../ui/input/InputField';
 import Button from '../ui/button/Button';
 
 import styles from './auth.form.module.css';
-import {ToastContext} from "../../context/toast.context";
+import ToastContext from "../../context/toast.context";
 
 const fieldStyle = {
     padding: "1rem 0.5rem 1rem 3rem"
@@ -14,11 +14,10 @@ const fieldStyle = {
 const AuthForm = ({ register = false, data, setData}) => {
     let {setPosition, toastElement} = useContext(ToastContext);
 
-    // const [repeatPassword, setRepeatPassword] = useState('');
 
     useEffect(() => {
         setPosition('top_center');
-    });
+    }, [setPosition]);
 
     const onChangeHandler = event => setData({...data, [event.target.name]: event.target.value})
 

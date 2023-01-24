@@ -1,7 +1,7 @@
 import {useCallback, useContext, useEffect} from "react";
-import {ToastContext} from "../../../context/toast.context";
-
 import styles from "./toast.module.css";
+import ToastContext from "../../../context/toast.context";
+
 
 const Toast = ({position = "top_right", fade_time = 3000}) => {
     let isPosCorrect = ["top_right", "top_left", "top_center", "bottom_right", "bottom_left", "bottom_center"]
@@ -32,8 +32,7 @@ const Toast = ({position = "top_right", fade_time = 3000}) => {
             {
                 toastList.map((toast, index) => (
                    <div key={index}
-                        className={`${styles.toast} ${styles[toast.type]}
-                         ${isPosCorrect ? styles[position] : styles["top_right"]}`
+                        className={`${styles.toast} ${styles[toast.type]}`
                    }>
                        <span className={styles.close} onClick={() => deleteToast(toast.id)}></span>
                        <div>

@@ -1,0 +1,8 @@
+.error__page {
+    min-width: 100vw;
+    min-height: 100vh;
+}
+.error__message {
+    font-size: 5rem;
+    font-weight: 700;
+}

@@ -1,9 +1,11 @@
 import {createContext} from "react";
 
-export const ToastContext = createContext({
+const ToastContext = createContext({
     toastList: [],
     setToastList: () => {},
     toastElement: null,
-    position: 'top_center',
+    position: '',
     setPosition: () => {}
 });
+
+export default ToastContext;

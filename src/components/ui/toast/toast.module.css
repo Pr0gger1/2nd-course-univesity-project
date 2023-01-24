@@ -1,40 +1,34 @@
 .toast_container {
+    font-family: 'Segoe UI', sans-serif;
     padding-top: 1rem;
     position: fixed;
-    z-index: 10;
+    z-index: 100;
     overflow: hidden;
-
-    display: flex;
-    flex-direction: column;
-    /*width: 50%;*/
+    max-width: 50%;
 }
 
 .toast {
     padding: 0.5rem 1rem;
     margin: 1rem;
-    flex: 1 1 auto;
     word-break: break-word;
 
     color: #fff;
     border-radius: 5px;
-    transition: 1s ease;
+    transition: 1s ease-in;
 }
-@media screen and (min-width: 1501px) {
+
+@media screen and (min-width: 1500px) {
     .toast_container {
-        /*width: 20%;*/
-    }
-}
-@media screen and (max-width: 1500px) {
-    .toast_container {
-        /*width: 60%;*/
+        width: 30%;
     }
 }
 
 @media screen and (max-width: 375px) {
     .toast_container {
-        /*width: 80%;*/
+        width: 80%;
     }
 }
+
 .title {
     margin: 0;
     font-weight: bold;
@@ -72,81 +66,106 @@
 .info {
     background-color: #2b8ad2;
 }
-.classic-white.success {
+.classic-white .success {
     background-color: #e2ece1;
     color: #222;
 }
+
 .top_right {
     top: 0;
     right: 0.5rem;
+}
+.top_right > .toast {
     animation: toast-in-right .7s;
 }
-.top_center:not(.toast) {
+
+.top_center {
     top: 0;
     transform: translateX(-50%);
     left: 50%;
 }
-.top_center {
+.top_center > .toast {
     animation: toast-in-top .7s;
 }
 .top_left {
     top: 0;
     left: 0.5rem;
+}
+.top_left > .toast {
     animation: toast-in-left .7s;
 }
 .bottom_right {
     bottom: 0;
     right: 0.5rem;
+}
+.bottom_right > .toast {
     animation: toast-in-right .7s;
 }
+
 .bottom_left {
     bottom: 0;
     left: 0.5rem;
+}
+.bottom_left > .toast {
     animation: toast-in-left .7s;
 }
-.bottom_center:not(.toast) {
+
+.bottom_center {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
 }
-.bottom_center {
+.bottom_center > .toast{
     animation: toast-in-bottom .7s;
 }
 
 @keyframes toast-in-right {
     from {
+        opacity: 0;
         transform: translateX(100%);
     }
     to {
+        opacity: 1;
         transform: translateX(0);
     }
 }
 
 @keyframes toast-in-left {
     from {
+        opacity: 0;
         transform: translateX(-100%);
     }
     to {
+        opacity: 1;
         transform: translateX(0);
     }
 }
 @keyframes toast-in-top {
     from {
-        transform: translateY(-100%);
         opacity: 0;
+        transform: translateY(-100%);
     }
     to {
-        transform: translateY(0);
         opacity: 1;
+        transform: translateY(0);
     }
 }
 @keyframes toast-in-bottom {
     from {
-        transform: translateY(100%);
         opacity: 0;
+        transform: translateY(100%);
     }
     to {
-        transform: translateY(0%);
         opacity: 1;
+        transform: translateY(0%);
     }
 }
+/*frozen component*/
+/*@keyframes progressBar {*/
+/*    0% {*/
+/*        width: 0;*/
+/*    }*/
+/*    100% {*/
+/*        width: 100%;*/
+/*    }*/
+/*}*/

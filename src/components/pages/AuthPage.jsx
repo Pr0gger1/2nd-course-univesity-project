@@ -4,7 +4,7 @@ import AuthForm from '../forms/AuthForm';
 import styles from './styles/auth_page.module.css';
 import logo from '../../assets/img/logo_vector_white.svg';
 
-const AuthPage = ({register = false}) => {
+const AuthPage = ( {register = false} ) => {
     const [authData, setAuthData] = useState({
         email: '',
         password: '',
@@ -22,7 +22,9 @@ const AuthPage = ({register = false}) => {
     return (
         <div className={styles.container}>
             <div className={styles.login__form}>
-                <h1 className={styles.auth__header}>{register ? 'Регистрация' : 'Авторизация'}</h1>
+                <h1 className={styles.auth__header}>
+                    {register ? 'Регистрация' : 'Авторизация'}
+                </h1>
                 <AuthForm register={register} data={authData} setData={setAuthData}/>
             </div>
 
@@ -32,7 +34,6 @@ const AuthPage = ({register = false}) => {
                 </div>
                 <div className={styles.introduce__slogan}>
                     <p>Начните планировать свой день уже сегодня</p>
-
                 </div>
             </div>
         </div>

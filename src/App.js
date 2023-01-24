@@ -8,24 +8,25 @@ import {useToast} from "./hooks/useToast";
 
 import AppRouter from './router/AppRouter';
 import Toast from "./components/ui/toast/Toast";
-import {ToastContext} from './context/toast.context';
 
+import ToastContext from './context/toast.context';
 
 function App() {
     const {login, logout, token, userData} = useAuth();
-    const [isAuth, setIsAuth] = useState(!!token);
+    const isAuth = !!token;
+    // const isAuth = true;
 
     const {toastList, setToastList, toastElement} = useToast();
     const [toastPosition, setToastPosition] = useState('top_right');
 
     return (
       <AuthContext.Provider value={{
-          login, logout, token: token, userData: userData,
-          isAuth: isAuth
+          login, logout, token,
+          userData, isAuth
       }}>
           <ToastContext.Provider value={{
-              toastList: toastList, setToastList: setToastList,
-              toastElement: toastElement,
+              toastList, setToastList,
+              toastElement,
               position: toastPosition,
               setPosition: setToastPosition
           }}>
