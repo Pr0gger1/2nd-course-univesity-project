@@ -7,9 +7,11 @@
     background-color: #ededed;
 }
 .login__form {
+    margin-top: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 1.5rem;
 }
 .login__form form {
     width: 50%;
@@ -24,7 +26,7 @@
     justify-content: flex-start;
 
     background-image:  linear-gradient(180deg, rgba(228, 165, 3, 0.6) 0%, rgba(235, 113, 88, 0.6) 100%),
-    url("../../../assets/img/login_page_stock_img.jpg");
+    url("../../../assets/img/background/login_page_stock_img.jpg");
     background-size: cover;
     border-radius: 30px 0 0 30px;
     height: 100%;
@@ -50,6 +52,27 @@
     width: 70%;
 }
 
+.google_auth__button {
+    padding: 10px;
+    border-radius: 100%;
+    background-color: white;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.google_auth__button img {
+    width: 3rem;
+    height: 3rem;
+    vertical-align: middle;
+}
+.google_auth__button .google_auth__text {
+    color: white;
+    font-weight: bold;
+    margin-left: 1rem;
+    display: none;
+}
+
 @media screen and (max-width: 1000px) {
     .introduce__slogan {
         font-size: 2.5rem;
@@ -59,9 +82,9 @@
     .container {
         height: 100vh;
         grid-template-columns: none;
-        grid-template-rows: 1fr 3fr;
+        grid-template-rows: 1fr 5fr;
         background-image: linear-gradient(180deg, rgba(228, 165, 3, 0.6) 0%, rgba(235, 113, 88, 0.6) 100%),
-                url("../../../assets/img/login_page_stock_mobile.jpg");
+                url("../../../assets/img/background/login_page_stock_mobile.jpg");
         background-size: cover;
         background-repeat: no-repeat;
     }
@@ -94,6 +117,21 @@
 
     .logo img {
         width: 90%;
+    }
+    .google_auth__button img {
+        width: 2rem;
+        height: 2rem;
+    }
+    .google_auth__button {
+        border-radius: 10px;
+        padding: 10px 20px;
+        backdrop-filter: blur(1rem);
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        background-color: transparent;
+        width: 50%;
+    }
+    .google_auth__text {
+        display: inline-block !important;
     }
 
     .auth__header {
