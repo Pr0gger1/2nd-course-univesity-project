@@ -8,14 +8,14 @@
    [Pr0gger1](https://github.com/Pr0gger1) •
    [LilYxa](https://github.com/LilYxa)
 
-## Установка зависимостей
+## Установка зависимостей и настройка firebase
 1. Установите необходимые для работы проекта зависимости _npm_ из `package.json`.
  
         npm i
 
 2. Установите _firebase-tools_ глобально на свой компьютер.
 
-        npm i firebase-tools
+        npm i -g firebase-tools
 
 3. Авторизуйтесь в свой firebase аккаунт
         
