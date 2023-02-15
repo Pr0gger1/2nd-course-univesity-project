@@ -22,7 +22,7 @@
     display: block;
     margin-bottom: 8px;
     width: 2.5rem;
-    height: 0.25rem;
+    height: 3px;
     background-color: #000;
 
     border-radius: 10px;
@@ -35,3 +35,7 @@
 .settings__buttons {}
 
 .content {}
+
+.sidebar__left {
+    padding: 1.25rem;
+}
