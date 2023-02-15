@@ -2,15 +2,21 @@
   --bgColorHeader: #dfdfdf;
   --bgColorContent: #fff;
   --bgColorSidebar: #f2f2f2;
+
   --borderColor: #868686;
   --fontColor: #000;
+  --searchProps: #ebebeb url("./assets/img/icons/search_light_icon.svg");
 }
 [data-theme="dark"] {
   --bgColorHeader: #232323;
   --bgColorContent: #2a2a2a;
   --bgColorSidebar: #333333;
+  --bgColorSearch: #444444;
+
   --borderColor: #5f5f5f;
   --fontColor: #fff;
+
+  --searchProps: #444 url("./assets/img/icons/search_dark_icon.svg");
 }
 
 * {
@@ -19,7 +25,11 @@
   font-family: 'Montserrat', sans-serif;
   overflow: hidden;
   font-size: 1rem;
+  color: var(--fontColor);
 }
 a {
   color: #6977f3;
+}
+input::placeholder {
+  color: var(--fontColor);
 }

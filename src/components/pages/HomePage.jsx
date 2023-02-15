@@ -1,20 +1,43 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
+
 import UserDataCard from "../ui/cards/UserDataCard";
-
-import styles from './styles/home_page.module.css';
-
-import MenuIcon from '@mui/icons-material/Menu';
 import ImgButton from "../ui/button/ImgButton";
 import SearchInput from "../ui/input/SearchInput";
 
-import testAvatar from "../../assets/test/testAvatar.jpg";
-import themeIconLightIcon from "../../assets/img/icons/light theme.svg";
-import notificationIcon from "../../assets/img/icons/bell.svg";
+import styles from './styles/home_page.module.css';
+
 import { Badge } from "@mui/material";
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import MenuIcon from '@mui/icons-material/Menu';
+
+import testAvatar from "../../assets/test/testAvatar.jpg";
+import themeIconLight from "../../assets/img/icons/theme_icon_light.svg";
+import notificationIconLight from "../../assets/img/icons/bell_light.svg";
+import settingsIconLight from "../../assets/img/icons/settings_light.svg";
+
+import themeIconDark from '../../assets/img/icons/theme_icon_dark.svg';
+import notificationIconDark from '../../assets/img/icons/bell_dark.svg';
+import settingsIconDark from '../../assets/img/icons/settings_dark.svg'
+
+import { styled } from "@mui/material/styles";
+import themeContext from "../../context/theme.context";
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+      right: 11,
+      top: 10,
+      color: "#fff",
+      backgroundColor: "red",
+        height: "14px",
+      padding: '0 2px',
+    },
+  }));
+
 
 const HomePage = () => {
-
+    const {theme, setTheme} = useContext(themeContext);
+    // useEffect(() => {
+    //     setTheme("dark");
+    // }, [])
     return (
         <main className={styles.main__container}>
             <header className={styles.header__app}>
@@ -26,18 +49,30 @@ const HomePage = () => {
 
                 <div className={styles.settings__buttons}>
                     <ImgButton 
-                        src={themeIconLightIcon}
+                        src={
+                            theme === "light" 
+                            ? themeIconLight : themeIconDark
+                        }
                         alt="theme button"
                     />
 
-                    <Badge badgeContent={2}
-                        color="primary">
-                        <NotificationsIcon/>
-                        {/* <ImgButton
-                            src={notificationIcon}
-                            alt="notification icon"
-                        /> */}
-                    </Badge>
+                    <StyledBadge badgeContent={2}>
+                        <ImgButton
+                            src={
+                                theme === "light" 
+                                ? notificationIconLight : notificationIconDark
+                        }
+                            alt="notification button"
+                        />
+                    </StyledBadge>
+
+                    <ImgButton
+                        src={
+                            theme === "light" 
+                            ? settingsIconLight : settingsIconDark
+                        }
+                        alt="settings icon"
+                    />
                 </div>
             </header>
 
@@ -51,7 +86,7 @@ const HomePage = () => {
                 </div>
 
                 <div className={styles.search_input}>
-                    <SearchInput/>
+                    <SearchInput placeholder="Поиск..."/>
                 </div>
             </aside>
 
