@@ -7,7 +7,6 @@ const InputField = (
 ) => {
     const customClassesVar = [styles.input__field, ...customClasses].join(' ');
 
-
     return (
         <input className={customClassesVar}
                type={type}
