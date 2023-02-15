@@ -1,15 +1,42 @@
 import React, {useContext} from "react";
-import ToastContext from "../../context/toast.context";
+import UserDataCard from "../ui/cards/UserDataCard";
+
 import styles from './styles/home_page.module.css';
 
+import testAvatar from "../../../assets/test/testAvatar.jpg";
+
 const HomePage = () => {
-    const {toastElement} = useContext(ToastContext)
+    // const {toastElement} = useContext(ToastContext)
 
     return (
         <main className={styles.main__container}>
-            <button onClick={() => new toastElement('desc', 'title').success}>Click</button>
+            <header className={styles.header__app}>
+                <div className={styles.menu__button}>
+
+                </div>
+                <div className={styles.settings__buttons}>
+
+                </div>
+            </header>
+
+            <div className={styles.sidebar__left}>
+                <div className={styles.user_info__block}>
+                    <UserDataCard
+                        name="Alexey Bobrov"
+                        email="alexeybobrov@gmail.com"
+                        photo={testAvatar}
+                    />
+                </div>
+            </div>
+
+            <div className={styles.content}>
+                
+            </div>
+            
+            <div className={styles.sidebar__right}>
+
+            </div>
         </main>
     )
 }
-
 export default HomePage;
