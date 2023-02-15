@@ -6,6 +6,9 @@
     overflow: hidden;
     background-color: #ededed;
 }
+.container h1 {
+    font-size: 2rem;
+}
 .login__form {
     margin-top: 2rem;
     display: flex;
@@ -39,6 +42,9 @@
 
     padding: 0 2rem;
     box-sizing: border-box;
+}
+.introduce__slogan p {
+    font-size: 2rem;
 }
 .introduce__slogan p {
     margin-top: 1rem;

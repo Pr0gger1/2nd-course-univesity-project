@@ -9,7 +9,7 @@
 }
 
 .header__app {
-    padding: 1.25rem;
+    padding: 10px 20px;
     background-color: var(--bgColorHeader);
     display: flex;
     flex-direction: row;
@@ -18,7 +18,7 @@
 
 }
 
-.hamburger_menu__btn span {
+/* .hamburger_menu__btn span {
     display: block;
     margin-bottom: 8px;
     width: 2.5rem;
@@ -26,16 +26,33 @@
     background-color: #000;
 
     border-radius: 10px;
-}
+} */
 
-.hamburger_menu__btn span:last-child {
+/* .hamburger_menu__btn span:last-child {
     margin-bottom: 0;
+} */
+.hamburger_menu__btn {
+    display: flex;
+    align-items: center;
+
 }
 
-.settings__buttons {}
+.settings__buttons {
+    display: flex;
+    align-items: center;
+}
 
-.content {}
+.content {
+
+}
 
 .sidebar__left {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+
     padding: 1.25rem;
+    width: 30%;
+    height: 100vh;
+    background-color: var(--bgColorSidebar);
 }

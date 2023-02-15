@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './input_field.module.css';
+import styles from './styles/InputField.module.css';
 
 const InputField = (
     {type = 'text', customStyles = {},

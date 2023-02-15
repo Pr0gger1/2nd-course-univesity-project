@@ -2,6 +2,10 @@
 .idea/
 .vscode/
 
+# storybook
+.storybook/
+src/stories/*
+
 # file environment
 **/.env
 
