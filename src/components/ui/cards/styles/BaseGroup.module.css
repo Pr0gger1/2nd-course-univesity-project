@@ -1,0 +1,54 @@
+.group {
+    width: 100%;
+    padding: 5px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    cursor: pointer;
+    font-size: 16px; 
+
+    transition: box-shadow 500ms;
+    border-radius: 10px;
+
+    box-sizing: border-box;
+}
+
+.group.active {
+    box-shadow: inset 0px 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.group:hover {  
+    transition: box-shadow 500ms;  
+    box-shadow: inset 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.icon_title {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.group_icon {
+    width: 24px;
+    height: 24px;
+}
+
+.counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--notificationBgColor);
+    color: #fff;
+    font-size: 0.7rem;
+
+    width: 5px;
+    height: 5px;
+
+    padding: 5px;
+    border-radius: 20px;
+}
+

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import themeContext from "../context/theme.context";
-import { themes } from "../context/theme.context";
 
 const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState(themes.light);
+    const [theme, setTheme] = useState(localStorage.getItem("theme"));
     
     useEffect(() => {
         localStorage.setItem("theme", theme);
-        document.getElementById("root").setAttribute("data-theme", theme);
+        document.body.setAttribute("data-theme", theme);
     }, [theme]);
+    
     return (
         <themeContext.Provider value={{
             theme,

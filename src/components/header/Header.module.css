@@ -1,0 +1,27 @@
+.header__app {
+    padding: 5px 20px 5px 10px;
+    background-color: var(--bgColorHeader);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.hamburger_menu__btn {
+    display: flex;
+    align-items: center;
+}
+.hamburger_menu__btn:hover {
+    cursor: pointer;
+}
+
+.settings__buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.settings__buttons button img {
+    width: 1.5rem;
+    height: 1.5rem;
+}

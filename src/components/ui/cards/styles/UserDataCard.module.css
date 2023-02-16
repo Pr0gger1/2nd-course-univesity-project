@@ -1,21 +1,23 @@
 .user__card {
+    width: 100%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     flex-direction: row;   
     align-items: center;
+    gap: 1rem;
 }
 
 .user__info {
-    margin-left: 1rem;
     display: flex;
     flex-direction: column;
 }
 .user__card .user__name {
     font-weight: 600;
-    font-size: 1.25rem;
+    font-size: 1rem;
 }
 .user__card .user__email {
     font-weight: 300;
+    font-size: 0.8rem;
 }
 .user__card .user__avatar {
     width: 1rem;   

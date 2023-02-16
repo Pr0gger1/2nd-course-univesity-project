@@ -6,7 +6,7 @@ export const themes = {
     light: "light"
 }
 const themeContext = createContext({
-    theme: "light",
+    theme: themes.light,
     setTheme: () => {}
 })
 
