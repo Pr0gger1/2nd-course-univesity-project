@@ -1,20 +1,25 @@
 .search {
     width: 100%;
+    height: 40px;
 
     border-radius: 8px;
     border: none;
 
-    background: var(--searchProps) no-repeat 5% 60%;
+    background: var(--searchProps) no-repeat 12px;
     background-size: 1rem 1rem;
+
+    border: 1px solid transparent;
 
     padding: 0.3rem 15%;
     caret-color: transparent;
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
     color: var(--fontColor);
+
+    transition: border-color 0.2s ease;
 }
 
 .search:focus {
-    border: 1px solid #c0c0c0;
+    border-color: #c0c0c0;
     outline: none;
 }
 
