@@ -28,6 +28,9 @@
 #create_account {
     text-align: center;
 }
+#create_account > b, a {
+    font-size: 1rem;
+}
 .login_button {
     background-color: #3496f1;
     color: #ffffff;

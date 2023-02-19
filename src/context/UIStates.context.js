@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-const adaptiveUi = createContext({
+const UIStates = createContext({
     sidebars: {
         isLeftSidebarOpened: true,
         setIsLeftSidebarOpened: () => {},
@@ -9,4 +9,4 @@ const adaptiveUi = createContext({
     }
 })
 
-export default adaptiveUi;
+export default UIStates;

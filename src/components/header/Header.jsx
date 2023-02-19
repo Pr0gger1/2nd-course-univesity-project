@@ -15,11 +15,11 @@ import settingsIconDark from "../../assets/img/icons/settings_dark.svg";
 import themeContext from "../../context/theme.context";
 
 import { themes } from "../../context/theme.context";
-import adaptiveUi from "../../context/adaptiveUi.context";
+import UIStates from "../../context/UIStates.context";
 
 export const Header = () => {
     const {theme, setTheme} = useContext(themeContext);
-    const {sidebars} = useContext(adaptiveUi);
+    const {sidebars} = useContext(UIStates);
 
     const changeThemeHandler = () => {
         const currentTheme = localStorage.getItem("theme");

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import styles from './styles/home_page.module.css';
+import styles from './styles/HomePage.module.css';
 
 import { Badge } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -29,9 +29,11 @@ const HomePage = () => {
     return (
         <main className={styles.main__container}>
             <Header/>
-            <LeftSidebar />
-            <Content/>
-            <RightSidebar/>
+            <div className={styles.content__wrapper}>
+                <LeftSidebar/>
+                <Content/>
+                <RightSidebar/>
+            </div>
         </main>
     )
 }

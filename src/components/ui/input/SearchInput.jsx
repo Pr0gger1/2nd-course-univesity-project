@@ -9,7 +9,6 @@ const SearchInput = ({ placeholder = '', ...props}) => {
             placeholder={placeholder}
             {...props}
         />
-        
   )
 }
 

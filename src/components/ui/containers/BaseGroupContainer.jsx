@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 
 import todayTaskIcon from '../../../assets/img/icons/task_list/today_task_icon.svg';
 import planTaskIcon from '../../../assets/img/icons/task_list/plan_task_icon.svg';
@@ -11,11 +11,11 @@ import BaseGroup from '../cards/BaseGroup';
 
 const BaseGroupContainer = () => {
     const groups = [
-        {title: "Сегодня", icon: todayTaskIcon, counter: 0, id: 1},
+        {title: "Сегодня", icon: todayTaskIcon, counter: 5, id: 1},
         {title: "Запланировано", icon: planTaskIcon, counter: 2, id: 2},
-        {title: "Избранные", icon: favouriteTaskIcon, counter: 0, id: 3},
-        {title: "Завершенные", icon: completedTaskIcon, counter: 0, id: 4},
-        {title: "Все задачи", icon: allTasksIcon, counter: 0, id: 5},
+        {title: "Избранные", icon: favouriteTaskIcon, counter: 6, id: 3},
+        {title: "Завершенные", icon: completedTaskIcon, counter: 1, id: 4},
+        {title: "Все задачи", icon: allTasksIcon, counter: 10, id: 5},
     ];
 
     const [activeIndex, setActiveIndex] = useState(null);
@@ -29,7 +29,7 @@ const BaseGroupContainer = () => {
         <div className={styles.base_group__container}>
             {
                 groups.map((group, index) => 
-                    <BaseGroup 
+                    <BaseGroup
                         key={group.id}
                         icon={group.icon}
                         title={group.title}

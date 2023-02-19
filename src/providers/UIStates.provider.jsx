@@ -1,12 +1,12 @@
-import React, { useContext, useState } from 'react';
-import adaptiveUi from '../context/adaptiveUi.context';
+import React, { useState } from 'react';
+import UIStates from '../context/UIStates.context';
 
-const AdaptiveUIPovider = ({ children }) => {
+const UIStatesProvider = ({ children }) => {
     const [isLeftSidebarOpened, setIsLeftSidebarOpened] = useState(true);
     const [isRightSidebarOpened, setIsRightSidebarOpened] = useState(false);
 
     return (
-        <adaptiveUi.Provider value={{
+        <UIStates.Provider value={{
             sidebars: {
                 isLeftSidebarOpened,
                 isRightSidebarOpened,
@@ -15,8 +15,8 @@ const AdaptiveUIPovider = ({ children }) => {
             }
         }}>
             {children}
-        </adaptiveUi.Provider>
+        </UIStates.Provider>
     );
 };
 
-export default AdaptiveUIPovider;
+export default UIStatesProvider;

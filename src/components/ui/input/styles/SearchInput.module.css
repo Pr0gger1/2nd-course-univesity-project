@@ -1,12 +1,16 @@
 .search {
     width: 100%;
+
     border-radius: 8px;
     border: none;
-    background: var(--searchProps) no-repeat 2% 50%;
+
+    background: var(--searchProps) no-repeat 5% 60%;
     background-size: 1rem 1rem;
-    padding: 5px 10%;
-    
+
+    padding: 0.3rem 15%;
+    caret-color: transparent;
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
+    color: var(--fontColor);
 }
 
 .search:focus {
@@ -15,7 +19,6 @@
 }
 
 .search::placeholder {
-    padding: 0;
     letter-spacing: 0.2em;
     font-size: 0.8rem;
 }

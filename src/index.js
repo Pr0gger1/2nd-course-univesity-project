@@ -6,7 +6,7 @@ import App from './App.js';
 import ThemeProvider from './providers/Theme.provider.jsx';
 
 import './index.css';
-import AdaptiveUIPovider from './providers/AdaptiveUI.provider.jsx';
+import UIStatesProvider from './providers/UIStates.provider.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 document.title = 'Productify ToDo App';
@@ -14,11 +14,11 @@ document.title = 'Productify ToDo App';
 root.render(
   <React.StrictMode>
     <ThemeProvider>
-      <AdaptiveUIPovider>
+      <UIStatesProvider>
         <BrowserRouter>
           <App />
         </BrowserRouter>
-      </AdaptiveUIPovider>
+      </UIStatesProvider>
     </ThemeProvider>
   </React.StrictMode>
 );

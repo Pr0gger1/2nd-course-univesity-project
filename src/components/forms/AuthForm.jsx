@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import InputField from '../ui/input/InputField';
 import Button from '../ui/button/Button';
 
-import styles from './auth.form.module.css';
+import styles from './AuthForm.module.css';
 import ToastContext from "../../context/toast.context";
 
 const fieldStyle = {

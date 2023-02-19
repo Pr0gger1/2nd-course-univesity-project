@@ -7,18 +7,18 @@
     background-color: #ededed;
 }
 .container h1 {
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 .login__form {
-    margin-top: 2rem;
+    padding: 1rem 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 .login__form form {
     width: 50%;
-    padding: 40px 60px;
+    padding: 1rem 1.5rem;
     background-color: white;
     border-radius: 30px;
 

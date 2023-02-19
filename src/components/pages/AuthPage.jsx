@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import AuthForm from '../forms/AuthForm';
 
-import styles from './styles/auth_page.module.css';
+import styles from './styles/AuthPage.module.css';
 import google_icon from '../../assets/img/icons/google.svg';
 import logo from '../../assets/img/logo/logo_vector_white.svg';
 

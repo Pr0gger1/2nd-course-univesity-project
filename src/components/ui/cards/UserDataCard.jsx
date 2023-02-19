@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Avatar from '@mui/material/Avatar';
 import styles from './styles/UserDataCard.module.css';
-import adaptiveUi from '../../../context/adaptiveUi.context';
+import UIStates from '../../../context/UIStates.context';
 
 const UserDataCard = ({ name, email, photo }) => {
-  const {sidebars} = useContext(adaptiveUi);
+  const {sidebars} = useContext(UIStates);
 
   return (
     <section className={styles.user__card}>

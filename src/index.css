@@ -6,6 +6,7 @@
   --bgColorHeader: #dfdfdf;
   --bgColorContent: #fff;
   --bgColorSidebar: #f2f2f2;
+  --bgColorInput: #e5e5e5;
 
   --borderColor: #868686;
   --fontColor: #000;
@@ -19,7 +20,7 @@
   --bgColorHeader: #232323;
   --bgColorContent: #2a2a2a;
   --bgColorSidebar: #333333;
-  --bgColorSearch: #444444;
+  --bgColorInput: #444;
 
   --borderColor: #5f5f5f;
   --fontColor: #fff;
@@ -34,7 +35,6 @@
   padding: 0;
 
   font-family: 'Montserrat', sans-serif;
-  color: var(--fontColor);
   font-size: 1rem;
 
   overflow: hidden;
@@ -42,6 +42,7 @@
 }
 
 main {
+  color: var(--fontColor);
   background-color: var(--bgColorContent);
 }
 

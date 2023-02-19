@@ -6,11 +6,12 @@ import styles from "./styles/LeftSidebar.module.css";
 
 import testAvatar from "../../assets/test/testAvatar.jpg";
 import BaseGroupContainer from "../ui/containers/BaseGroupContainer";
-import adaptiveUi from "../../context/adaptiveUi.context";
+import UIStates from "../../context/UIStates.context";
 
 export const LeftSidebar = () => {
-    const {sidebars} = useContext(adaptiveUi);
+    const {sidebars} = useContext(UIStates);
     const searchClickHandler = () => {
+        if (!sidebars.isLeftSidebarOpened)
          sidebars.setIsLeftSidebarOpened(prev => !prev);
     }
 
