@@ -1,6 +1,7 @@
 import React, { useState} from 'react';
 
 import todayTaskIcon from '../../../assets/img/icons/task_list/today_task_icon.svg';
+// import planTaskIcon from '../../../assets/img/icons/task_list/plan_task_icon.svg';
 import planTaskIcon from '../../../assets/img/icons/task_list/plan_task_icon.svg';
 import favouriteTaskIcon from '../../../assets/img/icons/task_list/favourite_task_icon.svg';
 import completedTaskIcon from '../../../assets/img/icons/task_list/completed_task_icon.svg';

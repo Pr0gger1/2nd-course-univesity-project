@@ -7,6 +7,7 @@ import styles from "./styles/LeftSidebar.module.css";
 import testAvatar from "../../assets/test/testAvatar.jpg";
 import BaseGroupContainer from "../ui/containers/BaseGroupContainer";
 import UIStates from "../../context/UIStates.context";
+import CustomGroupContainer from "../ui/containers/CustomGroupContainer";
 
 export const LeftSidebar = () => {
     const {sidebars} = useContext(UIStates);
@@ -33,6 +34,7 @@ export const LeftSidebar = () => {
                 placeholder="Поиск..."
             />
             <BaseGroupContainer/>
+            <CustomGroupContainer/>
         </aside>
     );
 }
