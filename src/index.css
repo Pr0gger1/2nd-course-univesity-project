@@ -11,7 +11,7 @@
   --borderColor: #868686;
   --fontColor: #000;
 
-  --searchProps: #ebebeb url("./assets/img/icons/search_light_icon.svg");
+  --searchProps: #ebebeb url("./assets/img/icons/search_dark.svg");
 
   --borderBottomSidebar: 1px solid #868686;
 
@@ -25,7 +25,7 @@
   --borderColor: #5f5f5f;
   --fontColor: #fff;
 
-  --searchProps: #444 url("./assets/img/icons/search_dark_icon.svg");
+  --searchProps: #444 url("./assets/img/icons/search_light.svg");
 
   --borderBottomSidebar: 1px solid #444;
 }

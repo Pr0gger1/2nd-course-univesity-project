@@ -1,3 +1,4 @@
 .content {
-
+    overflow-y: auto;
+    direction: rtl;
 }
