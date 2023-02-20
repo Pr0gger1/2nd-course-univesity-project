@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
 
 import App from './App.js';
 import ThemeProvider from './providers/Theme.provider.jsx';
@@ -13,13 +13,12 @@ document.title = 'Productify ToDo App';
 
 root.render(
   <React.StrictMode>
-    <ThemeProvider>
-      <UIStatesProvider>
-        <BrowserRouter>
+    <BrowserRouter>
+      <ThemeProvider>
+        <UIStatesProvider>
           <App />
-        </BrowserRouter>
-      </UIStatesProvider>
-    </ThemeProvider>
+        </UIStatesProvider>
+      </ThemeProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
-

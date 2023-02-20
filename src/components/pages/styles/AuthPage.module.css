@@ -3,7 +3,6 @@
     grid-template-columns: 60% 40%;
     height: 100vh;
 
-    overflow: hidden;
     background-color: #ededed;
 }
 .container h1 {
