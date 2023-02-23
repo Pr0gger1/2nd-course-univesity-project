@@ -12,8 +12,7 @@ const fieldStyle = {
 }
 
 const AuthForm = ({ register = false, data, setData}) => {
-    let {setPosition, toastElement} = useContext(ToastContext);
-
+    const {setPosition, toastElement} = useContext(ToastContext);
 
     useEffect(() => {
         setPosition('top_center');

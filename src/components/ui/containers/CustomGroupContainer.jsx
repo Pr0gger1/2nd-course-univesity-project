@@ -1,31 +1,44 @@
-import React, {useState, useEffect} from 'react';
+import React, {useContext, useMemo} from 'react';
 import CustomGroup from '../cards/CustomGroup';
 
+import defaultIcon from '../../../assets/img/icons/default/custom_group_task_icon.svg';
+
 import styles from './styles/CustomGroupContainer.module.css';
-// import useCustomGroups from '../../../hooks/useCustomGroups';
+import UIStates from "../../../context/UIStates.context";
+import {generateUniqueId} from "../../../utils/generateUniqueId";
 
 
 const CustomGroupContainer = () => {
+    const customFakeGroups = useMemo(() => {
+        return [
+            {
+                title: "Education",
+                icon: defaultIcon,
+                counter: 0,
+                id: generateUniqueId('task', 4)
+            },
+            {
+                title: "My project",
+                icon: defaultIcon,
+                counter: 0,
+                id: generateUniqueId('task', 4)
+            }
+        ];
+    }, []);
 
-    const customFakeGroups = [
-        {icon: "default", title: "Education", id: 0},
-        {icon: "default", title: "My project", id: 1}
-    ]
-
-    const [activeIndex, setActiveIndex] = useState(null);
+    const {tasks} = useContext(UIStates);
 
     const clickHandler = (index) => {
-        setActiveIndex(
-            index === activeIndex ? null : index
+        tasks.setActiveTaskGroup(
+            index === tasks.activeTaskGroup ? null : index
             );
     }
 
 
     return (
-
          <div className={styles.custom_group__container}>
              {
-                 customFakeGroups.map((group, index) =>
+                customFakeGroups.map((group, index) =>
                     <CustomGroup
                         key={group.id}
                         icon={group.icon}
@@ -33,7 +46,7 @@ const CustomGroupContainer = () => {
                         counter={group.counter}
                         onClick={() => clickHandler(index)}
                         activeClass={
-                            index === activeIndex ? 'active' : null
+                            index === tasks.activeTaskGroup ? 'active' : null
                         }
                     />
                  )

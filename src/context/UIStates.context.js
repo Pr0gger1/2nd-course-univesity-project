@@ -1,12 +1,5 @@
 import { createContext } from "react";
 
-const UIStates = createContext({
-    sidebars: {
-        isLeftSidebarOpened: true,
-        setIsLeftSidebarOpened: () => {},
-        isRightSidebarOpened: false,
-        setIsRightSidebarOpened: () => {}
-    }
-})
+const UIStates = createContext();
 
 export default UIStates;

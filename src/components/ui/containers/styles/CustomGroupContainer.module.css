@@ -1,6 +1,6 @@
 .custom_group__container {
     display: flex;
     flex-direction: column;
+    gap: 0.7rem;
     justify-content: flex-start;
-    /* gap: 0.7rem; */
 }

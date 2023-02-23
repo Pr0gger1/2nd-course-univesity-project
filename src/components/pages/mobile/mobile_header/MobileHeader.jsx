@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import styles from "./Header.module.css";
 
-import ImgButton from "../ui/button/ImgButton";
+import ImgButton from "../../../ui/button/ImgButton";
 
 import MenuIcon from "@mui/icons-material/Menu";
-import { StyledBadge } from "../ui/customComponents/CustomBadge";
+import { StyledBadge } from "../../../ui/customComponents/CustomBadge";
 
 import themeIconLight from "../../assets/img/icons/theme_icon_light.svg";
 import themeIconDark from "../../assets/img/icons/theme_icon_dark.svg";
@@ -12,14 +12,11 @@ import notificationIconLight from "../../assets/img/icons/bell_light.svg";
 import notificationIconDark from "../../assets/img/icons/bell_dark.svg";
 import settingsIconLight from "../../assets/img/icons/settings_light.svg";
 import settingsIconDark from "../../assets/img/icons/settings_dark.svg";
-import themeContext from "../../context/theme.context";
+import themeContext from "../../../../context/theme.context";
 
-import { themes } from '../../context/theme.context';
-import UIStates from '../../context/UIStates.context';
-import { useDispatch } from 'react-redux';
-import { setLBarOpen } from "../../store/reducers/UIStates";
-
-export const Header = () => {
+import { themes } from '../../../../context/theme.context';
+import UIStates from '../../../../context/UIStates.context';
+const MobileHeader = () => {
     const { theme, setTheme } = useContext(themeContext);
     const { sidebars } = useContext(UIStates);
     // const dispatch = useDispatch()
@@ -78,3 +75,4 @@ export const Header = () => {
             </header>
     );
 }
+export default MobileHeader;

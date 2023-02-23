@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import styles from './styles/BaseGroup.module.css';
+import styles from './styles/TaskGroups.module.css';
 import UIStates from "../../../context/UIStates.context";
 
 const BaseGroup = ({title, icon, counter, activeClass, onClick}) => {

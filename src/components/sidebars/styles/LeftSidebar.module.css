@@ -8,7 +8,6 @@
 
     width: 20%;
     height: 100vh;
-
     background-color: var(--bgColorSidebar);
     white-space: nowrap;
 }
@@ -20,4 +19,15 @@
 }
 .sidebar__left.closed input::placeholder {
     color: transparent;
-} 
+}
+
+.groups__container {
+    display: flex;
+    flex-direction: column;
+    /*justify-content: space-between;*/
+
+}
+
+.groups__container .groups {
+
+}

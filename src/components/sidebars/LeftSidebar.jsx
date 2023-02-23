@@ -4,13 +4,19 @@ import SearchInput from "../ui/input/SearchInput";
 
 import styles from "./styles/LeftSidebar.module.css";
 
-import testAvatar from "../../assets/test/testAvatar.jpg";
+import testAvatar from '../../assets/test/testAvatar.jpg';
 import BaseGroupContainer from "../ui/containers/BaseGroupContainer";
 import UIStates from "../../context/UIStates.context";
-import CustomGroupContainer from "../ui/containers/CustomGroupContainer";
+import CustomGroupContainer from '../ui/containers/CustomGroupContainer';
+import CreateListButton from '../ui/button/CreateListButton';
+
+// import { useSelector, useDispatch } from "react-redux";
 
 export const LeftSidebar = () => {
     const {sidebars} = useContext(UIStates);
+    // const isLbarOpened = useSelector(state => state.uiStates.value);
+    // const dispatch = useDispatch();
+
     const searchClickHandler = () => {
         if (!sidebars.isLeftSidebarOpened)
          sidebars.setIsLeftSidebarOpened(prev => !prev);
@@ -18,9 +24,10 @@ export const LeftSidebar = () => {
 
     return (
         <aside className={
-                styles.sidebar__left
-                 + `${!sidebars.isLeftSidebarOpened ? ' ' + styles.closed : ''}`
-                }
+            styles.sidebar__left
+            + `${!sidebars.isLeftSidebarOpened ? ' ' + styles.closed : ''}`
+            // + `${!isLbarOpened ? ' ' + styles.closed : ''}`
+            }
         >
 
             <UserDataCard
@@ -35,6 +42,11 @@ export const LeftSidebar = () => {
             />
             <BaseGroupContainer/>
             <CustomGroupContainer/>
+            {/*<div className={styles.groups__container}>*/}
+            {/*    <div className={styles.groups}>*/}
+            {/*    </div>*/}
+            <CreateListButton/>
+            {/*</div>*/}
         </aside>
     );
 }

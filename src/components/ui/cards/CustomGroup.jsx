@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import styles from './styles/CustomGroup.module.css'
+import styles from './styles/TaskGroups.module.css'
 import UIStates from "../../../context/UIStates.context";
 
 const CustomGroup = ({title, icon, counter, activeClass, onClick}) => {
@@ -16,7 +16,7 @@ const CustomGroup = ({title, icon, counter, activeClass, onClick}) => {
     return (
         <div 
             className={
-                `${styles.custom_group}${activeClass ? ' ' + styles["active"] : ''}`
+                `${styles.group}${activeClass ? ' ' + styles["active"] : ''}`
             }
             style={group_style}
             onClick={onClick}
