@@ -9,7 +9,6 @@ import MobileHomePage from "../components/pages/mobile/MobileHomePage";
 import {useSelector} from "react-redux";
 
 const AppRouter = ( {isAuth = false} ) => {
-    // const { isMobile } = useContext(UIStates);
     const isMobile = useSelector(state => state.mobileStates.isMobile);
     const UnauthorizedRoutes = [
         { path: "/", element: <Navigate to="/login"/> },

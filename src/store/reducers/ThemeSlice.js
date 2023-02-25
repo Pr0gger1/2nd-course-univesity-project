@@ -13,16 +13,14 @@ const themeSlice = createSlice({
     reducers: {
         setTheme(state) {
             const currentTheme = localStorage.getItem('theme');
-            console.log(currentTheme);
 
-            if (currentTheme === themes.light){
+            if (currentTheme === themes.light)
                 state.theme = themes.dark;
-                localStorage.setItem('theme', state.theme);
-            }
-            else {
+
+            else
                 state.theme = themes.light;
-                localStorage.setItem('theme', state.theme);
-            }
+            
+            localStorage.setItem('theme', state.theme);
         }
     }
 })
