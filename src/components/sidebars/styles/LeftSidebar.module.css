@@ -24,8 +24,6 @@
 .groups__container {
     display: flex;
     flex-direction: column;
-    /*justify-content: space-between;*/
-
 }
 
 .groups__container .groups {

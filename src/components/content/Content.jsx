@@ -1,22 +1,25 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import styles from './Content.module.css';
 import { DateFormatter } from '../../utils/DateFormatter';
-import UIStates from "../../context/UIStates.context";
-import { groupTitle } from "../../providers/UIStates.provider";
+import { groupTitle } from "../ui/containers/BaseGroupContainer";
+import {useSelector} from "react-redux";
 
 
 const Content = () => {
-    const { tasks } = useContext(UIStates);
+    const selectedGroup = useSelector(
+        state => state.taskGroupStates.selectedTaskGroup
+    );
     return (
         <div className={styles.content}>
             <div className={styles.task_list__container}>
                 <section className={styles.content__top_panel}>
-                    <h1 className={styles.task_list__title}>
-                        {groupTitle[tasks.selectedGroup]}
+                    <div className={styles.task_list__title}>
+                        { groupTitle[selectedGroup] }
+
                         <span className={styles.day_of_week__title}>
-                        | {new DateFormatter().getDayOfWeek()}
+                          {' | ' + new DateFormatter().getDayOfWeek()}
                         </span>
-                    </h1>
+                    </div>
                     <span className={styles.date__title}>
                         {new DateFormatter().getFullDate()}
                     </span>

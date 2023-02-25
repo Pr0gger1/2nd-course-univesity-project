@@ -26,8 +26,14 @@ const AuthPage = ( {register = false} ) => {
                 <h1 className={styles.auth__header}>
                     {register ? 'Регистрация' : 'Авторизация'}
                 </h1>
-                <AuthForm register={register} data={authData} setData={setAuthData}/>
-                <a href='#' className={styles.google_auth__button}>
+
+                <AuthForm
+                    register={register}
+                    data={authData}
+                    setData={setAuthData}
+                />
+
+                <a href='/' className={styles.google_auth__button}>
                     <img src={google_icon} alt="google authorization"/>
                     <span className={styles.google_auth__text}>
                         Авторизоваться через Google

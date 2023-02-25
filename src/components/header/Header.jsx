@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import styles from "./Header.module.css";
 
 import ImgButton from "../ui/button/ImgButton";
@@ -12,69 +12,53 @@ import notificationIconLight from "../../assets/img/icons/bell_light.svg";
 import notificationIconDark from "../../assets/img/icons/bell_dark.svg";
 import settingsIconLight from "../../assets/img/icons/settings_light.svg";
 import settingsIconDark from "../../assets/img/icons/settings_dark.svg";
-import themeContext from "../../context/theme.context";
 
-import { themes } from '../../context/theme.context';
-import UIStates from '../../context/UIStates.context';
-import { useDispatch } from 'react-redux';
-import { setLBarOpen } from "../../store/reducers/UIStates";
+import { useDispatch, useSelector } from 'react-redux';
+import { setLSidebarOpen } from "../../store/reducers/SidebarSlice";
+import { setTheme, themes } from "../../store/reducers/ThemeSlice";
 
 export const Header = () => {
-    const { theme, setTheme } = useContext(themeContext);
-    const { sidebars } = useContext(UIStates);
-    // const dispatch = useDispatch()
-
-    const changeThemeHandler = () => {
-        const currentTheme = localStorage.getItem("theme");
-        setTheme(
-            currentTheme === "light" 
-            ? themes.dark : themes.light
-            );
-    }
-
-    const toggleMenuHandler = () => {
-        sidebars.setIsLeftSidebarOpened(prev => !prev);
-        // dispatch(setLBarOpen);
-    }
+    const dispatch = useDispatch();
+    const currentTheme = useSelector(state => state.themeState.theme);
 
     return (
         <header className={styles.header__app}>
-                <div className={styles.hamburger_menu__btn}>
-                    <MenuIcon
-                        onClick={() => toggleMenuHandler()}
-                        sx={{
-                            fontSize: 30
-                    }}/>
-                </div>
+            <div className={styles.hamburger_menu__btn}>
+                <MenuIcon
+                    onClick={() => dispatch(setLSidebarOpen())}
+                    sx={{
+                        fontSize: 30
+                }}/>
+            </div>
 
-                <div className={styles.settings__buttons}>
-                    <ImgButton
-                        onClick={() => changeThemeHandler()}
-                        src={
-                            theme === "light"
-                            ? themeIconLight : themeIconDark
-                        }
-                        alt="theme button"
-                    />
+            <div className={styles.settings__buttons}>
+                <ImgButton
+                    onClick={() => dispatch(setTheme())}
+                    src={
+                        currentTheme === themes.light
+                        ? themeIconLight : themeIconDark
+                    }
+                    alt="theme button"
+                />
 
-                    <StyledBadge badgeContent={2}>
-                        <ImgButton
-                            src={
-                                theme === "light"
-                                ? notificationIconLight : notificationIconDark
-                        }
-                            alt="notification button"
-                        />
-                    </StyledBadge>
-
+                <StyledBadge badgeContent={2}>
                     <ImgButton
                         src={
-                            theme === "light"
-                            ? settingsIconLight : settingsIconDark
-                        }
-                        alt="settings icon"
+                            currentTheme === themes.light
+                            ? notificationIconLight : notificationIconDark
+                    }
+                        alt="notification button"
                     />
-                </div>
-            </header>
+                </StyledBadge>
+
+                <ImgButton
+                    src={
+                        currentTheme === themes.light
+                        ? settingsIconLight : settingsIconDark
+                    }
+                    alt="settings icon"
+                />
+            </div>
+        </header>
     );
 }

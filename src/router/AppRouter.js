@@ -1,15 +1,16 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import AuthPage from '../components/pages/AuthPage';
 import ErrorPage from '../components/pages/ErrorPage';
 import HomePage from '../components/pages/HomePage';
 
 import {Navigate, useRoutes} from "react-router-dom";
-import UIStates from "../context/UIStates.context";
 import ConditionalRoute from "./ConditionalRoute";
 import MobileHomePage from "../components/pages/mobile/MobileHomePage";
+import {useSelector} from "react-redux";
 
 const AppRouter = ( {isAuth = false} ) => {
-    const { isMobile } = useContext(UIStates);
+    // const { isMobile } = useContext(UIStates);
+    const isMobile = useSelector(state => state.mobileStates.isMobile);
     const UnauthorizedRoutes = [
         { path: "/", element: <Navigate to="/login"/> },
         { path: "/login", element: <AuthPage/> },

@@ -3,12 +3,9 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './App.js';
-
 import store from './store/store.js';
 
 import { Provider } from 'react-redux';
-import ThemeProvider from './providers/Theme.provider.jsx';
-import UIStatesProvider from './providers/UIStates.provider.jsx';
 import AuthProvider from './providers/AuthContext.provider.jsx';
 import './index.css';
 
@@ -20,11 +17,7 @@ root.render(
     <BrowserRouter>
       <Provider store={store}>
         <AuthProvider>
-          <ThemeProvider>
-            <UIStatesProvider>
-              <App />
-            </UIStatesProvider>
-          </ThemeProvider>
+            <App />
         </AuthProvider>
       </Provider>
     </BrowserRouter>

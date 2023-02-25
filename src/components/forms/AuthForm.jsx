@@ -18,7 +18,9 @@ const AuthForm = ({ register = false, data, setData}) => {
         setPosition('top_center');
     }, [setPosition]);
 
-    const onChangeHandler = event => setData({...data, [event.target.name]: event.target.value})
+    const onChangeHandler = event => {
+        setData({...data, [event.target.name]: event.target.value})
+    }
 
 
     const onSubmitHandler = event => {
@@ -45,7 +47,9 @@ const AuthForm = ({ register = false, data, setData}) => {
                 </div>
 
                 <div>
-                    <label htmlFor="password_field">Пароль</label>
+                    <label htmlFor="password_field">
+                        Пароль
+                    </label>
                     <InputField
                         type='password'
                         onChange={e => onChangeHandler(e)}
@@ -85,7 +89,8 @@ const AuthForm = ({ register = false, data, setData}) => {
                 customClass={styles.login_button}
                 variant='long'
                 onClick={e => onSubmitHandler(e)}>
-                {register ? 'Зарегистрироваться' : 'Войти'}<i className="fa-solid fa-arrow-right-to-bracket"></i>
+                {register ? 'Зарегистрироваться' : 'Войти'}
+                <i className="fa-solid fa-arrow-right-to-bracket"></i>
             </Button>
 
             {

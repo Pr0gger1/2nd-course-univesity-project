@@ -1,52 +1,58 @@
-import React, {useContext, useMemo} from 'react';
-import CustomGroup from '../cards/CustomGroup';
+import React, {useMemo, useState} from 'react';
 
 import defaultIcon from '../../../assets/img/icons/default/custom_group_task_icon.svg';
 
 import styles from './styles/CustomGroupContainer.module.css';
-import UIStates from "../../../context/UIStates.context";
-import {generateUniqueId} from "../../../utils/generateUniqueId";
+import { generateUniqueId } from '../../../utils/generateUniqueId';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedGroup } from '../../../store/reducers/TaskGroupSlice';
+import TaskGroup from "../cards/TaskGroup";
 
 
 const CustomGroupContainer = () => {
-    const customFakeGroups = useMemo(() => {
-        return [
-            {
-                title: "Education",
-                icon: defaultIcon,
-                counter: 0,
-                id: generateUniqueId('task', 4)
-            },
-            {
-                title: "My project",
-                icon: defaultIcon,
-                counter: 0,
-                id: generateUniqueId('task', 4)
-            }
-        ];
+    const selectedTaskGroup = useSelector(
+        state => state.taskGroupStates.selectedTaskGroup
+    );
+    const dispatch = useDispatch();
+
+    const [customGroups, setCustomGroups] = useState([
+        
+    ]);
+    // Здесь будет посылаться запрос на сервер и вытягиваться информация
+    // о кастомных группах. Пока что заносится фейк инфо
+    useMemo(() => {
+        setCustomGroups([{
+            title: "Education",
+            icon: defaultIcon,
+            counter: 0,
+            id: generateUniqueId('task', 4)
+        },
+        {
+            title: "My project",
+            icon: defaultIcon,
+            counter: 0,
+            id: generateUniqueId('task', 4)
+        }])
     }, []);
 
-    const {tasks} = useContext(UIStates);
 
-    const clickHandler = (index) => {
-        tasks.setActiveTaskGroup(
-            index === tasks.activeTaskGroup ? null : index
-            );
+    const clickHandler = (groupId) => {
+        dispatch(setSelectedGroup({ groupId }));
+        localStorage.setItem('selectedTaskGroup', groupId);
     }
-
 
     return (
          <div className={styles.custom_group__container}>
              {
-                customFakeGroups.map((group, index) =>
-                    <CustomGroup
+                customGroups.map(group =>
+                    <TaskGroup
                         key={group.id}
                         icon={group.icon}
                         title={group.title}
                         counter={group.counter}
-                        onClick={() => clickHandler(index)}
-                        activeClass={
-                            index === tasks.activeTaskGroup ? 'active' : null
+                        onClick={() => clickHandler(group.id)}
+                        isActive={
+                            group.id === selectedTaskGroup ? 'active' : null
                         }
                     />
                  )

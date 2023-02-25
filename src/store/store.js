@@ -1,7 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import UIReducer from './reducers/UIStates';
+import UIReducer from './reducers/SidebarSlice';
+import themeReducer from './reducers/ThemeSlice';
+import taskGroupReducer from './reducers/TaskGroupSlice';
+import mobileReducer from './reducers/MobileSlice';
+
 export default configureStore({
     reducer: {
-        uiStates: UIReducer
+        mobileStates: mobileReducer,
+        sidebarStates: UIReducer,
+        taskGroupStates: taskGroupReducer,
+        themeState: themeReducer
     }
 })

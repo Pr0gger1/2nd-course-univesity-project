@@ -1,13 +1,17 @@
-import React, { useContext } from "react";
+import React from "react";
 import Avatar from "@mui/material/Avatar";
 import styles from "./styles/UserDataCard.module.css";
-import UIStates from "../../../context/UIStates.context";
+import {useSelector} from "react-redux";
 
 const UserDataCard = ({ name, email, photo }) => {
-  const { sidebars } = useContext(UIStates);
+  const isLSidebarOpened = useSelector(
+      state => state.sidebarStates.isLeftSidebarOpen
+  );
 
   return (
-    <section className={styles.user__card + `${!sidebars.isLeftSidebarOpened ? ' ' + styles.closed : ''}`}>
+    <section className={
+        styles.user__card + `${!isLSidebarOpened ? ' ' + styles.closed : ''}`
+    }>
       <Avatar
         sx={{
           width: 40,
@@ -16,10 +20,9 @@ const UserDataCard = ({ name, email, photo }) => {
         alt="avatar"
         src={photo}
       />
-      <div className={sidebars.isLeftSidebarOpened ? '' : styles.user__wrap}>
+      <div className={isLSidebarOpened ? '' : styles.user__wrap}>
         <div className={styles.user__info}>
           <span className={styles.user__name}>{name}</span>
-
           <span className={styles.user__email}>{email}</span>
         </div>
       </div>

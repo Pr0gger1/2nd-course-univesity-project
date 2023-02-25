@@ -1,4 +1,5 @@
-import React, {useContext, useEffect} from 'react';
+import React from 'react';
+import {useDispatch, useSelector} from "react-redux";
 
 import todayTaskIcon from '../../../assets/img/icons/task_list/today_task_icon.svg';
 import planTaskIcon from '../../../assets/img/icons/task_list/plan_task_icon.svg';
@@ -8,14 +9,25 @@ import allTasksIcon from '../../../assets/img/icons/task_list/all_tasks_icon.svg
 
 import styles from './styles/BaseGroupContainer.module.css';
 
-import BaseGroup from '../cards/BaseGroup';
+import TaskGroup from '../cards/TaskGroup';
 
-import UIStates from "../../../context/UIStates.context";
-import { baseGroupNames } from '../../../providers/UIStates.provider';
+import { baseGroupNames, setSelectedGroup } from "../../../store/reducers/TaskGroupSlice";
+
+
+export const groupTitle = {
+    'task_today': '✌️Мой день',
+    'task_plan': '🗓️Запланировано',
+    'task_favorite': '✨Избранное',
+    'task_completed': '✅Завершенное',
+    'task_all': '🎯Все задачи'
+}
 
 const BaseGroupContainer = () => {
-    const { tasks } = useContext(UIStates);
-    const selectedGroup = localStorage.getItem("selectedGroup");
+    const selectedTaskGroup = useSelector(
+        state => state.taskGroupStates.selectedTaskGroup
+    );
+    const dispatch = useDispatch();
+
 
     const groups = [
         {
@@ -50,32 +62,23 @@ const BaseGroupContainer = () => {
         }
     ];
 
-    useEffect(() => {
-        if (selectedGroup)
-        tasks.setActiveTaskGroup(selectedGroup)
-    }, [selectedGroup]);
-
-
     const clickHandler = (groupId) => {
-        tasks.setActiveTaskGroup(
-            groupId === tasks.activeTaskGroup ? null : groupId
-        );
-        localStorage('selectedGroup', groupId)
-        tasks.setSelectedGroup(groupId);
+        dispatch(setSelectedGroup({ groupId }));
+        localStorage.setItem('selectedTaskGroup', groupId);
     }
 
     return (
         <div className={styles.base_group__container}>
             {
-                groups.map((group, index ) =>
-                    <BaseGroup
-                        key={index}
+                groups.map(group =>
+                    <TaskGroup
+                        key={group.id}
                         icon={group.icon}
                         title={group.title}
                         counter={group.counter}
                         onClick={() => clickHandler(group.id)}
-                        activeClass={
-                            group.id === tasks.activeTaskGroup ? 'active' : null
+                        isActive={
+                            group.id === selectedTaskGroup ? 'active' : null
                         }
                     />
                 )

@@ -2,7 +2,7 @@
     overflow-y: auto;
     width: 100vw;
 }
-.content h1 {
+.task_list__title {
     font-size: 2rem;
 }
 
