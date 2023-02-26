@@ -16,7 +16,13 @@ function App() {
 
 
     useEffect(() => {
-            localStorage.setItem('theme', currentTheme)
+        localStorage.setItem('theme', currentTheme)
+        const meta = document.querySelector('meta[name="theme-color"]')
+        let themeColor = "#dfdfdf";
+
+        if (currentTheme === 'dark') themeColor = '#232323';
+        if (meta) meta.setAttribute('content', themeColor);
+        console.log(meta)
     }, [currentTheme]);
 
     useMemo(() => {

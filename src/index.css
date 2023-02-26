@@ -14,8 +14,8 @@
   --searchProps: #ebebeb url("./assets/img/icons/search_dark.svg");
 
   --borderBottomSidebar: 1px solid #868686;
-
 }
+
 [data-theme="dark"] {
   --bgColorHeader: #232323;
   --bgColorContent: #2a2a2a;
@@ -49,6 +49,7 @@ main {
 a {
   color: #6977f3;
 }
+
 input::placeholder {
   color: var(--fontColor);
 }

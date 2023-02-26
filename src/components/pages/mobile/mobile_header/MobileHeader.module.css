@@ -5,30 +5,23 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    outline: none;
-    border: 0;
+
 }
 
 .hamburger_menu__btn {
     display: flex;
     align-items: center;
 }
-
 .hamburger_menu__btn:hover {
     cursor: pointer;
 }
 
 .settings__buttons {
-    outline: none;
     display: flex;
     align-items: center;
     gap: 1rem;
 }
-
 .settings__buttons button img {
     width: 1.5rem;
     height: 1.5rem;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
 }

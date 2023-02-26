@@ -1,10 +1,11 @@
 import React from 'react';
+import MobileHeader from "./mobile_header/MobileHeader";
 
 const MobileHomePage = () => {
     return (
-        <div>
-            Hello world
-        </div>
+        <main>
+            <MobileHeader/>
+        </main>
     );
 };
 

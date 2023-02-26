@@ -8,9 +8,13 @@ import store from './store/store.js';
 import { Provider } from 'react-redux';
 import AuthProvider from './providers/AuthContext.provider.jsx';
 import './index.css';
+import {themes} from "./store/reducers/ThemeSlice";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 document.title = 'Productify ToDo App';
+
+const currentTheme = localStorage.getItem('theme');
+if (!currentTheme) localStorage.setItem('theme', themes.light);
 
 root.render(
   <React.StrictMode>
