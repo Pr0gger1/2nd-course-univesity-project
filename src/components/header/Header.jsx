@@ -28,7 +28,8 @@ export const Header = () => {
                     onClick={() => dispatch(setLSidebarOpen())}
                     sx={{
                         fontSize: 30
-                }}/>
+                }}
+                />
             </div>
 
             <div className={styles.settings__buttons}>

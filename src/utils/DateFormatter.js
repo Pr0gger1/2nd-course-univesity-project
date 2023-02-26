@@ -16,7 +16,7 @@ export class DateFormatter {
     ]
 
     getDayOfWeek() {
-        return this.week[new Date().getDay() - 1];
+        return this.week.at(new Date().getDay() - 1);
     }
     getMonth(initial_form = false) {
         let month = this.months[new Date().getMonth()];

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import { useToast } from './hooks/useToast';
 
 import AppRouter from './router/AppRouter';
@@ -14,8 +14,13 @@ function App() {
     const [toastPosition, setToastPosition] = useState('top_right');
     const currentTheme = useSelector(state => state.themeState.theme);
 
+
+    useEffect(() => {
+            localStorage.setItem('theme', currentTheme)
+    }, [currentTheme]);
+
     useMemo(() => {
-        document.documentElement.setAttribute("data-theme", currentTheme);
+        document.documentElement.setAttribute("data-theme", currentTheme)
     }, [currentTheme]);
 
     return (

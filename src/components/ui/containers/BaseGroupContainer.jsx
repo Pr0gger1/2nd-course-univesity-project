@@ -15,11 +15,26 @@ import { baseGroupNames, setSelectedGroup } from "../../../store/reducers/TaskGr
 
 
 export const groupTitle = {
-    'task_today': '✌️Мой день',
-    'task_plan': '🗓️Запланировано',
-    'task_favorite': '✨Избранное',
-    'task_completed': '✅Завершенное',
-    'task_all': '🎯Все задачи'
+    'task_today': {
+        pageTitle: '✌️Мой день',
+        webTitle: `Productify - Мой день`
+    },
+    'task_plan': {
+        pageTitle: '🗓️Запланировано',
+        webTitle: 'Productify - Запланировано'
+    },
+    'task_favorite': {
+        pageTitle: '✨Избранное',
+        webTitle: 'Productify - Избранное'
+    },
+    'task_completed': {
+        pageTitle: '✅Завершенное',
+        webTitle: 'Productify - Завершенное'
+    },
+    'task_all': {
+        pageTitle: '🎯Все задачи',
+        webTitle: 'Productify - Все задачи'
+    }
 }
 
 const BaseGroupContainer = () => {

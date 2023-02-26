@@ -8,7 +8,7 @@ export const themes = {
 const themeSlice = createSlice({
     name: 'theme',
     initialState: {
-        theme: localStorage.getItem('theme')
+        theme: localStorage.getItem('theme') || themes.light
     },
     reducers: {
         setTheme(state) {
@@ -16,13 +16,12 @@ const themeSlice = createSlice({
 
             if (currentTheme === themes.light)
                 state.theme = themes.dark;
-
             else
                 state.theme = themes.light;
-            
+
             localStorage.setItem('theme', state.theme);
         }
     }
-})
+});
 export const { setTheme } = themeSlice.actions;
 export default themeSlice.reducer;

@@ -104,6 +104,7 @@
         width: 80%;
         padding: 1rem 1rem;
         backdrop-filter: blur(2rem);
+        -webkit-backdrop-filter: blur(2rem);
     }
 
     .auth__header {
@@ -131,6 +132,8 @@
         border-radius: 10px;
         padding: 10px 20px;
         backdrop-filter: blur(1rem);
+        -webkit-backdrop-filter: blur(1rem);
+
         border: 1px solid rgba(0, 0, 0, 0.3);
         background-color: transparent;
         width: 50%;
