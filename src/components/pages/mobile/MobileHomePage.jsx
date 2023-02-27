@@ -1,10 +1,14 @@
 import React from 'react';
-import MobileHeader from "./mobile_header/MobileHeader";
 
+import MobileHeader from "../../header/MobileHeader";
+import MobileContent from "../../content/MobileContent";
+
+import homePageStyles from '../styles/HomePage.module.css';
 const MobileHomePage = () => {
     return (
-        <main>
+        <main className={homePageStyles}>
             <MobileHeader/>
+            <MobileContent/>
         </main>
     );
 };

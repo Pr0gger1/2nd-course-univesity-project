@@ -1,8 +1,78 @@
 .error__page {
     min-width: 100vw;
     min-height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
-.error__message {
-    font-size: 5rem;
+
+.error__block {
+    margin-top: 10%;
     font-weight: 700;
+    display: flex;
+    flex-direction: row;
+}
+
+.error__code {
+    font-weight: 700;
+    color: transparent;
+    -webkit-text-stroke: 0.2rem var(--fontColor);
+}
+
+.error__code,
+.error__message {
+    font-size: 7rem;
+}
+
+.error__comment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+
+    margin-top: 5%;
+}
+
+.error__comment p {
+    font-size: 2rem;
+    font-weight: 300;
+}
+
+@media screen and (max-width: 910px) {
+    .error__block {
+        flex-direction: column;
+    }
+}
+@media screen and (max-width: 660px) {
+    .error__comment p {
+        width: 60%;
+    }
+}
+@media screen and (max-width: 600px) {
+    .error__page {
+        padding: 0.5rem;
+    }
+
+    .error__message, .error__code {
+        font-size: 5rem;
+        letter-spacing: 0.5rem;
+    }
+
+    .error__code {
+        display: block;
+    }
+
+    .error__page p {
+        text-align: center;
+        width: 80%;
+    }
+}
+@media screen and (max-width: 515px) {
+    .error__block {
+        padding: 0 10%;
+    }
+    .error__comment p {
+        text-align: center;
+        font-size: 1rem;
+    }
 }

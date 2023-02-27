@@ -22,7 +22,6 @@ function App() {
 
         if (currentTheme === 'dark') themeColor = '#232323';
         if (meta) meta.setAttribute('content', themeColor);
-        console.log(meta)
     }, [currentTheme]);
 
     useMemo(() => {

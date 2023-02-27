@@ -8,8 +8,11 @@ import ConditionalRoute from "./ConditionalRoute";
 import MobileHomePage from "../components/pages/mobile/MobileHomePage";
 import {useSelector} from "react-redux";
 
+import MobileContent from "../components/content/MobileContent";
+
 const AppRouter = ( {isAuth = false} ) => {
     const isMobile = useSelector(state => state.mobileStates.isMobile);
+
     const UnauthorizedRoutes = [
         { path: "/", element: <Navigate to="/login"/> },
         { path: "/login", element: <AuthPage/> },
@@ -23,6 +26,14 @@ const AppRouter = ( {isAuth = false} ) => {
             element: <ConditionalRoute
                 conditionVar={isMobile}
                 onTrueRoute={<MobileHomePage/>}
+                onFalseRoute={<HomePage/>}
+            />
+        },
+        {
+          path: '/tasks/:task_id',
+            element: <ConditionalRoute
+                conditionVar={isMobile}
+                onTrueRoute={<MobileContent/>}
                 onFalseRoute={<HomePage/>}
             />
         },

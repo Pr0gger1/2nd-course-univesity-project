@@ -12,6 +12,7 @@ import styles from './styles/BaseGroupContainer.module.css';
 import TaskGroup from '../cards/TaskGroup';
 
 import { baseGroupNames, setSelectedGroup } from "../../../store/reducers/TaskGroupSlice";
+import {useNavigate} from "react-router-dom";
 
 
 export const groupTitle = {
@@ -42,6 +43,7 @@ const BaseGroupContainer = () => {
         state => state.taskGroupStates.selectedTaskGroup
     );
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
 
     const groups = [
@@ -49,37 +51,43 @@ const BaseGroupContainer = () => {
             title: "Сегодня",
             icon: todayTaskIcon,
             counter: 0,
-            id: baseGroupNames.today
+            id: baseGroupNames.today,
+            route: 'today'
         },
         {
             title: "Запланировано",
             icon: planTaskIcon,
             counter: 0,
-            id: baseGroupNames.plan
+            id: baseGroupNames.plan,
+            route: 'plan'
         },
         {
             title: "Избранные",
             icon: favouriteTaskIcon,
             counter: 0,
-            id: baseGroupNames.favorite
+            id: baseGroupNames.favorite,
+            route: 'favorite'
         },
         {
             title: "Завершенные",
             icon: completedTaskIcon,
             counter: 0,
-            id: baseGroupNames.completed
+            id: baseGroupNames.completed,
+            route: 'completed'
         },
         {
             title: "Все задачи",
             icon: allTasksIcon,
             counter: 0,
-            id: baseGroupNames.all
+            id: baseGroupNames.all,
+            route: 'all'
         }
     ];
 
-    const clickHandler = (groupId) => {
+    const clickHandler = (groupId, route) => {
         dispatch(setSelectedGroup({ groupId }));
         localStorage.setItem('selectedTaskGroup', groupId);
+        navigate(`/tasks/${route}`);
     }
 
     return (
@@ -91,7 +99,8 @@ const BaseGroupContainer = () => {
                         icon={group.icon}
                         title={group.title}
                         counter={group.counter}
-                        onClick={() => clickHandler(group.id)}
+                        route={group.route}
+                        onClick={() => clickHandler(group.id, group.route)}
                         isActive={
                             group.id === selectedTaskGroup ? 'active' : null
                         }

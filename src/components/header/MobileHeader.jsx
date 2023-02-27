@@ -1,21 +1,21 @@
 import React from "react";
-import styles from "./MobileHeader.module.css";
+import styles from "./styles/MobileHeader.module.css";
 
-import ImgButton from "../../../ui/button/ImgButton";
+import ImgButton from "../ui/button/ImgButton";
 
 import MenuIcon from "@mui/icons-material/Menu";
-import { StyledBadge } from "../../../ui/customComponents/CustomBadge";
+import { StyledBadge } from "../ui/customComponents/CustomBadge";
 
-import themeIconLight from '../../../../assets/img/icons/theme_icon_light.svg';
-import themeIconDark from "../../../../assets/img/icons/theme_icon_dark.svg";
-import notificationIconLight from "../../../../assets/img/icons/bell_light.svg";
-import notificationIconDark from "../../../../assets/img/icons/bell_dark.svg";
-import settingsIconLight from "../../../../assets/img/icons/settings_light.svg";
-import settingsIconDark from "../../../../assets/img/icons/settings_dark.svg";
+import themeIconLight from '../../assets/img/icons/theme_icon_light.svg';
+import themeIconDark from "../../assets/img/icons/theme_icon_dark.svg";
+import notificationIconLight from "../../assets/img/icons/bell_light.svg";
+import notificationIconDark from "../../assets/img/icons/bell_dark.svg";
+import settingsIconLight from "../../assets/img/icons/settings_light.svg";
+import settingsIconDark from "../../assets/img/icons/settings_dark.svg";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setLSidebarOpen } from "../../../../store/reducers/SidebarSlice";
-import { setTheme, themes } from "../../../../store/reducers/ThemeSlice";
+import { setLSidebarOpen } from "../../store/reducers/SidebarSlice";
+import { setTheme, themes } from "../../store/reducers/ThemeSlice";
 
 const MobileHeader = () => {
     const dispatch = useDispatch();

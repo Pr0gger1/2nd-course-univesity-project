@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import styles from './Content.module.css';
+import styles from './styles/Content.module.css';
 import {useSelector} from 'react-redux';
 
 import { DateFormatter } from '../../utils/DateFormatter';

@@ -20,5 +20,5 @@ const taskGroupSlice = createSlice({
         }
     }
 })
-export const { setActiveTaskGroup, setSelectedGroup } = taskGroupSlice.actions;
+export const { setSelectedGroup } = taskGroupSlice.actions;
 export default taskGroupSlice.reducer;

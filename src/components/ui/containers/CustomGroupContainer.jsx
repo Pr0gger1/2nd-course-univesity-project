@@ -7,6 +7,7 @@ import { generateUniqueId } from '../../../utils/generateUniqueId';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedGroup } from '../../../store/reducers/TaskGroupSlice';
 import TaskGroup from "../cards/TaskGroup";
+import {useNavigate} from "react-router-dom";
 
 
 const CustomGroupContainer = () => {
@@ -14,10 +15,9 @@ const CustomGroupContainer = () => {
         state => state.taskGroupStates.selectedTaskGroup
     );
     const dispatch = useDispatch();
+    const [customGroups, setCustomGroups] = useState([]);
+    const navigate = useNavigate();
 
-    const [customGroups, setCustomGroups] = useState([
-        
-    ]);
     // Здесь будет посылаться запрос на сервер и вытягиваться информация
     // о кастомных группах. Пока что заносится фейк инфо
     useMemo(() => {
@@ -39,6 +39,7 @@ const CustomGroupContainer = () => {
     const clickHandler = (groupId) => {
         dispatch(setSelectedGroup({ groupId }));
         localStorage.setItem('selectedTaskGroup', groupId);
+        navigate(`/tasks/${groupId}`);
     }
 
     return (
