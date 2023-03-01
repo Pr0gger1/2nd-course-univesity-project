@@ -1,3 +1,24 @@
 .create_list__btn {
-    overflow: visible;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    /* padding-top: 11rem; */
+
 }
+
+.btn {
+    border: 1px solid #676767;
+    border-radius: 5px;
+    padding: 10px 10px;
+    width: 100%;
+    background: none;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    color: var(--fontColor);
+}
+
+/* .input_field {
+    color: var(--fontColor);
+} */

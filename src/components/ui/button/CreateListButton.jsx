@@ -4,6 +4,7 @@ import styles from './styles/createListButton.module.css';
 import Button from './Button';
 import TextField from '@mui/material/TextField'
 import CloseIcon from '@mui/icons-material/Close';
+import { styled } from '@mui/material/styles';
 
 const CreateListButton = ({ onCreateList }) => {
     const [showInput, setShowInput] = useState(false);
@@ -16,17 +17,24 @@ const CreateListButton = ({ onCreateList }) => {
         setShowInput(false);
     }
 
+    const CssTextField = styled(TextField)({
+        '& label': {
+            color: 'var(--fontColor)'
+        }
+
+    })
+
 
   return (
     <div className={styles.create_list__btn}>
         {!showInput &&
-            <Button onClick={() => setShowInput(true)}>
+            <Button className={styles.btn} onClick={() => setShowInput(true)}>
                 Создать список
             </Button>
         }
         {showInput &&
         <>
-            <TextField
+            <CssTextField
                 id="standard-basic"
                 label="Введите название списка"
                 variant="standard"

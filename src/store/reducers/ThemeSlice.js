@@ -6,7 +6,7 @@ export const themes = {
 }
 
 const themeSlice = createSlice({
-    name: 'theme',
+    name: 'themeState',
     initialState: {
         theme: localStorage.getItem('theme') || themes.light
     },
@@ -23,5 +23,6 @@ const themeSlice = createSlice({
         }
     }
 });
+
 export const { setTheme } = themeSlice.actions;
 export default themeSlice.reducer;

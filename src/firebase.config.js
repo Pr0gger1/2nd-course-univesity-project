@@ -1,14 +1,15 @@
-import { initializeApp } from "firebase/app";
-require('dotenv').config();
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+// require('dotenv').config();
 
-const apiKey = process.env.API_KEY_FIREBASE;
-const authDomain = process.env.AUTH_DOMAIN_FIREBASE;
-const databaseURL = process.env.DATABASE_URL_FIREBASE;
-const projectId = process.env.PROJECT_ID_FIREBASE;
-const storageBucket = process.env.STORAGE_BUCKET_FIREBASE;
-const messagingSenderId = process.env.MESSAGING_SENDER_ID_FIREBASE;
-const appId = process.env.APP_ID_FIREBASE;
-const measurementId = process.env.MEASUREMENT_ID_FIREBASE;
+const apiKey = process.env.REACT_APP_API_KEY_FIREBASE;
+const authDomain = process.env.REACT_APP_AUTH_DOMAIN_FIREBASE;
+const databaseURL = process.env.REACT_APP_DATABASE_URL_FIREBASE;
+const projectId = process.env.REACT_APP_PROJECT_ID_FIREBASE;
+const storageBucket = process.env.REACT_APP_STORAGE_BUCKET_FIREBASE;
+const messagingSenderId = process.env.REACT_APP_MESSAGING_SENDER_ID_FIREBASE;
+const appId = process.env.REACT_APP_APP_ID_FIREBASE;
+const measurementId = process.env.REACT_APP_MEASUREMENT_ID_FIREBASE;
 
 const firebaseConfig = {
   apiKey, authDomain,
@@ -18,4 +19,5 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);

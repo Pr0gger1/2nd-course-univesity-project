@@ -3,7 +3,7 @@ import styles from './styles/TaskGroups.module.css';
 import { useSelector } from 'react-redux';
 
 
-const TaskGroup = ({title, icon, counter, isActive, onClick}) => {
+const TaskGroup = ({ title, icon, counter, isActive, onClick }) => {
     const sidebarState = useSelector(
         state => state.sidebarStates.isLeftSidebarOpen
     );
@@ -20,15 +20,17 @@ const TaskGroup = ({title, icon, counter, isActive, onClick}) => {
             onClick={onClick}
         >
             <div className={styles.icon_title}>
-                <img src={icon} alt='' className={styles.group__icon}/>
-                <p>{title}</p>
+                <img src={icon} alt={`${title}_icon`} className={styles.group__icon}/>
+                <p>
+                    {title}
+                </p>
             {
                 counter !== 0 &&
-                <div className={styles.counter}>{counter}</div>
+                <div className={styles.counter}>
+                    {counter}
+                </div>
             }
             </div>
-
-
         </div>
     );
 };

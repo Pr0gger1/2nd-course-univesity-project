@@ -21,11 +21,12 @@
     color: transparent;
 }
 
-.groups__container {
+.container {
     display: flex;
     flex-direction: column;
-}
-
-.groups__container .groups {
-
+    justify-content: space-between;
+    height: 42%;
+    /* flex-flow: row wrap;
+    align-content: space-between; */
+    
 }

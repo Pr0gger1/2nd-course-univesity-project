@@ -6,9 +6,9 @@ import App from './App.js';
 import store from './store/store.js';
 
 import { Provider } from 'react-redux';
-import AuthProvider from './providers/AuthContext.provider.jsx';
+
 import './index.css';
-import {themes} from "./store/reducers/ThemeSlice";
+import { themes } from "./store/reducers/ThemeSlice";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 document.title = 'Productify ToDo App';
@@ -20,9 +20,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <AuthProvider>
-            <App />
-        </AuthProvider>
+        <App />
       </Provider>
     </BrowserRouter>
   </React.StrictMode>

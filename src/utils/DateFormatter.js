@@ -21,9 +21,10 @@ export class DateFormatter {
     getMonth(initial_form = false) {
         let month = this.months[new Date().getMonth()];
         if (!initial_form) {
-            if (month in ['Март', 'Август'])
-                month = month.replace(month.at(-1), 'а');
-            month = month.replace(month.at(-1), 'я');
+            if (month === 'Март' || month === 'Август')
+                month += 'a';
+            else
+                month = month.replace(month.at(-1), 'я');
         }
         return month;
     }

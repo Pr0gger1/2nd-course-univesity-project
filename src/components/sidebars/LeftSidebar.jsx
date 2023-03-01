@@ -40,8 +40,10 @@ export const LeftSidebar = () => {
             />
 
             <BaseGroupContainer/>
-            <CustomGroupContainer/>
-            <CreateListButton/>
+            <div className={styles.container}>
+                <CustomGroupContainer/>
+                <CreateListButton/>
+            </div>
         </aside>
     );
 }

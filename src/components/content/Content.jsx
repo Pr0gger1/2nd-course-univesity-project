@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
-import styles from './styles/Content.module.css';
 import {useSelector} from 'react-redux';
 
 import { DateFormatter } from '../../utils/DateFormatter';
-import { groupTitle } from '../ui/containers/BaseGroupContainer';
+
+import styles from './styles/Content.module.css';
 
 
 const Content = () => {
@@ -11,9 +11,10 @@ const Content = () => {
         state => state.taskGroupStates.selectedTaskGroup
     );
 
+
     useEffect(() => {
         try {
-            document.title = groupTitle[selectedGroup].webTitle;
+            document.title = selectedGroup.webTitle
         }
         catch (e) {
             document.title = 'Productify';
@@ -25,7 +26,7 @@ const Content = () => {
             <div className={styles.task_list__container}>
                 <section className={styles.content__top_panel}>
                     <div className={styles.task_list__title}>
-                        { groupTitle[selectedGroup].pageTitle }
+                        { selectedGroup.pageTitle }
 
                         <span className={styles.day_of_week__title}>
                           {' | ' + new DateFormatter().getDayOfWeek()}

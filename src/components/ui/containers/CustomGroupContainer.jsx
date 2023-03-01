@@ -1,21 +1,24 @@
 import React, {useMemo, useState} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { setSelectedGroup } from '../../../store/reducers/TaskGroupSlice';
+import { generateUniqueId } from '../../../utils/generateUniqueId';
 
 import defaultIcon from '../../../assets/img/icons/default/custom_group_task_icon.svg';
-
 import styles from './styles/CustomGroupContainer.module.css';
-import { generateUniqueId } from '../../../utils/generateUniqueId';
-import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedGroup } from '../../../store/reducers/TaskGroupSlice';
-import TaskGroup from "../cards/TaskGroup";
-import {useNavigate} from "react-router-dom";
+
+import TaskGroup from '../cards/TaskGroup';
 
 
 const CustomGroupContainer = () => {
     const selectedTaskGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
+
     const dispatch = useDispatch();
     const [customGroups, setCustomGroups] = useState([]);
+
     const navigate = useNavigate();
 
     // Здесь будет посылаться запрос на сервер и вытягиваться информация
