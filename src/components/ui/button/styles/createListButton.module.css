@@ -4,11 +4,12 @@
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    /* padding-top: 11rem; */
-
 }
 
 .btn {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     border: 1px solid #676767;
     border-radius: 5px;
     padding: 10px 10px;
@@ -19,6 +20,27 @@
     color: var(--fontColor);
 }
 
-/* .input_field {
-    color: var(--fontColor);
-} */
+.close_icon {
+    cursor: pointer;
+}
+
+.input-enter {
+    opacity: 0;
+    transform: scale(0.9);
+}
+.input-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 300ms, transform 300ms;
+}
+.input-exit {
+    opacity: 1;
+}
+.input-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 300ms, transform 300ms;
+}
+
+
+

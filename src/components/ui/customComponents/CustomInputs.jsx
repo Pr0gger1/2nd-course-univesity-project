@@ -7,12 +7,12 @@ export const CreateGroupInput = styled(TextField)({
     },
     '& input': {
         color: 'var(--fontColor)'
-    }, 
-    '& .MuiInputBase-root:before': {
-        borderBottom: '1px solid var(--borderColor)'
     },
-    '& .MuiInputBase-root:hover': {
-        borderBottom: '1px solid white'
+    '& .MuiInput-underline:before': {
+        borderBottomColor: 'var(--borderColor)'
+    },
+    '& .MuiInput-underline:hover:before': {
+        borderBottomColor: 'var(--borderColor) !important;'
     }
-    
+
 })
