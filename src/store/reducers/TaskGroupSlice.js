@@ -6,6 +6,9 @@ import favouriteTaskIcon from '../../assets/img/icons/task_list/favourite_task_i
 import completedTaskIcon from '../../assets/img/icons/task_list/completed_task_icon.svg';
 import allTasksIcon from '../../assets/img/icons/task_list/all_tasks_icon.svg';
 
+import customGroupDefafultIcon from '../../assets/img/icons/default/custom_group_task_icon.svg';
+import { generateUniqueId } from '../../utils/generateUniqueId';
+
 export const baseGroupIds = {
     today: 'today',
     plan: 'plan',
@@ -81,7 +84,16 @@ const taskGroupSlice = createSlice({
             localStorage.setItem('selectedTaskGroup', JSON.stringify(action.payload.group));
         },
         addCustomTaskGroup(state, action) {
-            state.allTaskGroups.custom.push(action.payload.group);
+            const name = action.payload;
+            state.allTaskGroups.custom.push({
+                title: name,
+                icon: customGroupDefafultIcon,
+                counter: 0,
+                id: generateUniqueId('task', 4),
+                pageTitle: name,
+                webTitle: `Productify - ${name}`
+
+            });
         },
         deleteCustomTaskGroup(state, action) {
             if (state.allTaskGroups.custom.length)

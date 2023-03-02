@@ -1,29 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCustomTaskGroup } from '../../../store/reducers/TaskGroupSlice';
+
+import Button from './Button';
+import CloseIcon from '@mui/icons-material/Close';
+import { CreateGroupInput } from '../customComponents/CustomInputs';
 
 import styles from './styles/createListButton.module.css';
-import Button from './Button';
-import TextField from '@mui/material/TextField'
-import CloseIcon from '@mui/icons-material/Close';
-import { styled } from '@mui/material/styles';
 
-const CreateListButton = ({ onCreateList }) => {
+const CreateListButton = () => {
     const [showInput, setShowInput] = useState(false);
-    const [inputValue, setInputValue] = useState('')
+    const [inputValue, setInputValue] = useState('');
+
+    const dispatch = useDispatch();
+    const isLSidebarOpened = useSelector(
+        state => state.sidebarStates.isLeftSidebarOpen
+    )
+
+    useEffect(() => {
+        if (!isLSidebarOpened) setShowInput(false);
+    }, [isLSidebarOpened, showInput])
 
     const handleInputSubmit = (event) => {
-        event.preventDefault();
-        onCreateList(inputValue);
-        setInputValue('')
-        setShowInput(false);
-    }
-
-    const CssTextField = styled(TextField)({
-        '& label': {
-            color: 'var(--fontColor)'
+        if (event.key === 'Enter' && inputValue.length) {
+            setInputValue('');
+            setShowInput(false);
+            dispatch(addCustomTaskGroup(inputValue));
         }
-
-    })
-
+    }
 
   return (
     <div className={styles.create_list__btn}>
@@ -34,13 +38,14 @@ const CreateListButton = ({ onCreateList }) => {
         }
         {showInput &&
         <>
-            <CssTextField
+            <CreateGroupInput
                 id="standard-basic"
                 label="Введите название списка"
                 variant="standard"
+                onKeyDown={handleInputSubmit}
                 onSubmit={handleInputSubmit}
                 value={inputValue}
-                onChange={(event) => setInputValue(event.target.value)}
+                onChange={e => setInputValue(e.target.value)}
             />
             <CloseIcon onClick={() => setShowInput(false)}/>
         </>
