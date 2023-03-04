@@ -1,0 +1,56 @@
+.content__top_panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.top_panel__left {
+    display: flex;
+    flex-direction: column;
+}
+
+.task_list__title {
+    font-size: 2rem;
+}
+
+.task_list__container {
+    direction: ltr;
+    padding: 1.5rem 3rem;
+}
+
+.task_list__title {
+
+}
+
+.day_of_week__title {
+    font-weight: 200;
+    font-size: 2rem;
+}
+
+.date__title {
+    margin-left: 0.5rem;
+    font-weight: 200;
+    font-size: 1.5rem;
+}
+
+.task_list__settings {
+    color: #ffffff;
+    background-color: transparent;
+
+    height: 2rem;
+    width: 2rem;
+
+    border: none;
+    font-size: 1.5rem;
+
+    padding: 1.25rem;
+    border-radius: 0.25rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.task_list__settings:hover {
+    background-color: rgba(197, 197, 197, 0.3);
+}
+

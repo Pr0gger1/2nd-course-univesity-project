@@ -1,3 +1,46 @@
 .sidebar__right {
-    
+    /* transition: transform .5s; */
+    transition: width .5s;
+
+    padding: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+
+    max-width: 30%;
+    /* transform: translateX(0); */
+
+    width: 30%;
+    height: 100vh;
+
+    background-color: var(--bgColorSidebar);
+}
+
+.sidebar__right.closed {
+    /* transform: translateX(100%); */
+    width: 0;
+    padding: 0;
+    /* display: none; */
+    /* transition: transform .5s ease-in; */
+    transition: width .5s ease-in;
+}
+
+
+.sidebar_close__btn {
+    text-align: right;
+    cursor: pointer;
+}
+.add_task__section {
+
+}
+.add_task__input {
+    background-color: var(--bgColorContent);
+    color: var(--fontColor);
+
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+.add_task__btn {
+
 }

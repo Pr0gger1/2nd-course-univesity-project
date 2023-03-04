@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './styles/TaskGroups.module.css';
 import { useSelector } from 'react-redux';
 
+import styles from './styles/TaskGroups.module.css';
 
 const TaskGroup = ({ title, icon, counter, isActive, onClick }) => {
     const sidebarState = useSelector(
@@ -21,9 +21,7 @@ const TaskGroup = ({ title, icon, counter, isActive, onClick }) => {
         >
             <div className={styles.icon_title}>
                 <img src={icon} alt={`${title}_icon`} className={styles.group__icon}/>
-                <p>
-                    {title}
-                </p>
+                <p>{ title }</p>
             {
                 counter !== 0 &&
                 <div className={styles.counter}>

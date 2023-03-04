@@ -48,13 +48,16 @@
     width: 1.5rem;
     height: 1.5rem;
 }
+
 .group__icon img {
     width: 1.5rem;
     height: 1.5rem;
 }
+
 .group__title {
     font-size: 1rem;
 }
+
 .counter {
     display: flex;
     align-items: center;

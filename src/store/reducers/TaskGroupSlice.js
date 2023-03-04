@@ -39,7 +39,8 @@ const taskGroupSlice = createSlice({
                     counter: 0,
                     id: baseGroupIds.today,
                     pageTitle: '✌️Мой день',
-                    webTitle: `Productify - Мой день`
+                    webTitle: `Productify - Мой день`,
+                    tasks: []
                 },
                 {
                     title: "Запланировано",
@@ -47,7 +48,8 @@ const taskGroupSlice = createSlice({
                     counter: 0,
                     id: baseGroupIds.plan,
                     pageTitle: '🗓️Запланировано',
-                    webTitle: 'Productify - Запланировано'
+                    webTitle: 'Productify - Запланировано',
+                    tasks: []
                 },
                 {
                     title: "Избранные",
@@ -56,15 +58,16 @@ const taskGroupSlice = createSlice({
                     id: baseGroupIds.favorite,
                     pageTitle: '✨Избранное',
                     webTitle: 'Productify - Избранное',
+                    tasks: []
                 },
                 {
                     title: "Завершенные",
                     icon: completedTaskIcon,
                     counter: 0,
                     id: baseGroupIds.completed,
-                    pageTitle: '✅Завершенное',
-                    webTitle: 'Productify - Завершенное'
-
+                    pageTitle: '✅Завершенные',
+                    webTitle: 'Productify - Завершенное',
+                    tasks: []
                 },
                 {
                     title: "Все задачи",
@@ -72,7 +75,8 @@ const taskGroupSlice = createSlice({
                     counter: 0,
                     id: baseGroupIds.all,
                     pageTitle: '🎯Все задачи',
-                    webTitle: 'Productify - Все задачи'
+                    webTitle: 'Productify - Все задачи',
+                    tasks: []
                 }
             ],
             custom: []
@@ -83,6 +87,7 @@ const taskGroupSlice = createSlice({
             state.selectedTaskGroup = action.payload.group;
             localStorage.setItem('selectedTaskGroup', JSON.stringify(action.payload.group));
         },
+
         addCustomTaskGroup(state, action) {
             const name = action.payload;
             state.allTaskGroups.custom.push({
@@ -91,13 +96,60 @@ const taskGroupSlice = createSlice({
                 counter: 0,
                 id: generateUniqueId('task', 4),
                 pageTitle: name,
-                webTitle: `Productify - ${name}`
-
+                webTitle: `Productify - ${name}`,
+                tasks: []
             });
         },
+        
         deleteCustomTaskGroup(state, action) {
             if (state.allTaskGroups.custom.length)
-                state.allTaskGroups.custom.filter(group => group.id !== action.payload.group);
+                state.allTaskGroups.custom.filter(
+                    group => group.id !== action.payload.group
+                );
+        }, 
+
+        addTask(state, action) {
+            const taskGroup = action.payload.groupId;
+
+            const taskName = action.payload.taskData.name;
+            const completed = action.payload.taskData.completed;
+            const subTasks = action.payload.taskData.subTasks;
+            const notes = action.payload.taskData.notes;
+            const category = action.payload.taskData.category;
+            const deadline = action.payload.taskData.deadline;
+            const repeat = action.payload.taskData.repeat;
+            const reminder = action.payload.taskData.reminder;
+
+            if (!Object.values(baseGroupIds).includes(taskGroup)) {
+                let length = state.allTaskGroups.custom;
+
+                for (let i = 0; i < length; i++) {
+                    if (state.allTaskGroups.custom[i].id === taskGroup) {
+                        state.allTaskGroups.custom[i].tasks.push({
+                            taskName, subTasks,
+                            category, deadline,
+                            repeat, reminder,
+                            notes, completed
+                        })
+                    }
+                }
+            }
+            else {
+                let length = state.allTaskGroups.base.length;
+
+                for (let i = 0; i < length; i++) {
+                    if (state.allTaskGroups.base[i].id === taskGroup) {
+                        state.allTaskGroups.base[i].tasks.push(
+                            {
+                                taskName, subTasks,
+                                category, deadline,
+                                repeat, reminder,
+                                notes, completed
+                        });
+                    }
+                    break;
+                }
+            }
         }
     }
 })

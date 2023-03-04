@@ -6,6 +6,7 @@ import { setSelectedGroup } from '../../../store/reducers/TaskGroupSlice';
 
 import TaskGroup from '../cards/TaskGroup';
 import styles from './styles/BaseGroupContainer.module.css';
+import {setCurrentRoute} from "../../../store/reducers/RouteSlice";
 
 
 const BaseGroupContainer = () => {
@@ -20,9 +21,12 @@ const BaseGroupContainer = () => {
     const navigate = useNavigate();
 
     const clickHandler = (group) => {
+        console.log("BaseGroup handler = ", group)
+
         dispatch(setSelectedGroup({ group }));
         localStorage.setItem('selectedTaskGroup', JSON.stringify(group));
 
+        dispatch(setCurrentRoute(`/tasks/${group.id}`));
         navigate(`/tasks/${group.id}`);
     }
 

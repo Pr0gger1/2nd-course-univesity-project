@@ -1,8 +1,9 @@
 import React from "react";
-import styles from "./styles/Header.module.css";
+import { useDispatch, useSelector } from 'react-redux';
+import { setLSidebarOpen } from "../../store/reducers/SidebarSlice";
+import { setTheme, themes } from "../../store/reducers/ThemeSlice";
 
 import ImgButton from "../ui/button/ImgButton";
-
 import MenuIcon from "@mui/icons-material/Menu";
 import { StyledBadge } from "../ui/customComponents/CustomBadge";
 
@@ -13,9 +14,7 @@ import notificationIconDark from "../../assets/img/icons/bell_dark.svg";
 import settingsIconLight from "../../assets/img/icons/settings_light.svg";
 import settingsIconDark from "../../assets/img/icons/settings_dark.svg";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { setLSidebarOpen } from "../../store/reducers/SidebarSlice";
-import { setTheme, themes } from "../../store/reducers/ThemeSlice";
+import styles from "./styles/Header.module.css";
 
 export const Header = () => {
     const dispatch = useDispatch();

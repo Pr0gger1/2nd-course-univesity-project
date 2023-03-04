@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setSelectedGroup } from '../../../store/reducers/TaskGroupSlice';
+import { setCurrentRoute } from "../../../store/reducers/RouteSlice";
 
 import TaskGroup from '../cards/TaskGroup';
 
@@ -12,6 +13,9 @@ const CustomGroupContainer = () => {
     const selectedTaskGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
+    const isLSidebarOpened = useSelector(
+        state => state.sidebarStates.isLeftSidebarOpen
+    );
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -20,14 +24,23 @@ const CustomGroupContainer = () => {
         state => state.taskGroupStates.allTaskGroups.custom
     );
 
+    const hideOverflow = !isLSidebarOpened ? {
+        overflow: 'hidden'
+        } : {};
+
+
     const clickHandler = (group) => {
         dispatch(setSelectedGroup({ group }));
         localStorage.setItem('selectedTaskGroup', JSON.stringify(group));
+
+        dispatch(setCurrentRoute(`/tasks/${group.id}`));
         navigate(`/tasks/${group.id}`);
     }
 
     return (
-         <div className={styles.custom_group__container}>
+         <div className={styles.custom_group__container}
+              style={hideOverflow}
+         >
             {
             customGroups.map(group =>
                 <TaskGroup

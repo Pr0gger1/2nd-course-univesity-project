@@ -1,12 +1,18 @@
 :root {
   --notificationBgColor: rgb(226, 64, 64);
+  --scrollbarWidth: 0.6rem;
 }
 
 [data-theme="light"] {
+  --bgColorScrollbarTrack: #868686;
+  --bgColorScrollbarThumb: #b9b9b9;
+
   --bgColorHeader: #dfdfdf;
   --bgColorContent: #fff;
   --bgColorSidebar: #f2f2f2;
   --bgColorInput: #e5e5e5;
+  --bgButtonColor: #f2f2f2;
+  --bgButtonColorHover: #e1e1e1;
 
   --borderColor: #868686;
   --fontColor: #000;
@@ -17,10 +23,15 @@
 }
 
 [data-theme="dark"] {
+  --bgColorScrollbarTrack: #5f5f5f;
+  --bgColorScrollbarThumb: #191919;
+
   --bgColorHeader: #232323;
   --bgColorContent: #2a2a2a;
   --bgColorSidebar: #333333;
   --bgColorInput: #444;
+  --bgButtonColor: #373737;
+  --bgButtonColorHover: #404040;
 
   --borderColor: #5f5f5f;
   --fontColor: #fff;
@@ -53,4 +64,24 @@ a {
 
 input::placeholder {
   color: var(--fontColor);
+}
+
+*::-webkit-scrollbar {
+  width: var(--scrollbarWidth);
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--bgColorScrollbarTrack);
+  border-radius: 1rem;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--bgColorScrollbarThumb);
+  border-radius: 1rem;
+}
+
+/* firefox scrollbar styles */
+* {
+  scrollbar-width: var(--scrollbarWidth);
+  scrollbar-color: var(--bgColorScrollbarThumb) var(--bgColorScrollbarTrack);
 }

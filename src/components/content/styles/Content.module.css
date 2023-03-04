@@ -1,30 +1,13 @@
 .content {
     overflow-y: auto;
     width: 100vw;
-}
-.task_list__title {
-    font-size: 2rem;
+    height: 100vh;
+
+    direction: ltr;
+    padding: 1.5rem 2.5rem;
 }
 
 .task_list__container {
     direction: ltr;
-    padding: 1.5rem 3rem;
-}
-.task_list__title {
-
-}
-
-.content__top_panel {
-
-}
-
-.day_of_week__title {
-    font-weight: 200;
-    font-size: 2rem;
-}
-
-.date__title {
-    margin-left: 0.5rem;
-    font-weight: 200;
-    font-size: 1.5rem;
+    padding: 1.5rem 2.5rem;
 }

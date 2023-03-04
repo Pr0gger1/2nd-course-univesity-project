@@ -1,6 +1,8 @@
 .custom_group__container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-    justify-content: flex-start;
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*justify-content: flex-start;*/
+    /*gap: 0.7rem;*/
+    overflow-y: auto;
+    height: 75%;
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import UserDataCard from "../ui/cards/UserDataCard";
 import SearchInput from "../ui/input/SearchInput";
 
@@ -16,6 +16,8 @@ export const LeftSidebar = () => {
     const isLSidebarOpened = useSelector(
         state => state.sidebarStates.isLeftSidebarOpen
     );
+    // const isLSidebarOpened = localStorage.getItem('LSidebarOpened');
+
     const dispatch = useDispatch();
 
     const searchClickHandler = () => {
