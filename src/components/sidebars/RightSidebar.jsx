@@ -20,7 +20,7 @@ const RightSidebar = () => {
     return (
         <aside className={sidebarStyles}>
             <div className={styles.sidebar_close__btn}
-                onClick={dispatch(setRSidebarOpen())}>
+                onClick={() => dispatch(setRSidebarOpen())}>
                 <CloseIcon/>
             </div>
 
