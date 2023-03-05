@@ -8,7 +8,6 @@ const routerSlice = createSlice({
     reducers: {
         setCurrentRoute(state, action) {
             state.currentRoute = action.payload;
-            console.log(state.currentRoute);
         }
     }
 })

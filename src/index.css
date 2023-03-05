@@ -1,43 +1,57 @@
 :root {
   --notificationBgColor: rgb(226, 64, 64);
   --scrollbarWidth: 0.6rem;
+
+  --checkboxColor: #9f9f9f;
 }
 
 [data-theme="light"] {
+  /* task styles */
+  --starColor: #7f7f7f;
+
+  /* scrollbar background color */
   --bgColorScrollbarTrack: #868686;
   --bgColorScrollbarThumb: #b9b9b9;
 
+  /* ui background color */
   --bgColorHeader: #dfdfdf;
   --bgColorContent: #fff;
-  --bgColorSidebar: #f2f2f2;
   --bgColorInput: #e5e5e5;
   --bgButtonColor: #f2f2f2;
   --bgButtonColorHover: #e1e1e1;
-
   --borderColor: #868686;
   --fontColor: #000;
 
+  /* input styles */
   --searchProps: #ebebeb url("./assets/img/icons/search_dark.svg");
 
+  /* sidebar styles */
+  --bgColorSidebar: #f2f2f2;
   --borderBottomSidebar: 1px solid #868686;
 }
 
 [data-theme="dark"] {
+  /* task styles */
+  --starColor: #c7c7c7;
+
+  /* scrollbar background color */
   --bgColorScrollbarTrack: #5f5f5f;
   --bgColorScrollbarThumb: #191919;
 
+  /* ui background color*/
   --bgColorHeader: #232323;
   --bgColorContent: #2a2a2a;
-  --bgColorSidebar: #333333;
   --bgColorInput: #444;
   --bgButtonColor: #373737;
   --bgButtonColorHover: #404040;
-
   --borderColor: #5f5f5f;
   --fontColor: #fff;
 
+  /* input styles */
   --searchProps: #444 url("./assets/img/icons/search_light.svg");
 
+  /* sidebar styles */
+  --bgColorSidebar: #333333;
   --borderBottomSidebar: 1px solid #444;
 }
 
@@ -49,7 +63,10 @@
   font-size: 1rem;
 
   overflow: hidden;
-  transition: background-color .5s;
+
+  -webkit-transition: background-color .5s ease-in-out;
+  -moz-transition: background-color .5s ease-in-out;
+  transition: background-color .5s ease-in-out;
 
 }
 

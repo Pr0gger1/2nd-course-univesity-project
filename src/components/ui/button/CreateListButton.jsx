@@ -10,7 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { CreateGroupInput } from '../customComponents/CustomInputs';
 
-import styles from './styles/createListButton.module.css';
+import styles from './styles/CreateListButton.module.css';
 import './styles/buttonTransition.css';
 
 const CreateListButton = () => {
@@ -60,12 +60,12 @@ const CreateListButton = () => {
                     style={adaptiveBtn}
             >
                 <AddBoxIcon className={styles.add_icon}/>
-                <span 
-                    className={styles.btn_text}
-                    style={adaptiveSpan}
-                >
-                    Создать список
-                </span>
+                    <span
+                        className={styles.btn_text}
+                        style={adaptiveSpan}
+                    >
+                        Создать список
+                    </span>
             </Button>
         }
 

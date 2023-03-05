@@ -1,13 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Button from '../ui/button/Button';
+import { setRSidebarOpen } from '../../store/reducers/SidebarSlice';
 
+import Button from '../ui/button/Button';
+import InputField from '../ui/input/InputField';
 import CloseIcon from '@mui/icons-material/Close';
 
-import InputField from '../ui/input/InputField';
-
 import styles from './styles/RightSidebar.module.css';
-import { setRSidebarOpen } from '../../store/reducers/SidebarSlice';
 
 const RightSidebar = () => {
     const dispatch = useDispatch();

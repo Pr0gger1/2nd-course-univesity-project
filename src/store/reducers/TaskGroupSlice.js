@@ -30,7 +30,11 @@ const initialGroup = {
 const taskGroupSlice = createSlice({
     name: 'taskGroupsStates',
     initialState: {
-        selectedTaskGroup: JSON.parse(localStorage.getItem('selectedTaskGroup')) || initialGroup,
+        selectedTaskGroup: JSON.parse(
+            localStorage.getItem('selectedTaskGroup')
+        ) || initialGroup,
+
+        tasks: [],
         allTaskGroups: {
             base: [
                 {
@@ -109,9 +113,9 @@ const taskGroupSlice = createSlice({
         }, 
 
         addTask(state, action) {
-            const taskGroup = action.payload.groupId;
+            const groupId = action.payload.groupId;
 
-            const taskName = action.payload.taskData.name;
+            const taskName = action.payload.taskData.taskName;
             const completed = action.payload.taskData.completed;
             const subTasks = action.payload.taskData.subTasks;
             const notes = action.payload.taskData.notes;
@@ -120,38 +124,24 @@ const taskGroupSlice = createSlice({
             const repeat = action.payload.taskData.repeat;
             const reminder = action.payload.taskData.reminder;
 
-            if (!Object.values(baseGroupIds).includes(taskGroup)) {
-                let length = state.allTaskGroups.custom;
+            if (!state.tasks.length)
+                state.tasks = [{
+                taskName, completed,
+                subTasks, notes,
+                category, groupId,
+                deadline, repeat,
+                reminder
+            }];
 
-                for (let i = 0; i < length; i++) {
-                    if (state.allTaskGroups.custom[i].id === taskGroup) {
-                        state.allTaskGroups.custom[i].tasks.push({
-                            taskName, subTasks,
-                            category, deadline,
-                            repeat, reminder,
-                            notes, completed
-                        })
-                    }
-                }
-            }
-            else {
-                let length = state.allTaskGroups.base.length;
-
-                for (let i = 0; i < length; i++) {
-                    if (state.allTaskGroups.base[i].id === taskGroup) {
-                        state.allTaskGroups.base[i].tasks.push(
-                            {
-                                taskName, subTasks,
-                                category, deadline,
-                                repeat, reminder,
-                                notes, completed
-                        });
-                    }
-                    break;
-                }
-            }
+            else state.tasks.push({
+                    taskName, completed,
+                    subTasks, notes,
+                    category, groupId,
+                    deadline, repeat,
+                    reminder
+                })
         }
     }
 })
-export const { setSelectedGroup, addCustomTaskGroup, deleteCustomTaskGroup } = taskGroupSlice.actions;
+export const { setSelectedGroup, addCustomTaskGroup, addTask, deleteCustomTaskGroup } = taskGroupSlice.actions;
 export default taskGroupSlice.reducer;

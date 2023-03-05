@@ -25,3 +25,22 @@
 
     background-color: var(--bgColorInput);
 }
+.add_task__input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.add_task__input .close_input__btn {
+    cursor: pointer;
+    padding: 0.65rem;
+    background-color: var(--bgColorInput);
+    border-radius: 0.25rem;
+
+    transition: background-color .5s ease;
+}
+.close_input__btn:hover {
+    background-color: var(--bgButtonColorHover);
+    transition: background-color .5s ease;
+}

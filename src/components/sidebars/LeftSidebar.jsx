@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import UserDataCard from "../ui/cards/UserDataCard";
 import SearchInput from "../ui/input/SearchInput";
 

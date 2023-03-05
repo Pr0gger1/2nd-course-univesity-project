@@ -2,8 +2,9 @@ import React from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import styles from './styles/Task.module.css';
 
-import StarIcon from '@mui/icons-material/Star';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/StarRounded';
+import StarBorderIcon from '@mui/icons-material/StarBorderRounded';
+
 import { useDispatch } from 'react-redux';
 import { setRSidebarOpen } from '../../../store/reducers/SidebarSlice';
 
@@ -21,7 +22,7 @@ const Task = ({ taskData }) => {
             <div className={styles.task__info}>
                 <Checkbox 
                     sx={{
-                        color: "var(--fontColor)",
+                        color: "var(--checkboxColor)",
                         '& .MuiSvgIcon-root': {
                             fontSize: 30,
                             borderRadius: "15px"
@@ -52,7 +53,10 @@ const Task = ({ taskData }) => {
                 }}
                 />
                 : <StarBorderIcon
-                    sx={{fontSize: 32}}
+                    sx={{
+                        fontSize: 32,
+                        color: 'var(--starColor)'
+                }}
                 />
             }
         </div>

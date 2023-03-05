@@ -21,8 +21,6 @@ const BaseGroupContainer = () => {
     const navigate = useNavigate();
 
     const clickHandler = (group) => {
-        console.log("BaseGroup handler = ", group)
-
         dispatch(setSelectedGroup({ group }));
         localStorage.setItem('selectedTaskGroup', JSON.stringify(group));
 
