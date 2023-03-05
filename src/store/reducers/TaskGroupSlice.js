@@ -1,13 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { generateUniqueId } from '../../utils/generateUniqueId';
 
 import todayTaskIcon from '../../assets/img/icons/task_list/today_task_icon.svg';
 import planTaskIcon from '../../assets/img/icons/task_list/plan_task_icon.svg';
-import favouriteTaskIcon from '../../assets/img/icons/task_list/favourite_task_icon.svg';
+import favoriteTaskIcon from '../../assets/img/icons/task_list/favourite_task_icon.svg';
 import completedTaskIcon from '../../assets/img/icons/task_list/completed_task_icon.svg';
 import allTasksIcon from '../../assets/img/icons/task_list/all_tasks_icon.svg';
-
-import customGroupDefafultIcon from '../../assets/img/icons/default/custom_group_task_icon.svg';
-import { generateUniqueId } from '../../utils/generateUniqueId';
+import customGroupDefaultIcon from '../../assets/img/icons/default/custom_group_task_icon.svg';
 
 export const baseGroupIds = {
     today: 'today',
@@ -18,13 +17,13 @@ export const baseGroupIds = {
 }
 
 const initialGroup = {
-    title: "Сегодня",
+    title: 'Сегодня',
     icon: todayTaskIcon,
     counter: 0,
     id: baseGroupIds.today,
     route: 'today',
     pageTitle: '✌️Мой день',
-    webTitle: `Productify - Мой день`
+    webTitle: 'Productify - Мой день'
 }
 
 const taskGroupSlice = createSlice({
@@ -38,31 +37,28 @@ const taskGroupSlice = createSlice({
         allTaskGroups: {
             base: [
                 {
-                    title: "Сегодня",
+                    title: 'Сегодня',
                     icon: todayTaskIcon,
                     counter: 0,
                     id: baseGroupIds.today,
                     pageTitle: '✌️Мой день',
-                    webTitle: `Productify - Мой день`,
-                    tasks: []
+                    webTitle: 'Productify - Мой день'
                 },
                 {
-                    title: "Запланировано",
+                    title: 'Запланировано',
                     icon: planTaskIcon,
                     counter: 0,
                     id: baseGroupIds.plan,
                     pageTitle: '🗓️Запланировано',
                     webTitle: 'Productify - Запланировано',
-                    tasks: []
                 },
                 {
                     title: "Избранные",
-                    icon: favouriteTaskIcon,
+                    icon: favoriteTaskIcon,
                     counter: 0,
                     id: baseGroupIds.favorite,
                     pageTitle: '✨Избранное',
-                    webTitle: 'Productify - Избранное',
-                    tasks: []
+                    webTitle: 'Productify - Избранное'
                 },
                 {
                     title: "Завершенные",
@@ -70,8 +66,7 @@ const taskGroupSlice = createSlice({
                     counter: 0,
                     id: baseGroupIds.completed,
                     pageTitle: '✅Завершенные',
-                    webTitle: 'Productify - Завершенное',
-                    tasks: []
+                    webTitle: 'Productify - Завершенное'
                 },
                 {
                     title: "Все задачи",
@@ -79,8 +74,7 @@ const taskGroupSlice = createSlice({
                     counter: 0,
                     id: baseGroupIds.all,
                     pageTitle: '🎯Все задачи',
-                    webTitle: 'Productify - Все задачи',
-                    tasks: []
+                    webTitle: 'Productify - Все задачи'
                 }
             ],
             custom: []
@@ -96,7 +90,7 @@ const taskGroupSlice = createSlice({
             const name = action.payload;
             state.allTaskGroups.custom.push({
                 title: name,
-                icon: customGroupDefafultIcon,
+                icon: customGroupDefaultIcon,
                 counter: 0,
                 id: generateUniqueId('task', 4),
                 pageTitle: name,

@@ -19,6 +19,7 @@ const Task = ({ taskData }) => {
     return (
         <div className={styles.task}
             onClick={() => dispatch(setRSidebarOpen())}>
+
             <div className={styles.task__info}>
                 <Checkbox 
                     sx={{
