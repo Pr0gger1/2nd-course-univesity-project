@@ -43,7 +43,7 @@ const CreateListButton = () => {
         if (event.key === 'Enter' && inputValue.length) {
             setInputValue('');
             setShowInput(false);
-            dispatch(addCustomTaskGroup(inputValue));
+            dispatch(addCustomTaskGroup({groupName: inputValue}));
         }
     }
 

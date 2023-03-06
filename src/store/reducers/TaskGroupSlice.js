@@ -21,7 +21,6 @@ const initialGroup = {
     icon: todayTaskIcon,
     counter: 0,
     id: baseGroupIds.today,
-    route: 'today',
     pageTitle: '✌️Мой день',
     webTitle: 'Productify - Мой день'
 }
