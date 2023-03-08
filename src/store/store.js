@@ -6,15 +6,22 @@ import taskGroupReducer from './reducers/TaskGroupSlice';
 import mobileReducer from './reducers/MobileSlice';
 import authReducer from './reducers/AuthSlice';
 import routeReducer from './reducers/RouteSlice';
+import taskLogicReducer from './reducers/TaskLogicSlice';
+import filterReducer from './reducers/FilterSlice';
 
 export default configureStore({
     reducer: {
         mobileStates: mobileReducer,
-        sidebarStates: sidebarReducer,
-        taskGroupStates: taskGroupReducer,
         themeState: themeReducer,
+        sidebarStates: sidebarReducer,
+
         authStates: authReducer,
-        routeState: routeReducer
+        routeState: routeReducer,
+
+        taskGroupStates: taskGroupReducer,
+        taskLogic: taskLogicReducer,
+
+        filterStates: filterReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

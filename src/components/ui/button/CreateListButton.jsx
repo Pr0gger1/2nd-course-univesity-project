@@ -11,7 +11,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import { CreateGroupInput } from '../customComponents/CustomInputs';
 
 import styles from './styles/CreateListButton.module.css';
-import './styles/buttonTransition.css';
+import '../animations/Button/createListBtnAnimation.css';
 
 const CreateListButton = () => {
     const [showInput, setShowInput] = useState(false);

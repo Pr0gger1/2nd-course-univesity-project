@@ -30,12 +30,16 @@ const AppRouter = ( {isAuth = false} ) => {
             />
         },
         {
-          path: '/tasks/:task_id',
+          path: '/tasks/:task_group_id',
             element: <ConditionalRoute
                 conditionVar={isMobile}
                 onTrueRoute={<MobileContent/>}
                 onFalseRoute={<HomePage/>}
             />
+        },
+        {
+            path: '/tasks/:task_group_id/:task_id',
+            element: <HomePage/>
         },
         {
             path: "/login",

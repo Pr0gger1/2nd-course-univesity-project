@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './styles/button.module.css';
+import styles from './styles/Button.module.css';
 
 const Button = ({children, variant = 'white', customClass = '', cs = {}, ...props}) => {
     return (

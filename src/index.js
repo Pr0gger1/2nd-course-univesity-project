@@ -12,6 +12,8 @@ import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 document.title = 'Productify ToDo App';
+if (window.location.pathname.length < 2)
+    window.location.pathname = '/tasks/today';
 
 const currentTheme = localStorage.getItem('theme');
 if (!currentTheme) localStorage.setItem('theme', themes.light);

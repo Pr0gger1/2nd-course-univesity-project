@@ -1,29 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { generateUniqueId } from '../../utils/generateUniqueId';
 
-import todayTaskIcon from '../../assets/img/icons/task_list/today_task_icon.svg';
-import planTaskIcon from '../../assets/img/icons/task_list/plan_task_icon.svg';
-import favoriteTaskIcon from '../../assets/img/icons/task_list/favourite_task_icon.svg';
-import completedTaskIcon from '../../assets/img/icons/task_list/completed_task_icon.svg';
-import allTasksIcon from '../../assets/img/icons/task_list/all_tasks_icon.svg';
 import customGroupDefaultIcon from '../../assets/img/icons/default/custom_group_task_icon.svg';
 
-export const baseGroupIds = {
-    today: 'today',
-    plan: 'plan',
-    favorite: 'favorite',
-    completed: 'completed',
-    all: 'all'
-}
+import { initialGroup } from "../defaultData/baseGroups";
+import defaultGroups from '../defaultData/baseGroups';
 
-const initialGroup = {
-    title: 'Сегодня',
-    icon: todayTaskIcon,
-    counter: 0,
-    id: baseGroupIds.today,
-    pageTitle: '✌️Мой день',
-    webTitle: 'Productify - Мой день'
-}
 
 const taskGroupSlice = createSlice({
     name: 'taskGroupsStates',
@@ -31,8 +13,7 @@ const taskGroupSlice = createSlice({
         selectedTaskGroup: JSON.parse(
             localStorage.getItem('selectedTaskGroup')
         ) || initialGroup,
-
-        taskFilter: '',
+        selectedTask: {},
 
         // массив всех задач
         tasks: [],
@@ -40,56 +21,11 @@ const taskGroupSlice = createSlice({
         // массив задач активной группы
         currentGroupTasks: [],
         allTaskGroups: {
-            base: [
-                {
-                    title: 'Сегодня',
-                    icon: todayTaskIcon,
-                    counter: 0,
-                    id: baseGroupIds.today,
-                    pageTitle: '✌️Мой день',
-                    webTitle: 'Productify - Мой день'
-                },
-                {
-                    title: 'Запланировано',
-                    icon: planTaskIcon,
-                    counter: 0,
-                    id: baseGroupIds.plan,
-                    pageTitle: '🗓️Запланировано',
-                    webTitle: 'Productify - Запланировано',
-                },
-                {
-                    title: "Избранные",
-                    icon: favoriteTaskIcon,
-                    counter: 0,
-                    id: baseGroupIds.favorite,
-                    pageTitle: '✨Избранное',
-                    webTitle: 'Productify - Избранное'
-                },
-                {
-                    title: "Завершенные",
-                    icon: completedTaskIcon,
-                    counter: 0,
-                    id: baseGroupIds.completed,
-                    pageTitle: '✅Завершенные',
-                    webTitle: 'Productify - Завершенное'
-                },
-                {
-                    title: "Все задачи",
-                    icon: allTasksIcon,
-                    counter: 0,
-                    id: baseGroupIds.all,
-                    pageTitle: '🎯Все задачи',
-                    webTitle: 'Productify - Все задачи'
-                }
-            ],
+            base: defaultGroups,
             custom: []
         }
     },
     reducers: {
-        setFilter(state, action) {
-          state.taskFilter = action.payload.filter;
-        },
-
         setSelectedGroup(state, action) {
             state.selectedTaskGroup = action.payload.group;
             localStorage.setItem('selectedTaskGroup', JSON.stringify(action.payload.group));
@@ -97,6 +33,10 @@ const taskGroupSlice = createSlice({
 
         setCurrentGroupTasks(state, action) {
             state.currentGroupTasks = action.payload.tasks;
+        },
+
+        setSelectedTask(state, action) {
+            state.selectedTask = action.payload.taskData;
         },
 
         addCustomTaskGroup(state, action) {
@@ -120,6 +60,8 @@ const taskGroupSlice = createSlice({
 
         addTask(state, action) {
             const groupId = action.payload.taskData.groupId;
+
+            const taskId = generateUniqueId('task', 12, true);
             const taskName = action.payload.taskData.taskName;
             const completed = action.payload.taskData.completed;
             const subTasks = action.payload.taskData.subTasks;
@@ -134,14 +76,24 @@ const taskGroupSlice = createSlice({
                     subTasks, notes,
                     category, groupId,
                     deadline, repeat,
-                    reminder
-                });
+                    reminder, taskId
+            });
+
+        },
+        updateCompleteTask(state, action) {
+            const index = state.tasks.findIndex(task => task.taskId === action.payload.taskId);
+            state.tasks[index].completed = action.payload.completed;
+        },
+        updateFavoriteTask(state, action) {
+            const index = state.tasks.findIndex(task => task.taskId === action.payload.taskId);
+            state.tasks[index].favorite = action.payload.favorite
         }
     }
 })
 export const {
-    setSelectedGroup, setCurrentGroupTasks, setFilter,
-    addCustomTaskGroup, addTask, deleteCustomTaskGroup
+    setSelectedGroup, setCurrentGroupTasks, setSelectedTask,
+    addCustomTaskGroup, addTask, deleteCustomTaskGroup,
+    updateCompleteTask, updateFavoriteTask
 } = taskGroupSlice.actions;
 
 export default taskGroupSlice.reducer;

@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from "react-router-dom";
+
+import {useDispatch, useSelector} from 'react-redux';
 import { setRSidebarOpen } from '../../../store/reducers/SidebarSlice';
+import {setSelectedTask, updateCompleteTask, updateFavoriteTask} from "../../../store/reducers/TaskGroupSlice";
 
 import StarIcon from '@mui/icons-material/StarRounded';
 import StarBorderIcon from '@mui/icons-material/StarBorderRounded';
@@ -12,21 +15,43 @@ import styles from './styles/Task.module.css';
 
 const Task = ({ taskData }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [taskIsCompleted, setTaskIsCompleted] = useState(false);
+
+    const selectedGroup = useSelector(
+        state => state.taskGroupStates.selectedTaskGroup
+    );
 
     const taskStyle = {
         textDecoration: taskData.completed ? 'line-through' : 'none',
     };
 
-    const onCheckboxChange = (event) => {
-        // event.stopPropagation();
-        console.log(event.target.checked)
-        setTaskIsCompleted(event.target.checked);
+    const onTaskClick = () => {
+        dispatch(setRSidebarOpen());
+        dispatch(setSelectedTask({taskData}));
+        navigate(`/tasks/${selectedGroup.id}/${taskData.taskId}`);
     }
+
+    const onFavoriteToggle = event => {
+        event.stopPropagation();
+        dispatch(updateFavoriteTask({
+            taskId: taskData.taskId,
+            favorite: !taskData.favorite
+        }));
+    }
+
+    useEffect(() => {
+        dispatch(updateCompleteTask({
+            taskId: taskData.taskId,
+            completed: taskIsCompleted
+        }))
+    }, [dispatch, taskData.taskId, taskIsCompleted]);
+
     
     return (
         <div className={styles.task}
-            onClick={() => dispatch(setRSidebarOpen())}>
+            onClick={() => onTaskClick()}>
 
             <div className={styles.task__checkbox_info}>
                 <Checkbox 
@@ -41,8 +66,8 @@ const Task = ({ taskData }) => {
                         }
                     }}
                     onClick={e => e.stopPropagation()}
-                    checked={taskIsCompleted}
-                    onChange={e => onCheckboxChange(e)}
+                    checked={taskData.completed}
+                    onChange={e => setTaskIsCompleted(e.target.checked)}
                 />
                 <div className={styles.task__info}>
                     <span 
@@ -80,14 +105,14 @@ const Task = ({ taskData }) => {
                     fontSize: 32,
                     borderRadius: "15px"
                     }}
-                    onClick={e => e.stopPropagation()}
+                    onClick={e => onFavoriteToggle(e)}
                 />
                 : <StarBorderIcon
                     sx={{
                         fontSize: 32,
                         color: 'var(--starColor)'
                     }}
-                    onClick={e => e.stopPropagation()}
+                    onClick={e => onFavoriteToggle(e)}
                 />
             }
         </div>

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilter } from '../../../store/reducers/TaskGroupSlice';
+import { setSearchFilter } from '../../../store/reducers/FilterSlice';
 
 import styles from './styles/SearchInput.module.css';
 
@@ -13,7 +13,7 @@ const SearchInput = ({ placeholder = '', ...props}) => {
     const [searchText, setSearchText] = useState('');
 
     useEffect(() => {
-        dispatch(setFilter({filter: searchText}));
+        dispatch(setSearchFilter({searchFilter: searchText}));
     }, [dispatch, searchText]);
 
     const searchStyles = !isLSidebarOpened ? {

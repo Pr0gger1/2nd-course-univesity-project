@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setRSidebarOpen } from '../../store/reducers/SidebarSlice';
 
@@ -14,7 +14,19 @@ const RightSidebar = () => {
         state => state.sidebarStates.isRightSidebarOpen
     );
 
+    
+    const selectedTask = useSelector(
+        state => state.taskGroupStates.selectedTask
+    );
+
+    const [taskNameValue, setTaskNameValue] = useState(selectedTask.taskName);
+
     const sidebarStyles = `${styles.sidebar__right}${!isRSidebarOpened ? ' ' + styles['closed'] : ''}`;
+
+    const textAreaAdjust = event => {
+        event.target.style.height = 'auto';
+        event.target.style.height = `${event.target.scrollHeight + 2}px`
+    }
 
     return (
         <aside className={sidebarStyles}>
@@ -25,23 +37,35 @@ const RightSidebar = () => {
 
             <section className={styles.add_task__section}>
                 <InputField customClasses={[styles.add_task__input]}
-                    placeholder="Введите задачу"
+                    placeholder="Ваша задача"
+                    value={taskNameValue}
+                    onChange={e => setTaskNameValue(e.target.value)}
                     />
-                <div className={styles.add_task__btn}>
+
+                <div className={styles.add_subtask__btn}>
                     <Button>Добавить подзадачу</Button>
                 </div>
             </section>
-            <select name="" id="">
-
+            <select className={styles.choose_group} name="" id="">
+                <option disabled selected>Выберите категорию задачи...</option>
             </select>
-            <div>
-                <InputField/>
-                <InputField/>
+            <div className={styles.date_and_repeat}>
+                <InputField className={styles.deadline} type="date"/>
+                <select className={styles.repeat}>
+                    <option disabled selected>Повтор</option>
+                </select>
             </div>
 
-            <InputField/>
+            <InputField 
+                className={styles.reminder}
+                placeholder="Напоминание"
+            />
 
-            <textarea>
+            <textarea 
+                className={styles.notes}
+                placeholder="Ваши заметки"
+                onInput={e => textAreaAdjust(e)}
+            >
 
             </textarea>
         </aside>

@@ -1,15 +1,17 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTask } from '../../../store/reducers/TaskGroupSlice';
 
 import InputField from '../input/InputField';
 import Button from './Button';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
+
 import { CSSTransition } from 'react-transition-group';
 
 import styles from './styles/CreateTaskButton.module.css';
-import './styles/BtnAnimation.css';
-import './styles/InputAnimation.css';
+import '../animations/Button/createTaskBtnAnimation.css';
+import '../animations/input/InputAnimation.css';
 
 const CreateTaskButton = () => {
     const [showInput, setShowInput] = useState(false);
@@ -22,36 +24,37 @@ const CreateTaskButton = () => {
     const [taskName, setTaskName] = useState('');
     const dispatch = useDispatch();
 
-    const onEnterPressed = (event) => {
-        if (event.key === 'Enter' && event.target.value.length) {
-            // setShowInput(false);
 
-            dispatch(addTask({
-                taskData: {
-                    taskName,
-                    completed: false,
-                    subTasks: [],
-                    notes: '',
-                    groupId: selectedGroup.id,
-                    category: selectedGroup.title,
-                    deadline: null,
-                    reminder: null,
-                    repeat: null
-                    }
+    const addTaskHandler = () => {
+        dispatch(addTask({
+            taskData: {
+                taskName,
+                completed: false,
+                subTasks: [],
+                notes: '',
+                groupId: selectedGroup.id,
+                category: selectedGroup.title,
+                deadline: null,
+                reminder: null,
+                repeat: null
                 }
-            ));
+            }
+        ));
 
             setTaskName('');
-        }
+    }
+    const onEnterPressed = (event) => {
+        if (event.key === 'Enter' && event.target.value.length)
+            addTaskHandler();
     }
 
 
     return (
-        <div className={styles.create_task__container}>
+        <div>
             <CSSTransition
                 in={showButton}
                 timeout={300}
-                classNames="btn_animation"
+                classNames="create_task_btn_animation"
                 unmountOnExit
             >
                 <Button
@@ -70,11 +73,19 @@ const CreateTaskButton = () => {
                 onExited={() => setShowButton(true)}
                 unmountOnExit
             >
-                <div className={styles.add_task__input}>
-                    <CloseRoundedIcon
-                        className={styles.close_input__btn}
-                        onClick={() => setShowInput(false)}
+                <div className={styles.add_task_input__container}>
+                    {
+                        taskName.length ?
+                        <CheckRoundedIcon
+                            className={[styles.close_input__btn, styles.send_task__btn].join(' ')}
+                            onClick={addTaskHandler}
+                        />
+                        :
+                        <CloseRoundedIcon
+                            className={styles.close_input__btn}
+                            onClick={() => setShowInput(false)}
                     />
+                    }
                     <InputField
                         customClasses={[styles.add_task__btn]}
                         onChange={e => setTaskName(e.target.value)}

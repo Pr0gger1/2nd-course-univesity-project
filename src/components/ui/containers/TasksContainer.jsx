@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import { setCurrentGroupTasks } from '../../../store/reducers/TaskGroupSlice';
 
+import { baseGroupIds } from '../../../store/defaultData/baseGroups';
+
 import CreateTaskButton from '../button/CreateTaskButton';
 import Task from '../cards/Task';
 
 import styles from './styles/TasksContainer.module.css';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import './styles/TaskAnimation.css';
+import '../animations/Task/TaskAnimation.css';
 
 const NoTasksMessage = () => {
     return (
@@ -24,7 +26,7 @@ const TasksContainer = () => {
         state => state.taskGroupStates.currentGroupTasks
     );
     const filter = useSelector(
-        state => state.taskGroupStates.taskFilter
+        state => state.filterStates.searchFilter
     );
     
     const tasks = useSelector(
@@ -34,68 +36,71 @@ const TasksContainer = () => {
         state => state.taskGroupStates.selectedTaskGroup
     );
 
-    const [isMounted, setIsMounted] = useState(false);
+    const [hasTasks, setHasTasks] = useState(!!currentGroupTasks.length);
 
     useEffect(() => {
-        setIsMounted(true);
-    }, []);
-    
+        setHasTasks(currentGroupTasks.length > 0);
+    }, [currentGroupTasks]);
+
     useEffect(() => {
-        if (filter.length) {
-            console.log(filter);
+        if (filter && filter.length) {
             const currentTasksFilter = tasks.filter(
                 task => task.groupId === selectedGroup.id && 
                 task.taskName.includes(filter)
             );
-            console.log(currentTasksFilter)
-            return () => dispatch(setCurrentGroupTasks({tasks: currentTasksFilter}));
+
+            dispatch(setCurrentGroupTasks({tasks: currentTasksFilter}));
         }
+
         else {
             const currentTasks = tasks.filter(
                 task => task.groupId === selectedGroup.id
             );
-    
             dispatch(setCurrentGroupTasks({tasks: currentTasks}));
         }
+
+        console.log(tasks)
     }, [dispatch, filter, selectedGroup, tasks]);
 
-    // if (!currentGroupTasks.length)
-    //     return (
-    //         <div className={styles.tasks__container}>
-    //             <CreateTaskButton/>
-    //             <div className={styles.no_tasks__message}>
-    //                 В этой группе нет задач. Вперед к приключениям :)
-    //             </div>
-    //         </div>
-    //     );
+
+    useEffect(() => {
+        // если активная группа - все задачи,
+        // помещаем в массив все существующие задачи
+        if (selectedGroup.id === baseGroupIds.all) {
+            dispatch(setCurrentGroupTasks({tasks}))
+        }
+    }, [dispatch, selectedGroup, tasks])
 
 
     return (
         <div className={styles.tasks__container}>
-            <CreateTaskButton/>
-                {
+            {
+                selectedGroup.id !== baseGroupIds.completed &&
+                <CreateTaskButton/>
+            }
+            {
+                !hasTasks && <NoTasksMessage/>
+            }
+            {
             <TransitionGroup style={{paddingLeft: '0.5rem'}}>
                 {
-                    currentGroupTasks.length ?
+                    hasTasks && (
                     currentGroupTasks.map((task, index) => 
                         <CSSTransition
                             key={index}
                             timeout={500}
                             classNames="item"
-                            appear={isMounted}
+                            mountOnEnter
                         >
                             <Task
                                 key={index}
                                 taskData={task}
                             />
                         </CSSTransition>
-                    )
-                        :
-                        <NoTasksMessage/>
-
+                    ))
                 }
             </TransitionGroup>
-                }
+            }
         </div>
     );
 };
