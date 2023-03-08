@@ -87,13 +87,20 @@ const taskGroupSlice = createSlice({
         updateFavoriteTask(state, action) {
             const index = state.tasks.findIndex(task => task.taskId === action.payload.taskId);
             state.tasks[index].favorite = action.payload.favorite
+        },
+
+        updateTaskData(state, action) {
+
+            const taskIndex = state.tasks.findIndex(task => task.taskId === action.payload.taskData.taskId);
+            state.tasks[taskIndex] = action.payload.taskData;
         }
     }
 })
+
 export const {
     setSelectedGroup, setCurrentGroupTasks, setSelectedTask,
     addCustomTaskGroup, addTask, deleteCustomTaskGroup,
-    updateCompleteTask, updateFavoriteTask
+    updateCompleteTask, updateTaskData, updateFavoriteTask
 } = taskGroupSlice.actions;
 
 export default taskGroupSlice.reducer;

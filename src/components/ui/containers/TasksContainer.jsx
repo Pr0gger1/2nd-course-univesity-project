@@ -94,7 +94,7 @@ const TasksContainer = () => {
                         >
                             <Task
                                 key={index}
-                                taskData={task}
+                                taskDataProps={task}
                             />
                         </CSSTransition>
                     ))

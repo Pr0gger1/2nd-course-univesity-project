@@ -8,16 +8,23 @@
     flex-direction: column;
     flex-shrink: 0;
     gap: 1.2rem;
-    overflow-y: auto;
+    /* overflow-y: auto; */
 
     max-width: 30%;
     /* transform: translateX(0); */
-
+    /* overflow: visible; */
     width: 30%;
     height: 100vh;
 
     background-color: var(--bgColorSidebar);
 }
+
+/* .sidebar__right select {
+    appearance: none;
+    background-image: url("../../../assets/img/icons/bracket_light.svg");
+    background-repeat: no-repeat;
+    background-position: 95% 50%;
+} */
 
 .sidebar__right.closed {
     /* transform: translateX(100%); */
@@ -30,9 +37,11 @@
     transition: width .5s ease-in;
 }
 
-
 .sidebar_close__btn {
     text-align: right;
+}
+
+.sidebar_close__btn svg {
     cursor: pointer;
 }
 
@@ -40,9 +49,18 @@
     background-color: var(--bgColorContent);
     color: var(--fontColor);
 
-    border: 1px solid transparent;
+    /* border: 1px solid transparent; */
+    border: none;
     border-radius: 0.25rem;
     padding: 0.6rem;
+}
+
+.add_task__input:focus {
+    border: none;
+}
+
+.add_task__input:hover {
+    border: none;
 }
 
 .date_and_repeat {
@@ -62,13 +80,31 @@
     cursor: pointer;
 }
 
-.deadline, .repeat {
+ .deadline, .repeat {
     width: 50%;
     color: var(--fontColor);
     background-color: var(--bgColorContent);
     border: none;
     border-radius: 5px;
     padding: 0.6rem;
+    outline: none;
+}
+
+.repeat {
+    content: "";
+    background-image: url("../../../assets/img/icons/task_list/plan_task_icon.svg");
+    background-repeat: no-repeat;
+    background-size: 1.5rem;
+    background-position: 8% 50%;
+    padding: 1rem 2rem 1rem 2.5rem;
+
+    appearance: none;
+}
+
+
+.task_category__section select {
+    width: 100%;
+    padding: 0.8rem;
 }
 
 .add_task__section {
@@ -80,29 +116,52 @@
 .choose_group {
     color: var(--fontColor);
     background-color: var(--bgColorContent);
+
+    padding: 0.5rem 1.2rem;
+
     border: none;
     border-radius: 5px;
-    padding: 0.5rem 1.2rem;
+    outline: none;
+
+    appearance: none;
+    background-image: url("../../../assets/img/icons/bracket_light.svg");
+    background-repeat: no-repeat;
+    background-position: 95% 50%;
 }
 
 .reminder {
     color: var(--fontColor);
     background-color: var(--bgColorContent);
+    
     border: none;
+    outline: none;
     border-radius: 5px;
+
     padding: 0.6rem;
+
+    box-sizing: border-box;
 }
 
 .notes {
     color: var(--fontColor);
     background-color: var(--bgColorContent);
-    border: none;
-    border-radius: 5px;
     padding: 0.6rem;
     resize: none;
     min-height: 12rem;
+    
+    border: none;
+    border-radius: 5px;
+    outline: none;
+
+    box-sizing: border-box;
 }
 
 .notes::placeholder {
     color: var(--fontColor);
+}
+
+.add_task {
+    display: flex;
+    background-color: var(--bgColorContent);
+    border-radius: 5px;
 }

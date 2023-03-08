@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 
 import {useDispatch, useSelector} from 'react-redux';
 import { setRSidebarOpen } from '../../../store/reducers/SidebarSlice';
-import {setSelectedTask, updateCompleteTask, updateFavoriteTask} from "../../../store/reducers/TaskGroupSlice";
+import {setSelectedTask, updateCompleteTask, updateFavoriteTask, updateTaskData} from "../../../store/reducers/TaskGroupSlice";
 
 import StarIcon from '@mui/icons-material/StarRounded';
 import StarBorderIcon from '@mui/icons-material/StarBorderRounded';
@@ -13,40 +13,47 @@ import Checkbox from '@mui/material/Checkbox';
 
 import styles from './styles/Task.module.css';
 
-const Task = ({ taskData }) => {
+const Task = ({ taskDataProps }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [taskIsCompleted, setTaskIsCompleted] = useState(false);
+    const [IsTaskCompleted, setIsTaskCompleted] = useState(false);
 
     const selectedGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
 
     const taskStyle = {
-        textDecoration: taskData.completed ? 'line-through' : 'none',
+        textDecoration: taskDataProps.completed ? 'line-through' : 'none',
     };
 
     const onTaskClick = () => {
         dispatch(setRSidebarOpen());
-        dispatch(setSelectedTask({taskData}));
-        navigate(`/tasks/${selectedGroup.id}/${taskData.taskId}`);
+        dispatch(setSelectedTask({taskData: taskDataProps}));
+        navigate(`/tasks/${selectedGroup.id}/${taskDataProps.taskId}`);
     }
 
     const onFavoriteToggle = event => {
         event.stopPropagation();
-        dispatch(updateFavoriteTask({
-            taskId: taskData.taskId,
-            favorite: !taskData.favorite
+
+        const data = {
+            ...taskDataProps, favorite: !taskDataProps.favorite
+        }
+
+        dispatch(updateTaskData({
+            taskData: data
         }));
     }
 
     useEffect(() => {
-        dispatch(updateCompleteTask({
-            taskId: taskData.taskId,
-            completed: taskIsCompleted
+        const data = {
+            data: { ...taskDataProps, completed: IsTaskCompleted}
+        }
+
+        dispatch(updateTaskData({
+            taskData: {...data}
         }))
-    }, [dispatch, taskData.taskId, taskIsCompleted]);
+    }, [dispatch, taskDataProps, taskDataProps.taskId, IsTaskCompleted]);
 
     
     return (
@@ -66,20 +73,20 @@ const Task = ({ taskData }) => {
                         }
                     }}
                     onClick={e => e.stopPropagation()}
-                    checked={taskData.completed}
-                    onChange={e => setTaskIsCompleted(e.target.checked)}
+                    checked={taskDataProps.completed}
+                    onChange={e => setIsTaskCompleted(e.target.checked)}
                 />
                 <div className={styles.task__info}>
                     <span 
                         style={taskStyle}
                         className={styles.task_title}
                     >
-                        {taskData.taskName}
+                        {taskDataProps.taskName}
                     </span>
                     
                     <div className={styles.task__tags}>
                         <span className={styles.group_title}>
-                            {taskData.category}
+                            {taskDataProps.category}
                         </span>
                         {
                             // taskData.repeat ?
@@ -99,7 +106,7 @@ const Task = ({ taskData }) => {
                 </div>
             </div>
             {
-                taskData.favorite ? 
+                taskDataProps.favorite ? 
                 <StarIcon sx={{
                     color: "#ffc107",
                     fontSize: 32,

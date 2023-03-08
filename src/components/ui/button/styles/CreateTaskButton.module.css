@@ -21,29 +21,45 @@
     color: var(--fontColor);
 
     border-radius: 0.25rem;
-    border: 1px solid transparent;
+    border: none;
 
     background-color: var(--bgColorInput);
 }
-.add_task__input {
+
+.add_task__btn:focus {
+    border: none;
+}
+/* .add_task__btn:focus {
+    border: none;
+} */
+.add_task__btn:hover {
+    border: none;
+}
+
+.add_task_input__container {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
 }
-.add_task__input input {
+
+.add_task_input__container input {
     padding: 0.75rem;
 }
 
-.add_task__input .close_input__btn {
+.close_input__btn {
     cursor: pointer;
     padding: 0.65rem;
     background-color: var(--bgColorInput);
     border-radius: 0.25rem;
+    color: #fd5649;
 
     transition: background-color .5s ease;
 }
 .close_input__btn:hover {
     background-color: var(--bgButtonColorHover);
     transition: background-color .5s ease;
+}
+.send_task__btn {
+    color: #67e339;
 }

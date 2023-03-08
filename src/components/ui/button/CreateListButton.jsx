@@ -22,9 +22,10 @@ const CreateListButton = () => {
     const nodeRef = useRef(null);
 
     const dispatch = useDispatch();
-    const isLSidebarOpened = useSelector(
-        state => state.sidebarStates.isLeftSidebarOpen
-    )
+    // const isLSidebarOpened = useSelector(
+    //     state => state.sidebarStates.isLeftSidebarOpen
+    // );
+    const isLSidebarOpened = JSON.parse(localStorage.getItem('LSidebarOpened'));
 
     const adaptiveSpan = !isLSidebarOpened ? {
         display: 'none',
