@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import { setCurrentGroupTasks } from '../../../store/reducers/TaskGroupSlice';
 
@@ -7,8 +7,9 @@ import { baseGroupIds } from '../../../store/defaultData/baseGroups';
 import CreateTaskButton from '../button/CreateTaskButton';
 import Task from '../cards/Task';
 
-import styles from './styles/TasksContainer.module.css';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+
+import styles from './styles/TasksContainer.module.css';
 import '../animations/Task/TaskAnimation.css';
 
 const NoTasksMessage = () => {
@@ -25,52 +26,40 @@ const TasksContainer = () => {
     const currentGroupTasks = useSelector(
         state => state.taskGroupStates.currentGroupTasks
     );
-    const filter = useSelector(
-        state => state.filterStates.searchFilter
-    );
     
     const tasks = useSelector(
         state => state.taskGroupStates.tasks
     );
+
     const selectedGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
 
-    const [hasTasks, setHasTasks] = useState(!!currentGroupTasks.length);
 
     useEffect(() => {
-        setHasTasks(currentGroupTasks.length > 0);
-    }, [currentGroupTasks]);
+        let currentTasks = tasks.filter(
+            task => task.groupId === selectedGroup.id
+        );
 
-    useEffect(() => {
-        if (filter && filter.length) {
-            const currentTasksFilter = tasks.filter(
-                task => task.groupId === selectedGroup.id && 
-                task.taskName.includes(filter)
-            );
+        if (selectedGroup.id === baseGroupIds.all)
+            currentTasks = tasks;
 
-            dispatch(setCurrentGroupTasks({tasks: currentTasksFilter}));
-        }
+        if (selectedGroup.id === baseGroupIds.plan)
+            currentTasks = tasks.filter(task => task.deadline);
 
-        else {
-            const currentTasks = tasks.filter(
-                task => task.groupId === selectedGroup.id
-            );
-            dispatch(setCurrentGroupTasks({tasks: currentTasks}));
-        }
+        if (selectedGroup.id === baseGroupIds.favorite)
+            currentTasks = tasks.filter(task => task.favorite);
 
-        console.log(tasks)
-    }, [dispatch, filter, selectedGroup, tasks]);
+        if (selectedGroup.id === baseGroupIds.completed)
+            currentTasks = tasks.filter(task => task.completed);
 
+        dispatch(setCurrentGroupTasks({tasks: currentTasks}));
 
-    useEffect(() => {
-        // если активная группа - все задачи,
-        // помещаем в массив все существующие задачи
-        if (selectedGroup.id === baseGroupIds.all) {
-            dispatch(setCurrentGroupTasks({tasks}))
-        }
-    }, [dispatch, selectedGroup, tasks])
+    }, [dispatch, selectedGroup, tasks]);
 
+    // useEffect(() => {
+    //     console.log(currentGroupTasks)
+    // }, [currentGroupTasks])
 
     return (
         <div className={styles.tasks__container}>
@@ -79,13 +68,13 @@ const TasksContainer = () => {
                 <CreateTaskButton/>
             }
             {
-                !hasTasks && <NoTasksMessage/>
+                !currentGroupTasks.length && <NoTasksMessage/>
             }
-            {
+
             <TransitionGroup style={{paddingLeft: '0.5rem'}}>
                 {
-                    hasTasks && (
-                    currentGroupTasks.map((task, index) => 
+                    currentGroupTasks.length > 0 && (
+                    currentGroupTasks.map((task, index) =>
                         <CSSTransition
                             key={index}
                             timeout={500}
@@ -93,14 +82,13 @@ const TasksContainer = () => {
                             mountOnEnter
                         >
                             <Task
-                                key={index}
+                                key={task.taskId}
                                 taskDataProps={task}
                             />
                         </CSSTransition>
                     ))
                 }
             </TransitionGroup>
-            }
         </div>
     );
 };

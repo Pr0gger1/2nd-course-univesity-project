@@ -62,6 +62,7 @@ const taskGroupSlice = createSlice({
             const groupId = action.payload.taskData.groupId;
 
             const taskId = generateUniqueId('task', 12, true);
+            const favorite = action.payload.taskData.favorite;
             const taskName = action.payload.taskData.taskName;
             const completed = action.payload.taskData.completed;
             const subTasks = action.payload.taskData.subTasks;
@@ -73,6 +74,7 @@ const taskGroupSlice = createSlice({
 
             state.tasks.push({
                     taskName, completed,
+                    favorite,
                     subTasks, notes,
                     category, groupId,
                     deadline, repeat,
@@ -90,9 +92,10 @@ const taskGroupSlice = createSlice({
         },
 
         updateTaskData(state, action) {
-
             const taskIndex = state.tasks.findIndex(task => task.taskId === action.payload.taskData.taskId);
-            state.tasks[taskIndex] = action.payload.taskData;
+
+            if (taskIndex !== -1)
+                state.tasks[taskIndex] = action.payload.taskData;
         }
     }
 })

@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import {useNavigate} from "react-router-dom";
 
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setRSidebarOpen } from '../../../store/reducers/SidebarSlice';
-import {setSelectedTask, updateCompleteTask, updateFavoriteTask, updateTaskData} from "../../../store/reducers/TaskGroupSlice";
+import { setSelectedTask, updateTaskData } from "../../../store/reducers/TaskGroupSlice";
 
 import StarIcon from '@mui/icons-material/StarRounded';
 import StarBorderIcon from '@mui/icons-material/StarBorderRounded';
@@ -16,46 +16,67 @@ import styles from './styles/Task.module.css';
 const Task = ({ taskDataProps }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
 
-    const [IsTaskCompleted, setIsTaskCompleted] = useState(false);
+    const [isTaskCompleted, setIsTaskCompleted] = useState(taskDataProps.completed);
+    const isRSidebarOpened = useSelector(
+        state => state.sidebarStates.isRightSidebarOpen
+    );
 
     const selectedGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
 
+    const selectedTask = useSelector(
+        state => state.taskGroupStates.selectedTask
+    );
+
     const taskStyle = {
-        textDecoration: taskDataProps.completed ? 'line-through' : 'none',
+        textDecoration: isTaskCompleted ? 'line-through' : 'none',
     };
 
     const onTaskClick = () => {
-        dispatch(setRSidebarOpen());
-        dispatch(setSelectedTask({taskData: taskDataProps}));
-        navigate(`/tasks/${selectedGroup.id}/${taskDataProps.taskId}`);
+        if (selectedTask.taskId !== taskDataProps.taskId) {
+            /* эта ветка нужна, чтобы при нажатии на другую задачу сайдбар
+            не закрывался, а изменял данные внутри
+            */
+
+            // Изменяем состояние выбранной задачи, если нажмем на другую задачу
+            dispatch(setSelectedTask({taskData: taskDataProps}));
+
+            // если сайдбар был закрыт, то открываем его
+            if (!isRSidebarOpened) dispatch(setRSidebarOpen());
+
+            navigate(`/tasks/${selectedGroup.id}/${taskDataProps.taskId}`);
+        }
+        else {
+            dispatch(setRSidebarOpen());
+            dispatch(setSelectedTask({taskData: taskDataProps}));
+            navigate(`/tasks/${selectedGroup.id}/${taskDataProps.taskId}`);
+        }
+
     }
 
     const onFavoriteToggle = event => {
         event.stopPropagation();
 
-        const data = {
-            ...taskDataProps, favorite: !taskDataProps.favorite
-        }
-
+        const favorite = !taskDataProps.favorite;
         dispatch(updateTaskData({
-            taskData: data
+            taskData: {...taskDataProps, favorite}
         }));
     }
 
-    useEffect(() => {
-        const data = {
-            data: { ...taskDataProps, completed: IsTaskCompleted}
-        }
+    const onTaskCheckboxClick = event => {
+        event.stopPropagation();
 
+        const completed = !isTaskCompleted;
         dispatch(updateTaskData({
-            taskData: {...data}
-        }))
-    }, [dispatch, taskDataProps, taskDataProps.taskId, IsTaskCompleted]);
+            taskData: {...taskDataProps, completed}
+        }));
 
-    
+        setIsTaskCompleted(completed);
+    }
+
     return (
         <div className={styles.task}
             onClick={() => onTaskClick()}>
@@ -72,10 +93,10 @@ const Task = ({ taskDataProps }) => {
                             color: '#68d96d',
                         }
                     }}
-                    onClick={e => e.stopPropagation()}
-                    checked={taskDataProps.completed}
-                    onChange={e => setIsTaskCompleted(e.target.checked)}
+                    onClick={e => onTaskCheckboxClick(e)}
+                    checked={isTaskCompleted}
                 />
+
                 <div className={styles.task__info}>
                     <span 
                         style={taskStyle}
@@ -89,18 +110,16 @@ const Task = ({ taskDataProps }) => {
                             {taskDataProps.category}
                         </span>
                         {
-                            // taskData.repeat ?
+                            // taskData.repeat &&
                             <span className={styles.task__repeat}>
                                 <SyncRoundedIcon className={styles.task__icons}/>
                             </span>
-                            // : null
                         }
                         {
-                            // taskData.deadline ?
+                            // taskData.deadline &&
                             <span className={styles.task__deadline}>
                                 <CalendarMonthOutlinedIcon className={styles.task__icons}/>
                             </span>
-                            // : null
                         }
                     </div>
                 </div>
@@ -114,6 +133,7 @@ const Task = ({ taskDataProps }) => {
                     }}
                     onClick={e => onFavoriteToggle(e)}
                 />
+                
                 : <StarBorderIcon
                     sx={{
                         fontSize: 32,

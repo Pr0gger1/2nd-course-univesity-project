@@ -1,5 +1,4 @@
 .sidebar__right {
-    /* transition: transform .5s; */
     transition: width .5s;
 
     padding: 2rem;
@@ -8,32 +7,19 @@
     flex-direction: column;
     flex-shrink: 0;
     gap: 1.2rem;
-    /* overflow-y: auto; */
 
     max-width: 30%;
-    /* transform: translateX(0); */
-    /* overflow: visible; */
     width: 30%;
     height: 100vh;
 
     background-color: var(--bgColorSidebar);
 }
 
-/* .sidebar__right select {
-    appearance: none;
-    background-image: url("../../../assets/img/icons/bracket_light.svg");
-    background-repeat: no-repeat;
-    background-position: 95% 50%;
-} */
 
 .sidebar__right.closed {
-    /* transform: translateX(100%); */
     width: 0; 
     padding: 0;
-    /* transform: translateX(-110vw); */
 
-    /* display: none; */
-    /* transition: transform .5s ease-in; */
     transition: width .5s ease-in;
 }
 
@@ -49,7 +35,6 @@
     background-color: var(--bgColorContent);
     color: var(--fontColor);
 
-    /* border: 1px solid transparent; */
     border: none;
     border-radius: 0.25rem;
     padding: 0.6rem;
@@ -78,16 +63,27 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.add_subtask__icon {
+    padding-right: 0.8rem; 
 }
 
  .deadline, .repeat {
-    width: 50%;
+    /* width: 50%; */
     color: var(--fontColor);
     background-color: var(--bgColorContent);
     border: none;
     border-radius: 5px;
     padding: 0.6rem;
     outline: none;
+}
+.deadline {
+    width: 100%;
+    height: 100%;
 }
 
 .repeat {
@@ -96,7 +92,7 @@
     background-repeat: no-repeat;
     background-size: 1.5rem;
     background-position: 8% 50%;
-    padding: 1rem 2rem 1rem 2.5rem;
+    padding: 1rem 2rem 1rem 3rem;
 
     appearance: none;
 }
@@ -140,6 +136,11 @@
     padding: 0.6rem;
 
     box-sizing: border-box;
+
+    background-image: url("../../../assets/img/icons/reminder_icon.svg");
+    background-repeat: no-repeat;
+    background-size: 1.5rem;
+    background-position: 3% 50%;
 }
 
 .notes {

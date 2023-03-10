@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setRSidebarOpen } from '../../store/reducers/SidebarSlice';
 
 import Button from '../ui/button/Button';
-import InputField from '../ui/input/InputField';
+// import InputField from '../ui/input/InputField';
 import CloseIcon from '@mui/icons-material/Close';
-import Checkbox from '@mui/material/Checkbox';
+// import Checkbox from '@mui/material/Checkbox';
+import AddIcon from '@mui/icons-material/Add';
 
+import DatePicker from 'react-widgets/DatePicker';
 import styles from './styles/RightSidebar.module.css';
+import "react-widgets/styles.css";
 
-// import dayjs from 'dayjs';
-// import { DesktopDatePicker } from '@mui/x-date-pickers';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-// import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+// import reminderIcon from '../../assets/img/icons/reminder_icon.svg';
+import CheckboxInput from '../ui/input/CheckboxInput';
+import { updateTaskData } from '../../store/reducers/TaskGroupSlice';
+
 
 const RightSidebar = () => {
     const dispatch = useDispatch();
@@ -25,10 +26,13 @@ const RightSidebar = () => {
     const selectedTask = useSelector(
         state => state.taskGroupStates.selectedTask
     );
+
     const taskGroups = useSelector(
         state => state.taskGroupStates.allTaskGroups.base.concat(state.taskGroupStates.allTaskGroups.custom)
-    )
+    );
+
     const [taskNameValue, setTaskNameValue] = useState(selectedTask.taskName);
+    const [isTaskCompleted, setIsTaskCompleted] = useState(selectedTask.completed);
 
     const sidebarStyles = `${styles.sidebar__right}${!isRSidebarOpened ? ' ' + styles['closed'] : ''}`;
 
@@ -41,6 +45,22 @@ const RightSidebar = () => {
         
     }
 
+    const onTaskCheckboxClick = () => {
+        const completed = !isTaskCompleted;
+        dispatch(updateTaskData({
+            taskData: {...selectedTask, completed}
+        }))
+    }
+
+
+    useEffect(() => {
+        setTaskNameValue(selectedTask.taskName)
+    }, [selectedTask]);
+
+    // useEffect(() => {
+
+    // }, [])
+
     return (
         <aside className={sidebarStyles}>
             <div className={styles.sidebar_close__btn}>
@@ -48,28 +68,25 @@ const RightSidebar = () => {
             </div>
 
             <section className={styles.add_task__section}>
-                <div className={styles.add_task}>
-                    <Checkbox 
-                        sx={{
-                            color: "var(--checkboxColor)",
-                            '& .MuiSvgIcon-root': {
-                                fontSize: 30,
-                                borderRadius: "15px"
-                            },
-                            '&.Mui-checked': {
-                                color: '#68d96d',
-                            }
-                        }}
-                    />
-                    <InputField customClasses={[styles.add_task__input]}
-                        placeholder="Ваша задача"
-                        value={taskNameValue}
-                        onChange={e => setTaskNameValue(e.target.value)}
-                    />
-                </div>    
+                <CheckboxInput
+                    placeholder='Ваша задача'
+                    inputValue={taskNameValue}
+                    checkboxChecked={isTaskCompleted}
+                    onCheckboxClick={onTaskCheckboxClick}
+                    onChangeInput={e => setTaskNameValue(e.target.value)}
+                />
 
                 <div className={styles.add_subtask__btn}>
-                    <Button>Добавить подзадачу</Button>
+                    <Button>
+                        <AddIcon 
+                            className={styles.add_subtask__icon}
+                            sx = {{
+                                fontSize: 32,
+                                color: 'var(--addSubtaskIconColor)'
+                            }}
+                        />
+                        <span>Добавить подзадачу</span>
+                    </Button>
                 </div>
 
             </section>
@@ -92,18 +109,18 @@ const RightSidebar = () => {
                         
             
             <div className={styles.date_and_repeat}>
-                <InputField 
-                    className={styles.deadline} 
-                    type="date"
+                {/* <DatePicker
+                    placeholderText="idi nahui"
+                    showIcon
+                    dateFormat='dd/MM/yyyy'
+                    selected={new Date()}
+                    customInput={<CustomInputCalendar/>}
+                /> */}
+                <DatePicker 
+                defaultValue={new Date()}
+
                 />
-                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DesktopDatePicker']}>
-                        <DemoItem>
-                            <DesktopDatePicker label="Basic date picker"
-                                defaultValue={dayjs('2022-04-17')} />
-                        </DemoItem>
-                    </DemoContainer>
-                </LocalizationProvider> */}
+
 
                 <select className={styles.repeat}
                     defaultValue={'default'}>
@@ -115,10 +132,12 @@ const RightSidebar = () => {
                 </select>
             </div>
 
-            <InputField 
+            {/* <InputField 
                 className={styles.reminder}
                 placeholder="Напоминание"
-            />
+            /> */}
+            
+            {/* <InputFieldWithIcon inputIcon={reminderIcon}/> */}
 
             <textarea 
                 className={styles.notes}

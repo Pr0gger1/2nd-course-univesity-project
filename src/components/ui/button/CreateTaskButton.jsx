@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTask } from '../../../store/reducers/TaskGroupSlice';
 
@@ -7,6 +7,7 @@ import Button from './Button';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 
+import { baseGroupIds } from '../../../store/defaultData/baseGroups';
 import { CSSTransition } from 'react-transition-group';
 
 import styles from './styles/CreateTaskButton.module.css';
@@ -25,25 +26,33 @@ const CreateTaskButton = () => {
     const dispatch = useDispatch();
 
 
-
     const addTaskHandler = () => {
+        let taskData = {
+            taskName,
+            completed: false,
+            favorite: false,
+            subTasks: [],
+            notes: '',
+            groupId: selectedGroup.id,
+            category: selectedGroup.title,
+            deadline: null,
+            reminder: null,
+            repeat: null
+            };
+
+        if (selectedGroup.id === baseGroupIds.favorite)
+            taskData.favorite = true;
+        
+        console.log(taskData)
+
         dispatch(addTask({
-            taskData: {
-                taskName,
-                completed: false,
-                subTasks: [],
-                notes: '',
-                groupId: selectedGroup.id,
-                category: selectedGroup.title,
-                deadline: null,
-                reminder: null,
-                repeat: null
-                }
+            taskData
             }
         ));
 
-            setTaskName('');
+        setTaskName('');
     }
+
     const onEnterPressed = (event) => {
         if (event.key === 'Enter' && event.target.value.length)
             addTaskHandler();

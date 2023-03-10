@@ -7,16 +7,25 @@ import TasksContainer from '../ui/containers/TasksContainer';
 import ContentTopPanel from './ContentTopPanel';
 
 import styles from './styles/Content.module.css';
+import FilteredContent from "./FilteredContent";
 
 
 const Content = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const selectedGroup = useSelector(state => state.taskGroupStates.selectedTaskGroup);
-    const allGroupsObject = useSelector(state => state.taskGroupStates.allTaskGroups);
-    const currentRoute = useSelector(state => state.routeState.currentRoute);
-
+    const selectedGroup = useSelector(
+        state => state.taskGroupStates.selectedTaskGroup
+    );
+    const allGroupsObject = useSelector(
+        state => state.taskGroupStates.allTaskGroups
+    );
+    const currentRoute = useSelector(
+        state => state.routeState.currentRoute
+    );
+    const filter = useSelector(
+        state => state.filterStates.searchFilter
+    );
 
     useEffect(() => {
         const groupId = currentRoute.split('/')[2];
@@ -50,8 +59,15 @@ const Content = () => {
 
     return (
         <div className={styles.content}>
-            <ContentTopPanel/>
-            <TasksContainer/>
+            {
+                filter.length
+                ? <FilteredContent/>
+                :
+                    <>
+                        <ContentTopPanel/>
+                        <TasksContainer/>
+                    </>
+            }
         </div>
     );
 };

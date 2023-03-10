@@ -8,6 +8,7 @@
 [data-theme="light"] {
   /* task styles */
   --starColor: #7f7f7f;
+  --addSubtaskIconColor: #80CBF1;
 
   /* scrollbar background color */
   --bgColorScrollbarTrack: #868686;
@@ -33,6 +34,7 @@
 [data-theme="dark"] {
   /* task styles */
   --starColor: #c7c7c7;
+  --addSubtaskIconColor: #3C6B94;
 
   /* scrollbar background color */
   --bgColorScrollbarTrack: #5f5f5f;
