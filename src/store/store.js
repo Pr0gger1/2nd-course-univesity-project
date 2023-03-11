@@ -2,12 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import sidebarReducer from './reducers/SidebarSlice';
 import themeReducer from './reducers/ThemeSlice';
-import taskGroupReducer from './reducers/TaskGroupSlice';
 import mobileReducer from './reducers/MobileSlice';
 import authReducer from './reducers/AuthSlice';
 import routeReducer from './reducers/RouteSlice';
 import taskLogicReducer from './reducers/TaskLogicSlice';
 import filterReducer from './reducers/FilterSlice';
+import taskGroupReducer from './reducers/TaskGroupSlice';
+import taskReducer from './reducers/TaskSlice';
 
 export default configureStore({
     reducer: {
@@ -21,7 +22,8 @@ export default configureStore({
         taskGroupStates: taskGroupReducer,
         taskLogic: taskLogicReducer,
 
-        filterStates: filterReducer
+        filterStates: filterReducer,
+        tasksStates: taskReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

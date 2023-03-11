@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setRSidebarOpen } from '../../../store/reducers/SidebarSlice';
-import { setSelectedTask, updateTaskData } from "../../../store/reducers/TaskGroupSlice";
+import { setSelectedTask, updateTaskData } from "../../../store/reducers/TaskSlice";
 
 import StarIcon from '@mui/icons-material/StarRounded';
 import StarBorderIcon from '@mui/icons-material/StarBorderRounded';
@@ -19,6 +19,7 @@ const Task = ({ taskDataProps }) => {
     
 
     const [isTaskCompleted, setIsTaskCompleted] = useState(taskDataProps.completed);
+
     const isRSidebarOpened = useSelector(
         state => state.sidebarStates.isRightSidebarOpen
     );
@@ -28,7 +29,7 @@ const Task = ({ taskDataProps }) => {
     );
 
     const selectedTask = useSelector(
-        state => state.taskGroupStates.selectedTask
+        state => state.tasksStates.selectedTask
     );
 
     const taskStyle = {
@@ -46,14 +47,12 @@ const Task = ({ taskDataProps }) => {
 
             // если сайдбар был закрыт, то открываем его
             if (!isRSidebarOpened) dispatch(setRSidebarOpen());
-
-            navigate(`/tasks/${selectedGroup.id}/${taskDataProps.taskId}`);
         }
         else {
             dispatch(setRSidebarOpen());
             dispatch(setSelectedTask({taskData: taskDataProps}));
-            navigate(`/tasks/${selectedGroup.id}/${taskDataProps.taskId}`);
         }
+        navigate(`/tasks/${selectedGroup.id}/${taskDataProps.taskId}`);
 
     }
 

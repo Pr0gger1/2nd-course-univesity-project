@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import { setCurrentGroupTasks } from '../../../store/reducers/TaskGroupSlice';
+import { setCurrentGroupTasks } from '../../../store/reducers/TaskSlice';
 
 import { baseGroupIds } from '../../../store/defaultData/baseGroups';
 
@@ -24,11 +24,11 @@ const TasksContainer = () => {
     const dispatch = useDispatch();
 
     const currentGroupTasks = useSelector(
-        state => state.taskGroupStates.currentGroupTasks
+        state => state.tasksStates.currentGroupTasks
     );
     
     const tasks = useSelector(
-        state => state.taskGroupStates.tasks
+        state => state.tasksStates.tasks
     );
 
     const selectedGroup = useSelector(

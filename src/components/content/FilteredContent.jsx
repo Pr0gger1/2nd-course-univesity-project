@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentGroupTasks } from "../../store/reducers/TaskGroupSlice";
+import { setCurrentGroupTasks } from "../../store/reducers/TaskSlice";
 import Task from "../ui/cards/Task";
 
-import {CSSTransition, TransitionGroup} from "react-transition-group";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import styles from '../ui/containers/styles/TasksContainer.module.css';
 
@@ -11,7 +11,7 @@ const FilteredContent = () => {
     const dispatch = useDispatch();
 
     const currentGroupTasks = useSelector(
-        state => state.taskGroupStates.currentGroupTasks
+        state => state.tasksStates.currentGroupTasks
     );
 
     const filter = useSelector(
@@ -19,7 +19,7 @@ const FilteredContent = () => {
     );
 
     const tasks = useSelector(
-        state => state.taskGroupStates.tasks
+        state => state.tasksStates.tasks
     );
 
     useEffect(() => {
@@ -29,9 +29,6 @@ const FilteredContent = () => {
             currentTasks = tasks.filter(
                 task => task.taskName.includes(filter)
             );
-
-            console.log(tasks);
-            console.log(currentTasks);
 
             dispatch(setCurrentGroupTasks({tasks: currentTasks}));
         }

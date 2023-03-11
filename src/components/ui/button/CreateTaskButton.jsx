@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTask } from '../../../store/reducers/TaskGroupSlice';
+import { addTask } from '../../../store/reducers/TaskSlice';
 
 import InputField from '../input/InputField';
 import Button from './Button';
@@ -42,8 +42,6 @@ const CreateTaskButton = () => {
 
         if (selectedGroup.id === baseGroupIds.favorite)
             taskData.favorite = true;
-        
-        console.log(taskData)
 
         dispatch(addTask({
             taskData

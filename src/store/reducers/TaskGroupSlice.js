@@ -13,13 +13,7 @@ const taskGroupSlice = createSlice({
         selectedTaskGroup: JSON.parse(
             localStorage.getItem('selectedTaskGroup')
         ) || initialGroup,
-        selectedTask: {},
 
-        // массив всех задач
-        tasks: [],
-
-        // массив задач активной группы
-        currentGroupTasks: [],
         allTaskGroups: {
             base: defaultGroups,
             custom: []
@@ -29,14 +23,6 @@ const taskGroupSlice = createSlice({
         setSelectedGroup(state, action) {
             state.selectedTaskGroup = action.payload.group;
             localStorage.setItem('selectedTaskGroup', JSON.stringify(action.payload.group));
-        },
-
-        setCurrentGroupTasks(state, action) {
-            state.currentGroupTasks = action.payload.tasks;
-        },
-
-        setSelectedTask(state, action) {
-            state.selectedTask = action.payload.taskData;
         },
 
         addCustomTaskGroup(state, action) {
@@ -56,54 +42,12 @@ const taskGroupSlice = createSlice({
                 state.allTaskGroups.custom = state.allTaskGroups.custom.filter(
                     group => group.id !== action.payload.groupId
                 );
-        }, 
-
-        addTask(state, action) {
-            const groupId = action.payload.taskData.groupId;
-
-            const taskId = generateUniqueId('task', 12, true);
-            const favorite = action.payload.taskData.favorite;
-            const taskName = action.payload.taskData.taskName;
-            const completed = action.payload.taskData.completed;
-            const subTasks = action.payload.taskData.subTasks;
-            const notes = action.payload.taskData.notes;
-            const category = action.payload.taskData.category;
-            const deadline = action.payload.taskData.deadline;
-            const repeat = action.payload.taskData.repeat;
-            const reminder = action.payload.taskData.reminder;
-
-            state.tasks.push({
-                    taskName, completed,
-                    favorite,
-                    subTasks, notes,
-                    category, groupId,
-                    deadline, repeat,
-                    reminder, taskId
-            });
-
-        },
-        updateCompleteTask(state, action) {
-            const index = state.tasks.findIndex(task => task.taskId === action.payload.taskId);
-            state.tasks[index].completed = action.payload.completed;
-        },
-        updateFavoriteTask(state, action) {
-            const index = state.tasks.findIndex(task => task.taskId === action.payload.taskId);
-            state.tasks[index].favorite = action.payload.favorite
-        },
-
-        updateTaskData(state, action) {
-            const taskIndex = state.tasks.findIndex(task => task.taskId === action.payload.taskData.taskId);
-
-            if (taskIndex !== -1)
-                state.tasks[taskIndex] = action.payload.taskData;
         }
     }
-})
+});
 
 export const {
-    setSelectedGroup, setCurrentGroupTasks, setSelectedTask,
-    addCustomTaskGroup, addTask, deleteCustomTaskGroup,
-    updateCompleteTask, updateTaskData, updateFavoriteTask
+    setSelectedGroup,addCustomTaskGroup, deleteCustomTaskGroup
 } = taskGroupSlice.actions;
 
 export default taskGroupSlice.reducer;

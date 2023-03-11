@@ -25,6 +25,7 @@ const CheckboxInput = ({
                     }
                 }}
             />
+            
             <InputField customClasses={[styles.checkbox__input]}
                 placeholder={placeholder}
                 value={inputValue}
