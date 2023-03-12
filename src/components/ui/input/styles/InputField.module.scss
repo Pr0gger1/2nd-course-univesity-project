@@ -11,10 +11,12 @@
 
     width: 100%;
     transition: .5s;
-}
-.input__field:hover {
-    border: 1px solid #2a2a2a;
-}
-.input__field:focus {
-    border: 1px solid #000;
+
+    &:hover {
+        border: 1px solid #2a2a2a;
+    }
+
+    &:focus {
+        border: 1px solid #000;
+    }
 }

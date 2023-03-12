@@ -14,11 +14,13 @@ import notificationIconDark from "../../assets/img/icons/bell_dark.svg";
 import settingsIconLight from "../../assets/img/icons/settings_light.svg";
 import settingsIconDark from "../../assets/img/icons/settings_dark.svg";
 
-import styles from "./styles/Header.module.css";
+import styles from "./styles/Header.module.scss";
 
 export const Header = () => {
     const dispatch = useDispatch();
-    const currentTheme = useSelector(state => state.themeState.theme);
+    const currentTheme = useSelector(
+        state => state.themeState.theme
+    );
 
     return (
         <header className={styles.header__app}>
@@ -27,7 +29,7 @@ export const Header = () => {
                     onClick={() => dispatch(setLSidebarOpen())}
                     sx={{
                         fontSize: 30
-                }}
+                    }}
                 />
             </div>
 

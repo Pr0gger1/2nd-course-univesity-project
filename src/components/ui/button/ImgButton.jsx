@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './styles/imgButton.module.css';
+import styles from './styles/ImgButton.module.scss';
 
 const ImgButton = ({ src, alt, ...props }) => {
     return (

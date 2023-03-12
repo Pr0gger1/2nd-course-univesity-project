@@ -10,7 +10,7 @@ import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import { baseGroupIds } from '../../../store/defaultData/baseGroups';
 import { CSSTransition } from 'react-transition-group';
 
-import styles from './styles/CreateTaskButton.module.css';
+import styles from './styles/CreateTaskButton.module.scss';
 import '../animations/Button/createTaskBtnAnimation.css';
 import '../animations/input/InputAnimation.css';
 

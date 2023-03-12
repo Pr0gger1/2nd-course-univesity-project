@@ -1,0 +1,51 @@
+.content__top_panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .top_panel__left {
+        display: flex;
+        flex-direction: column;
+
+        .task_list__title > span {
+            font-size: 2rem;
+        }
+    }
+
+    .day_of_week__title {
+        font-weight: 200;
+        font-size: 2rem;
+    }
+
+    .date__title {
+        margin-left: 0.5rem;
+        font-weight: 200;
+        font-size: 1.5rem;
+    }
+
+    .task_list__settings {
+        color: #ffffff;
+        background-color: transparent;
+
+        height: 2rem;
+        width: 2rem;
+
+        border: none;
+        font-size: 1.5rem;
+
+        padding: 1.25rem;
+        border-radius: 0.25rem;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+            background-color: rgba(197, 197, 197, 0.3);
+        }
+    }
+}
+
+
+
+

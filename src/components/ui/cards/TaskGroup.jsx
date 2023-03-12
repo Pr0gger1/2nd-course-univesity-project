@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import styles from './styles/TaskGroups.module.css';
+import styles from './styles/TaskGroups.module.scss';
 
 const TaskGroup = ({ title, icon, counter, isActive, onClick }) => {
     const sidebarState = useSelector(

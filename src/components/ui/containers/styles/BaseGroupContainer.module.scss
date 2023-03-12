@@ -1,9 +1,9 @@
 .base_group__container {
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
     justify-content: flex-start;
-    
+    gap: 0.7rem;
+
     border-bottom: var(--borderBottomSidebar);
-    padding-bottom: 8px;
+    padding-bottom: 0.5rem;
 }

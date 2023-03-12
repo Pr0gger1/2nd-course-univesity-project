@@ -10,7 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { CreateGroupInput } from '../customComponents/CustomInputs';
 
-import styles from './styles/CreateListButton.module.css';
+import styles from './styles/CreateListButton.module.scss';
 import '../animations/Button/createListBtnAnimation.css';
 
 const CreateListButton = () => {
@@ -22,10 +22,9 @@ const CreateListButton = () => {
     const nodeRef = useRef(null);
 
     const dispatch = useDispatch();
-    // const isLSidebarOpened = useSelector(
-    //     state => state.sidebarStates.isLeftSidebarOpen
-    // );
-    const isLSidebarOpened = JSON.parse(localStorage.getItem('LSidebarOpened'));
+    const isLSidebarOpened = useSelector(
+        state => state.sidebarStates.isLeftSidebarOpen
+    );
 
     const adaptiveSpan = !isLSidebarOpened ? {
         display: 'none',
@@ -60,9 +59,8 @@ const CreateListButton = () => {
                     onClick={onCreateListBtnClick}
                     style={adaptiveBtn}
             >
-                <AddBoxIcon className={styles.add_icon}/>
+                <AddBoxIcon/>
                     <span
-                        className={styles.btn_text}
                         style={adaptiveSpan}
                     >
                         Создать список

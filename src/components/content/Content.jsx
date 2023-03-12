@@ -5,10 +5,9 @@ import { setSelectedGroup } from '../../store/reducers/TaskGroupSlice';
 
 import TasksContainer from '../ui/containers/TasksContainer'; 
 import ContentTopPanel from './ContentTopPanel';
+import FilteredContent from './FilteredContent';
 
-import styles from './styles/Content.module.css';
-import FilteredContent from "./FilteredContent";
-
+import styles from './styles/Content.module.scss';
 
 const Content = () => {
     const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import React from "react";
 
-import styles from './styles/HomePage.module.css';
+import styles from './styles/HomePage.module.scss';
 
 import { LeftSidebar } from "../sidebars/LeftSidebar";
 import { Header } from "../header/Header";

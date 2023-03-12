@@ -7,7 +7,7 @@ import { setCurrentRoute } from "../../../store/reducers/RouteSlice";
 
 import TaskGroup from '../cards/TaskGroup';
 
-import styles from './styles/CustomGroupContainer.module.css';
+import styles from './styles/CustomGroupContainer.module.scss';
 
 const CustomGroupContainer = () => {
     const selectedTaskGroup = useSelector(

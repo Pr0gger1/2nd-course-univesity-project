@@ -1,5 +1,5 @@
 import React from "react";
-import styles from './styles/ErrorPage.module.css';
+import styles from './styles/ErrorPage.module.scss';
 import {Button, styled} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 

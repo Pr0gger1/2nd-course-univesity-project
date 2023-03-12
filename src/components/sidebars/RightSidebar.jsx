@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setRSidebarOpen } from '../../store/reducers/SidebarSlice';
-import {setSelectedTask, updateTaskData} from '../../store/reducers/TaskSlice';
+import { updateTaskData } from '../../store/reducers/TaskSlice';
 
 import Button from '../ui/button/Button';
 import CloseIcon from '@mui/icons-material/Close';
@@ -16,9 +16,7 @@ import InputField from '../ui/input/InputField';
 import InputFieldWithIcon from '../ui/input/InputFieldWithIcon';
 // import "react-widgets/styles.css";
 
-
 import reminderIcon from '../../assets/img/icons/reminder_icon.svg';
-import task from "../ui/cards/Task";
 
 
 const RightSidebar = () => {
@@ -41,9 +39,9 @@ const RightSidebar = () => {
 
     const [isTaskCompleted, setIsTaskCompleted] = useState(selectedTask.completed);
 
-    const tasks = useSelector(
-        state => state.tasksStates.tasks
-    )
+    // const tasks = useSelector(
+    //     state => state.tasksStates.tasks
+    // )
 
     const [showButton, setShowButton] = useState(true);
     const [showInput, setShowInput] = useState(false);
@@ -59,7 +57,7 @@ const RightSidebar = () => {
         
     }
 
-    const onTaskCheckboxChange = event => {
+    const onTaskCheckboxChange = () => {
         const completed = !isTaskCompleted;
         setIsTaskCompleted(prev => !prev);
 

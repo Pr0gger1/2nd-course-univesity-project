@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchFilter } from '../../../store/reducers/FilterSlice';
 
-import styles from './styles/SearchInput.module.css';
+import styles from './styles/SearchInput.module.scss';
 
 const SearchInput = ({ placeholder = '', ...props}) => {
     const dispatch = useDispatch();

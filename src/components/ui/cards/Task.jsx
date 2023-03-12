@@ -11,7 +11,7 @@ import SyncRoundedIcon from '@mui/icons-material/SyncRounded';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import Checkbox from '@mui/material/Checkbox';
 
-import styles from './styles/Task.module.css';
+import styles from './styles/Task.module.scss';
 
 const Task = ({ taskDataProps }) => {
     const dispatch = useDispatch();
@@ -99,7 +99,7 @@ const Task = ({ taskDataProps }) => {
                 <div className={styles.task__info}>
                     <span 
                         style={taskStyle}
-                        className={styles.task_title}
+                        className={styles.task__title}
                     >
                         {taskDataProps.taskName}
                     </span>

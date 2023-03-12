@@ -15,16 +15,16 @@
     color: var(--fontColor);
 
     transition: border-color 0.2s ease;
-}
 
-.search:focus {
-    border-color: #c0c0c0;
-    outline: none;
-}
+    &:focus {
+        border-color: #c0c0c0;
+        outline: none;
+    }
 
-.search::placeholder {
-    letter-spacing: 0.2em;
-    font-size: 0.8rem;
+    &::placeholder {
+        letter-spacing: 0.2em;
+        font-size: 0.8rem;
+    }
 }
 
 ::-webkit-search-cancel-button {

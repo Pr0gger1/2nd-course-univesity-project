@@ -11,7 +11,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'fire
 import InputField from '../ui/input/InputField';
 import Button from '../ui/button/Button';
 
-import styles from './AuthForm.module.css';
+import styles from './AuthForm.module.scss';
 
 const fieldStyle = {
     padding: "1rem 0.5rem 1rem 3rem"

@@ -9,7 +9,7 @@ import Task from '../cards/Task';
 
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-import styles from './styles/TasksContainer.module.css';
+import styles from './styles/TasksContainer.module.scss';
 import '../animations/Task/TaskAnimation.css';
 
 const NoTasksMessage = () => {
@@ -57,9 +57,6 @@ const TasksContainer = () => {
 
     }, [dispatch, selectedGroup, tasks]);
 
-    // useEffect(() => {
-    //     console.log(currentGroupTasks)
-    // }, [currentGroupTasks])
 
     return (
         <div className={styles.tasks__container}>

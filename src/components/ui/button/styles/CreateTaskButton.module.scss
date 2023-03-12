@@ -1,0 +1,63 @@
+.create_task__btn {
+    background-size: 1.5rem 1.5rem !important;
+    background: var(--bgButtonColor) url("../../../../assets/img/icons/add_task_btn.svg")
+    no-repeat 6% 50%;
+
+    color: var(--fontColor);
+    font-weight: 500;
+
+    border: none;
+
+    padding: 0.75rem 0.75rem 0.75rem 3rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--bgButtonColorHover);
+
+    }
+}
+
+.add_task_input__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+
+    .add_task__btn {
+        color: var(--fontColor);
+
+        border-radius: 0.25rem;
+        border: none;
+
+        background-color: var(--bgColorInput);
+
+        input {
+            padding: 0.75rem;
+        }
+
+        &:hover, &:focus {
+            border: none;
+        }
+    }
+
+    .close_input__btn {
+        cursor: pointer;
+        padding: 0.65rem;
+        background-color: var(--bgColorInput);
+        border-radius: 0.25rem;
+        color: #fd5649;
+
+        transition: background-color .5s ease;
+
+        &:hover {
+            background-color: var(--bgButtonColorHover);
+            transition: background-color .5s ease;
+        }
+    }
+
+    .send_task__btn {
+        color: #67e339;
+    }
+}
+

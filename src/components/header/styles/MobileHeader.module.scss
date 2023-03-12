@@ -1,0 +1,38 @@
+.header__app {
+    padding: 0.3125rem 1.25rem 0.3125rem 0.625rem;
+    background-color: var(--bgColorHeader);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    outline: none;
+    border: 0;
+
+    .hamburger_menu__btn {
+        display: flex;
+        align-items: center;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    .settings__buttons {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        outline: none;
+
+        img {
+            width: 1.5rem;
+            height: 1.5rem;
+
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+    }
+}

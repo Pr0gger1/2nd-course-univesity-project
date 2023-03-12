@@ -5,7 +5,7 @@ import Task from "../ui/cards/Task";
 
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
-import styles from '../ui/containers/styles/TasksContainer.module.css';
+import styles from '../ui/containers/styles/TasksContainer.module.scss';
 
 const FilteredContent = () => {
     const dispatch = useDispatch();

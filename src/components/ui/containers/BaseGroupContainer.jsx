@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { setSelectedGroup } from '../../../store/reducers/TaskGroupSlice';
 
 import TaskGroup from '../cards/TaskGroup';
-import styles from './styles/BaseGroupContainer.module.css';
+import styles from './styles/BaseGroupContainer.module.scss';
 import {setCurrentRoute} from "../../../store/reducers/RouteSlice";
 
 

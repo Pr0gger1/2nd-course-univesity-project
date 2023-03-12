@@ -1,6 +1,6 @@
 import React from "react";
 import Avatar from "@mui/material/Avatar";
-import styles from "./styles/UserDataCard.module.css";
+import styles from "./styles/UserDataCard.module.scss";
 import {useSelector} from "react-redux";
 
 const UserDataCard = ({ name, email, photo }) => {
@@ -20,10 +20,10 @@ const UserDataCard = ({ name, email, photo }) => {
         alt="avatar"
         src={photo}
       />
-      <div className={isLSidebarOpened ? '' : styles.user__wrap}>
-        <div className={styles.user__info}>
-          <span className={styles.user__name}>{name}</span>
-          <span className={styles.user__email}>{email}</span>
+      <div className={isLSidebarOpened ? '' : styles.user__card__wrap}>
+        <div className={styles.user__card__info}>
+          <span className={styles.user__card__name}>{name}</span>
+          <span className={styles.user__card__email}>{email}</span>
         </div>
       </div>
     </section>
