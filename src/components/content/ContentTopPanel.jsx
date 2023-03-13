@@ -1,15 +1,38 @@
-import React from "react";
+import React, { useRef, useState } from 'react';
 import { useSelector } from "react-redux";
 
-import { DateFormatter } from "../../utils/DateFormatter";
 import Button from '../ui/button/Button';
+import TaskGroupMenuContainer from '../ui/containers/TaskGroupMenuContainer';
+import ContextMenu from '../ui/contextMenu/ContextMenu';
 
-import styles from "./styles/ContentTopPanel.module.scss";
+import { DateFormatter } from '../../utils/DateFormatter';
+
+import styles from './styles/ContentTopPanel.module.scss';
 
 const ContentTopPanel = () => {
+    const [isMenuOpened, setIsMenuOpened] = useState(false);
+
+    const menuRef = useRef(null);
+
     const selectedGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
+
+    // useEffect(() => {
+    //     console.log(filterTask);
+    // }, [filterTask]);
+
+    // const onAlphabetFilterClick = event => {
+    //     let filterData = {
+    //         type: event.target.value,
+    //         desc: false
+    //     }
+    //
+    //     if (filterTask.desc)
+    //         filterData.desc = true;
+    //
+    //     setFilterTask(filterData);
+    // }
 
     return (
         <section className={styles.content__top_panel}>
@@ -28,11 +51,22 @@ const ContentTopPanel = () => {
                     {new DateFormatter().getFullDate()}
                 </span>
             </div>
-            <Button customClass={styles.task_list__settings}>
-                •••
-            </Button>
 
+            <div className={styles.context__container} ref={menuRef}>
+                <Button customClass={styles.task_list__settings}
+                    onClick={() => setIsMenuOpened(prevState => !prevState)}
+                >
+                    •••
+                </Button>
 
+                <ContextMenu
+                    isMenuOpened={isMenuOpened}
+                    setIsMenuOpened={setIsMenuOpened}
+                    menuRef={menuRef}
+                >
+                    <TaskGroupMenuContainer/>
+                </ContextMenu>
+            </div>
 
         </section>
     );

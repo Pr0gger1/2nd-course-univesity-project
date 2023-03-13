@@ -11,7 +11,7 @@ import { CSSTransition } from 'react-transition-group';
 import '../ui/animations/Button/createListBtnAnimation.css'
 
 // import DatePicker from 'react-widgets/DatePicker';
-import styles from './styles/RightSidebar.module.css';
+import styles from './styles/RightSidebar.module.scss';
 import InputField from '../ui/input/InputField';
 import InputFieldWithIcon from '../ui/input/InputFieldWithIcon';
 // import "react-widgets/styles.css";
@@ -39,9 +39,6 @@ const RightSidebar = () => {
 
     const [isTaskCompleted, setIsTaskCompleted] = useState(selectedTask.completed);
 
-    // const tasks = useSelector(
-    //     state => state.tasksStates.tasks
-    // )
 
     const [showButton, setShowButton] = useState(true);
     const [showInput, setShowInput] = useState(false);
@@ -157,9 +154,6 @@ const RightSidebar = () => {
                 defaultValue={new Date()}
 
                 /> */}
-
-                
-
 
                 <select className={styles.repeat}
                     defaultValue={'default'}>

@@ -2,7 +2,7 @@ import React from "react";
 import UserDataCard from "../ui/cards/UserDataCard";
 import SearchInput from "../ui/input/SearchInput";
 
-import styles from "./styles/LeftSidebar.module.css";
+import styles from "./styles/LeftSidebar.module.scss";
 
 import testAvatar from '../../assets/test/testAvatar.jpg';
 import BaseGroupContainer from "../ui/containers/BaseGroupContainer";

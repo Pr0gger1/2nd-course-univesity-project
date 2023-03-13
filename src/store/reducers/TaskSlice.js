@@ -27,6 +27,7 @@ const taskSlice = createSlice({
 
             const taskId = generateUniqueId('task', 12, true);
             const favorite = action.payload.taskData.favorite;
+            const createdAt = action.payload.taskData.createdAt;
             const taskName = action.payload.taskData.taskName;
             const completed = action.payload.taskData.completed;
             const subTasks = action.payload.taskData.subTasks;
@@ -38,7 +39,7 @@ const taskSlice = createSlice({
 
             state.tasks.push({
                     taskName, completed,
-                    favorite,
+                    favorite, createdAt,
                     subTasks, notes,
                     category, groupId,
                     deadline, repeat,

@@ -31,6 +31,7 @@ const CreateTaskButton = () => {
             taskName,
             completed: false,
             favorite: false,
+            createdAt: new Date().getTime(),
             subTasks: [],
             notes: '',
             groupId: selectedGroup.id,
@@ -43,10 +44,7 @@ const CreateTaskButton = () => {
         if (selectedGroup.id === baseGroupIds.favorite)
             taskData.favorite = true;
 
-        dispatch(addTask({
-            taskData
-            }
-        ));
+        dispatch(addTask({taskData}));
 
         setTaskName('');
     }

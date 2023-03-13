@@ -11,6 +11,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import styles from './styles/TasksContainer.module.scss';
 import '../animations/Task/TaskAnimation.css';
+import {useTask} from "../../../hooks/useTask";
 
 const NoTasksMessage = () => {
     return (
@@ -31,15 +32,36 @@ const TasksContainer = () => {
         state => state.tasksStates.tasks
     );
 
+
+    const taskFilter = useSelector(
+        state => state.filterStates.taskFilter
+    );
+
     const selectedGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
 
+    // const currentGroupTasks = useSelector(
+    //     state => state.tasksStates.currentGroupTasks
+    // );
+
+    const sortedTasks = useTask(currentGroupTasks, taskFilter);
+
+    
+    useEffect(() => {
+        console.log(currentGroupTasks.createdAt)
+    }, [currentGroupTasks])
 
     useEffect(() => {
-        let currentTasks = tasks.filter(
+        let currentTasks = [...tasks].filter(
             task => task.groupId === selectedGroup.id
         );
+
+        if (taskFilter.type === 'alphabet') {
+            currentTasks.sort(
+                (a, b) => a.taskName.localeCompare(b.taskName)
+            );
+        }
 
         if (selectedGroup.id === baseGroupIds.all)
             currentTasks = tasks;
@@ -55,7 +77,7 @@ const TasksContainer = () => {
 
         dispatch(setCurrentGroupTasks({tasks: currentTasks}));
 
-    }, [dispatch, selectedGroup, tasks]);
+    }, [dispatch, selectedGroup, taskFilter.type, tasks]);
 
 
     return (
@@ -70,8 +92,8 @@ const TasksContainer = () => {
 
             <TransitionGroup style={{paddingLeft: '0.5rem'}}>
                 {
-                    currentGroupTasks.length > 0 && (
-                    currentGroupTasks.map((task, index) =>
+                    sortedTasks && sortedTasks.length > 0 && (
+                    sortedTasks.map((task, index) =>
                         <CSSTransition
                             key={index}
                             timeout={500}

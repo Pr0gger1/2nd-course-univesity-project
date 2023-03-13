@@ -1,0 +1,14 @@
+.context__menu {
+  position: fixed;
+  padding: 0.5rem;
+  z-index: 10;
+  top: 15%;
+
+  color: var(--fontColor);
+  background-color: var(--bgColorSecond);
+  border-radius: 0.25rem;
+  max-width: 30%;
+  width: 20%;
+  min-width: 10%;
+
+}

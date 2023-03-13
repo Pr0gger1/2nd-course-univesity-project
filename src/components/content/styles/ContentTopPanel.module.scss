@@ -23,28 +23,65 @@
         font-size: 1.5rem;
     }
 
-    .task_list__settings {
-        color: #ffffff;
-        background-color: transparent;
 
-        height: 2rem;
-        width: 2rem;
+}
 
-        border: none;
-        font-size: 1.5rem;
-
-        padding: 1.25rem;
-        border-radius: 0.25rem;
-
+.context__container {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 1rem;
 
-        &:hover {
-            background-color: rgba(197, 197, 197, 0.3);
+        position: relative;
+
+        .task_list__settings {
+            color: var(--fontColor);
+            background-color: transparent;
+
+            height: 2rem;
+            width: 2rem;
+
+            border: none;
+            font-size: 1.5rem;
+
+            padding: 1.25rem;
+            border-radius: 0.25rem;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:hover {
+                background-color: rgba(197, 197, 197, 0.3);
+            }
+        }
+
+        .menu__item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            cursor: pointer;
+
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+
+            &:hover {
+                background-color: var(--bgButtonColorHover);
+            }
+
+            span {
+                display: flex;
+                justify-content: flex-end;
+                //flex: 2;
+            }
+
+            img {
+                width: 1.3rem;
+                height: 1.3rem;
+            }
         }
     }
-}
 
 
 

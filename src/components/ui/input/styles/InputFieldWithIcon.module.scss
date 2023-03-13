@@ -5,7 +5,7 @@
     gap: 0.5rem;
     border-radius: 0.5rem;
 
-    background-color: var(--bgColorContent);
+    background-color: var(--bgColorFirst);
 
     .icon__input {
         width: 2rem;
@@ -13,7 +13,7 @@
     }
     
     input {
-        background-color: var(--bgColorContent);
+        background-color: var(--bgColorFirst);
         color: var(--fontColor);
         border: none;
         outline: none;

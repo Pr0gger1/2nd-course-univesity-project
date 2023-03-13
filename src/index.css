@@ -15,8 +15,8 @@
   --bgColorScrollbarThumb: #b9b9b9;
 
   /* ui background color */
-  --bgColorHeader: #dfdfdf;
-  --bgColorContent: #fff;
+  --bgColorSecond: #dfdfdf;
+  --bgColorFirst: #fff;
   --bgColorInput: #e5e5e5;
   --bgButtonColor: #f2f2f2;
   --bgButtonColorHover: #e1e1e1;
@@ -27,7 +27,7 @@
   --searchProps: #ebebeb url("./assets/img/icons/search_dark.svg");
 
   /* sidebar styles */
-  --bgColorSidebar: #f2f2f2;
+  --bgColorThird: #f2f2f2;
   --borderBottomSidebar: 1px solid #868686;
 }
 
@@ -41,8 +41,8 @@
   --bgColorScrollbarThumb: #191919;
 
   /* ui background color*/
-  --bgColorHeader: #232323;
-  --bgColorContent: #2a2a2a;
+  --bgColorSecond: #232323;
+  --bgColorFirst: #2a2a2a;
   --bgColorInput: #444;
   --bgButtonColor: #373737;
   --bgButtonColorHover: #404040;
@@ -53,7 +53,7 @@
   --searchProps: #444 url("./assets/img/icons/search_light.svg");
 
   /* sidebar styles */
-  --bgColorSidebar: #333333;
+  --bgColorThird: #333333;
   --borderBottomSidebar: 1px solid #444;
 }
 
@@ -74,7 +74,7 @@
 
 main {
   color: var(--fontColor);
-  background-color: var(--bgColorContent);
+  background-color: var(--bgColorFirst);
 }
 
 a {
@@ -103,4 +103,8 @@ input::placeholder {
 * {
   scrollbar-width: var(--scrollbarWidth);
   scrollbar-color: var(--bgColorScrollbarThumb) var(--bgColorScrollbarTrack);
+}
+
+button {
+  cursor: pointer;
 }
