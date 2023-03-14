@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {generateUniqueId} from "../../utils/generateUniqueId";
+import { generateUniqueId } from '../../utils/generateUniqueId';
 
 const taskSlice = createSlice({
     name: 'tasks',
@@ -43,14 +43,15 @@ const taskSlice = createSlice({
                     subTasks, notes,
                     category, groupId,
                     deadline, repeat,
-                    reminder, taskId
+                    reminder, id: taskId
             });
 
         },
 
         updateTaskData(state, action) {
-            const taskIndex = state.tasks.findIndex(task => task.taskId === action.payload.taskData.taskId);
-
+            const taskIndex = state.tasks.findIndex(
+                task => task.id === action.payload.taskData.id
+            );
             if (taskIndex !== -1)
                 state.tasks[taskIndex] = action.payload.taskData;
         }
@@ -61,4 +62,5 @@ export const {
     setCurrentGroupTasks, setSelectedTask,
     addTask, updateTaskData
 } = taskSlice.actions;
+
 export default taskSlice.reducer;

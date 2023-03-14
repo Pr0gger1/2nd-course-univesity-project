@@ -6,7 +6,6 @@ import customGroupDefaultIcon from '../../assets/img/icons/default/custom_group_
 import { initialGroup } from "../defaultData/baseGroups";
 import defaultGroups from '../defaultData/baseGroups';
 
-
 const taskGroupSlice = createSlice({
     name: 'taskGroupsStates',
     initialState: {
@@ -38,16 +37,33 @@ const taskGroupSlice = createSlice({
         },
         
         deleteCustomTaskGroup(state, action) {
-            if (state.allTaskGroups.custom.length)
+            if (state.allTaskGroups.custom.length) {
                 state.allTaskGroups.custom = state.allTaskGroups.custom.filter(
                     group => group.id !== action.payload.groupId
                 );
+                window.location.pathname = `/tasks/${initialGroup.id}`;
+            }
+        },
+
+        renameCustomTaskGroup(state, action) {
+            const groupId = action.payload.groupId;
+            const newName = action.payload.newName;
+
+            if (state.allTaskGroups.custom.length) {
+                let groupIndex = state.allTaskGroups.custom.findIndex(
+                    group => group.id === groupId
+                );
+                state.allTaskGroups.custom[groupIndex].title = newName;
+                state.allTaskGroups.custom[groupIndex].pageTitle = newName;
+                state.allTaskGroups.custom[groupIndex].webTitle = `Productify - ${newName}`;
+            }
         }
     }
 });
 
 export const {
-    setSelectedGroup,addCustomTaskGroup, deleteCustomTaskGroup
+    setSelectedGroup,addCustomTaskGroup,
+    deleteCustomTaskGroup, renameCustomTaskGroup
 } = taskGroupSlice.actions;
 
 export default taskGroupSlice.reducer;

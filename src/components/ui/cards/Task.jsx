@@ -37,7 +37,7 @@ const Task = ({ taskDataProps }) => {
     };
 
     const onTaskClick = () => {
-        if (selectedTask.taskId !== taskDataProps.taskId) {
+        if (selectedTask.id !== taskDataProps.id) {
             /* эта ветка нужна, чтобы при нажатии на другую задачу сайдбар
             не закрывался, а изменял данные внутри
             */
@@ -52,7 +52,7 @@ const Task = ({ taskDataProps }) => {
             dispatch(setRSidebarOpen());
             dispatch(setSelectedTask({taskData: taskDataProps}));
         }
-        navigate(`/tasks/${selectedGroup.id}/${taskDataProps.taskId}`);
+        navigate(`/tasks/${selectedGroup.id}/${taskDataProps.id}`);
 
     }
 

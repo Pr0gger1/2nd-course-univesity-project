@@ -47,7 +47,7 @@ const FilteredContent = () => {
                             mountOnEnter
                         >
                             <Task
-                                key={task.taskId}
+                                key={task.id}
                                 taskDataProps={task}
                             />
                         </CSSTransition>

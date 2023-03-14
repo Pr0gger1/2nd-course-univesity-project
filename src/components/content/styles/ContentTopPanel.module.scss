@@ -60,6 +60,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            justify-content: space-between;
 
             cursor: pointer;
 
@@ -79,6 +80,13 @@
             img {
                 width: 1.3rem;
                 height: 1.3rem;
+            }
+            .select__container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-grow: 1;
+                gap: 0.25rem;
             }
         }
     }

@@ -8,7 +8,7 @@ import { CSSTransition } from "react-transition-group";
 import Button from './Button';
 import CloseIcon from '@mui/icons-material/Close';
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import { CreateGroupInput } from '../customComponents/CustomInputs';
+import { CustomTextField } from '../customComponents/CustomInputs';
 
 import styles from './styles/CreateListButton.module.scss';
 import '../animations/Button/createListBtnAnimation.css';
@@ -78,7 +78,7 @@ const CreateListButton = () => {
             onExited={() => setShowButton(true)}
         >
             <>
-                <CreateGroupInput
+                <CustomTextField
                     ref={nodeRef}
                     id="standard-basic"
                     label="Введите название списка"

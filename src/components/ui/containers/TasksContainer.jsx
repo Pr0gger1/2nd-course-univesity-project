@@ -27,41 +27,26 @@ const TasksContainer = () => {
     const currentGroupTasks = useSelector(
         state => state.tasksStates.currentGroupTasks
     );
-    
     const tasks = useSelector(
         state => state.tasksStates.tasks
     );
-
-
     const taskFilter = useSelector(
         state => state.filterStates.taskFilter
     );
-
     const selectedGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
-
-    // const currentGroupTasks = useSelector(
-    //     state => state.tasksStates.currentGroupTasks
-    // );
-
     const sortedTasks = useTask(currentGroupTasks, taskFilter);
 
     
-    useEffect(() => {
-        console.log(currentGroupTasks.createdAt)
-    }, [currentGroupTasks])
+    // useEffect(() => {
+    //     console.log(currentGroupTasks.createdAt)
+    // }, [currentGroupTasks])
 
     useEffect(() => {
         let currentTasks = [...tasks].filter(
             task => task.groupId === selectedGroup.id
         );
-
-        if (taskFilter.type === 'alphabet') {
-            currentTasks.sort(
-                (a, b) => a.taskName.localeCompare(b.taskName)
-            );
-        }
 
         if (selectedGroup.id === baseGroupIds.all)
             currentTasks = tasks;
@@ -101,7 +86,7 @@ const TasksContainer = () => {
                             mountOnEnter
                         >
                             <Task
-                                key={task.taskId}
+                                key={task.id}
                                 taskDataProps={task}
                             />
                         </CSSTransition>

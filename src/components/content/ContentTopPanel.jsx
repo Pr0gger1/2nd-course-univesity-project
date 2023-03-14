@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState} from 'react';
 import { useSelector } from "react-redux";
 
 import Button from '../ui/button/Button';
@@ -17,22 +17,6 @@ const ContentTopPanel = () => {
     const selectedGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
-
-    // useEffect(() => {
-    //     console.log(filterTask);
-    // }, [filterTask]);
-
-    // const onAlphabetFilterClick = event => {
-    //     let filterData = {
-    //         type: event.target.value,
-    //         desc: false
-    //     }
-    //
-    //     if (filterTask.desc)
-    //         filterData.desc = true;
-    //
-    //     setFilterTask(filterData);
-    // }
 
     return (
         <section className={styles.content__top_panel}>

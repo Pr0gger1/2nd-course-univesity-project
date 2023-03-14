@@ -1,28 +1,36 @@
 import {useMemo} from "react";
 
-function sortTasksByText(a, b, desc = true) {
+function sortTasks(a, b, desc = true) {
     if (!desc) {
         let temp = a;
         a = b;
         b = temp;
     }
-    return a.taskName.localeCompare(b.taskName);
+
+    if (a > b) return 1;
+    else if (a < b) return -1;
+    return 0;
 }
 
-function sortTasksByTime(a, b, desc = true) {
-    if (!desc) {
-        let temp = a;
-        a = b;
-        b = temp;
-    }
-    return a > b;
-}
 export const useTask = (groupTasks, filter) => {
     return useMemo(() => {
         if (filter.type === 'alphabet')
-            return [...groupTasks].sort((a, b) => sortTasksByText(a, b, filter.desc));
+            return [...groupTasks].sort(
+            (a, b) => sortTasks(
+                a.taskName, b.taskName, filter.desc
+            )
+        );
         else if (filter.type === 'created_at')
-            return [...groupTasks].sort((a, b) => sortTasksByTime(a, b, filter.desc));
+            return [...groupTasks].sort(
+            (a, b) => sortTasks(
+                a.createdAt, b.createdAt, filter.desc
+            )
+        );
+        else return [...groupTasks].sort(
+            (a, b) => sortTasks(
+                a.favorite, b.favorite, filter.desc
+            )
+        );
 
     }, [groupTasks, filter]);
 }
