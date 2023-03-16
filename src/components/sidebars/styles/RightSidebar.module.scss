@@ -77,6 +77,27 @@
         }
 
     }
+
+    .reminder {
+        color: var(--fontColor);
+        background-color: var(--bgColorFirst);
+        
+        border: none;
+        outline: none;
+        border-radius: 5px;
+    
+        // padding: 0.6rem;
+        padding: 1rem 2rem 1rem 3rem;
+    
+        box-sizing: border-box;
+    
+        background-image: url("../../../assets/img/icons/reminder_icon.svg");
+        background-repeat: no-repeat;
+        background-size: 1.5rem;
+        background-position: 3% 50%;
+    
+        appearance: none;
+    }
 }
 
 
@@ -108,23 +129,7 @@
     appearance: none;
 }
 
-.reminder {
-    color: var(--fontColor);
-    background-color: var(--bgColorFirst);
-    
-    border: none;
-    outline: none;
-    border-radius: 5px;
 
-    padding: 0.6rem;
-
-    box-sizing: border-box;
-
-    background-image: url("../../../assets/img/icons/reminder_icon.svg");
-    background-repeat: no-repeat;
-    background-size: 1.5rem;
-    background-position: 3% 50%;
-}
 
 .notes {
     color: var(--fontColor);

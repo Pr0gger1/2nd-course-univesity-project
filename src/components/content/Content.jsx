@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setSelectedGroup } from '../../store/reducers/TaskGroupSlice';
 
-import TasksContainer from '../ui/containers/TasksContainer'; 
-import ContentTopPanel from './ContentTopPanel';
-import FilteredContent from './FilteredContent';
+import TaskContainer from '../ui/containers/TaskContainer';
+import ContentTopPanel from './parts/ContentTopPanel';
+import FilteredContent from './parts/FilteredContent';
 
 import styles from './styles/Content.module.scss';
 
@@ -25,19 +25,17 @@ const Content = () => {
     const filter = useSelector(
         state => state.filterStates.searchFilter
     );
-
+ 
     useEffect(() => {
         const groupId = currentRoute.split('/')[2];
         const allGroups = [...allGroupsObject.base, ...allGroupsObject.custom];
 
         const group = allGroups.find(group => group.id === groupId);
 
-        if (group) {
+        if (group)
             dispatch(setSelectedGroup({ group }));
-        }
-        else {
-         navigate('/');
-        }
+        else navigate('/');
+
 
     }, [
         allGroupsObject.base,
@@ -45,7 +43,6 @@ const Content = () => {
         currentRoute, dispatch,
         navigate
     ]);
-
 
     useEffect(() => {
         try {
@@ -62,10 +59,10 @@ const Content = () => {
                 filter.length
                 ? <FilteredContent/>
                 :
-                    <>
-                        <ContentTopPanel/>
-                        <TasksContainer/>
-                    </>
+                <>
+                    <ContentTopPanel/>
+                    <TaskContainer/>
+                </>
             }
         </div>
     );

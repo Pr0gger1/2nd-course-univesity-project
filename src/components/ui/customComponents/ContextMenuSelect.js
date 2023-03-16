@@ -1,7 +1,7 @@
 import Select from "@mui/material/Select";
 import { styled } from '@mui/material/styles';
 
-export const CustomSelect = styled(Select)`
+export const ContextMenuSelect = styled(Select)`
   .MuiInputBase-input {
     height: 0.5rem;
     width: 100%;
@@ -9,7 +9,6 @@ export const CustomSelect = styled(Select)`
     color: var(--fontColor);
     //flex: 0 0 100%;
     flex-grow: 1;
-
   }
 
   .MuiSelect-root:hover {

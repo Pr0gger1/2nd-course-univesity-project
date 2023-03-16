@@ -7,11 +7,10 @@
     flex-shrink: 0;
 
     padding: 1rem 1.25rem 1rem 0.5rem;
-
-    max-width: 15%;
+    //width: 15%;
+    max-width: 30%;
     min-width: 2.5rem;
 
-    width: 15%;
     height: 100vh;
 
     background-color: var(--bgColorThird);
@@ -20,7 +19,9 @@
     &.closed {
         align-items: start;
         width: 2.5rem;
+        transition: width .5s ease;
         padding: 1rem 0.5rem;
+
 
         input::placeholder {
             color: transparent;
@@ -34,4 +35,3 @@
         height: 42%;
     }
 }
-

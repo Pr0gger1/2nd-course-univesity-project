@@ -1,16 +1,17 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate, useRoutes } from 'react-router-dom';
+
 import AuthPage from '../components/pages/AuthPage';
 import ErrorPage from '../components/pages/ErrorPage';
 import HomePage from '../components/pages/HomePage';
 
-import {Navigate, useRoutes} from "react-router-dom";
-import ConditionalRoute from "./ConditionalRoute";
-import MobileHomePage from "../components/pages/mobile/MobileHomePage";
-import {useSelector} from "react-redux";
+import ConditionalRoute from './ConditionalRoute';
+import TaskPage from "../components/pages/mobile/TaskPage";
+import TaskInfoPage from "../components/pages/mobile/TaskInfoPage";
 
-import MobileContent from "../components/content/MobileContent";
 
-const AppRouter = ( {isAuth = false} ) => {
+const AppRouter = ({ isAuth = false }) => {
     const isMobile = useSelector(state => state.mobileStates.isMobile);
 
     const UnauthorizedRoutes = [
@@ -23,23 +24,23 @@ const AppRouter = ( {isAuth = false} ) => {
     const AuthorizedRoutes = [
         {
             path: "/",
-            element: <ConditionalRoute
-                conditionVar={isMobile}
-                onTrueRoute={<MobileHomePage/>}
-                onFalseRoute={<HomePage/>}
-            />
+            element: <HomePage/>
         },
         {
           path: '/tasks/:task_group_id',
             element: <ConditionalRoute
                 conditionVar={isMobile}
-                onTrueRoute={<MobileContent/>}
+                onTrueRoute={<TaskPage/>}
                 onFalseRoute={<HomePage/>}
             />
         },
         {
             path: '/tasks/:task_group_id/:task_id',
-            element: <HomePage/>
+            element: <ConditionalRoute
+                conditionVar={isMobile}
+                onTrueRoute={<TaskInfoPage/>}
+                onFalseRoute={<HomePage/>}
+            />
         },
         {
             path: "/login",

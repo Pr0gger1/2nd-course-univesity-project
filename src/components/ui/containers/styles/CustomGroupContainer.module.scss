@@ -1,4 +1,13 @@
 .custom_group__container {
     overflow-y: auto;
-    height: 75%;
+    max-height: 75%;
+    min-height: 0;
+
+    @media (max-width: 1180px) {
+        margin-top: 0.5rem;
+        height: 50%;
+    }
+    @media (max-width: 400px) {
+        height: 40%;
+    }
 }

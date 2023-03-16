@@ -5,7 +5,7 @@ import useToggleIconTheme from '../../../hooks/useToggleIconTheme';
 import filterIcon from '../../../assets/img/icons/filter_icon.svg';
 import deleteGroupIcon from '../../../assets/img/icons/delete_icon.svg';
 
-import { CustomSelect } from '../customComponents/CustomSelect';
+import { ContextMenuSelect } from '../customComponents/ContextMenuSelect';
 import { CustomTextField } from "../customComponents/CustomInputs";
 
 import { MenuItem, Tooltip } from '@mui/material';
@@ -23,7 +23,7 @@ import editIcon from '../../../assets/img/icons/edit_icon.svg';
 
 import styles from "../../content/styles/ContentTopPanel.module.scss";
 
-const TaskGroupMenuContainer = () => {
+const TaskGroupMenuList = () => {
     const dispatch = useDispatch();
 
     const [showEditInput, setShowEditInput] = useState(false);
@@ -64,7 +64,8 @@ const TaskGroupMenuContainer = () => {
             setShowEditInput(false);
         }
     }
-    const onEnterPressed = event => {
+
+    const onEditTitleEnterPressed = event => {
         if (event.key === 'Enter')
             onEditGroupTitleClick();
     }
@@ -75,7 +76,7 @@ const TaskGroupMenuContainer = () => {
         }));
     }
 
-    const toggleFilterMode = () => {
+    const toggleFilterModeHandler = () => {
         dispatch(setTaskFilter({
             ...taskFilter, desc: !taskFilter.desc
         }));
@@ -89,7 +90,7 @@ const TaskGroupMenuContainer = () => {
                     <Tooltip
                         title={taskFilter.desc ? 'По возрастанию' : 'По убыванию'}
                     >
-                        <span onClick={toggleFilterMode}>
+                        <span onClick={toggleFilterModeHandler}>
                             {
                                 taskFilter.desc ?
                             <img src={filterModeIconUp} alt="сортировка"/>
@@ -100,7 +101,7 @@ const TaskGroupMenuContainer = () => {
                     </Tooltip>
 
                     <span>
-                        <CustomSelect
+                        <ContextMenuSelect
                             value={taskFilter.type}
                             MenuProps={{
                                 PaperProps: {
@@ -123,7 +124,7 @@ const TaskGroupMenuContainer = () => {
                             <MenuItem value="favorite">
                                 По важности
                             </MenuItem>
-                        </CustomSelect>
+                        </ContextMenuSelect>
                     </span>
                 </div>
             </div>
@@ -145,7 +146,7 @@ const TaskGroupMenuContainer = () => {
                             variant='standard'
                             value={editInputText}
                             onChange={e => setEditInputText(e.target.value)}
-                            onKeyDown={onEnterPressed}
+                            onKeyDown={onEditTitleEnterPressed}
                         />
                         :
                         <span>
@@ -169,4 +170,4 @@ const TaskGroupMenuContainer = () => {
     );
 };
 
-export default TaskGroupMenuContainer;
+export default TaskGroupMenuList;

@@ -3,9 +3,19 @@
     flex-direction: row;
     justify-content: space-between;
 
+    @media (max-width: 1180px) {
+        justify-content: normal;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
     .top_panel__left {
         display: flex;
         flex-direction: column;
+
+        @media (max-width: 400px) {
+            gap: 0.5rem;
+        }
 
         .task_list__title > span {
             font-size: 2rem;
@@ -15,81 +25,74 @@
     .day_of_week__title {
         font-weight: 200;
         font-size: 2rem;
+
+        &::before {
+            content: ' | ';
+
+            @media (max-width: 410px) {
+                content: '';
+            }
+        }
+
+        @media (max-width: 410px) {
+            display: block;
+            padding-left: 0.6rem;
+        }
     }
 
     .date__title {
-        margin-left: 0.5rem;
+        margin-left: 2.75%;
         font-weight: 200;
         font-size: 1.5rem;
+
+        @media (max-width: 400px) {
+            font-size: 1.25rem;
+        }
     }
-
-
 }
 
 .context__container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1rem;
+
+    position: relative;
+
+    .menu__item {
         display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 1rem;
+        align-items: center;
+        gap: 0.5rem;
+        justify-content: space-between;
 
-        position: relative;
+        cursor: pointer;
 
-        .task_list__settings {
-            color: var(--fontColor);
-            background-color: transparent;
+        padding: 0.5rem;
+        border-radius: 0.25rem;
 
-            height: 2rem;
-            width: 2rem;
-
-            border: none;
-            font-size: 1.5rem;
-
-            padding: 1.25rem;
-            border-radius: 0.25rem;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            &:hover {
-                background-color: rgba(197, 197, 197, 0.3);
-            }
+        &:hover {
+            background-color: var(--bgButtonColorHover);
         }
 
-        .menu__item {
+        span {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        img {
+            width: 1.3rem;
+            height: 1.3rem;
+        }
+
+        .select__container {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
             justify-content: space-between;
-
-            cursor: pointer;
-
-            padding: 0.5rem;
-            border-radius: 0.25rem;
-
-            &:hover {
-                background-color: var(--bgButtonColorHover);
-            }
-
-            span {
-                display: flex;
-                justify-content: flex-end;
-                //flex: 2;
-            }
-
-            img {
-                width: 1.3rem;
-                height: 1.3rem;
-            }
-            .select__container {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                flex-grow: 1;
-                gap: 0.25rem;
-            }
+            flex-grow: 1;
+            gap: 0.25rem;
         }
     }
+}
 
 
 

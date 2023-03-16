@@ -10,8 +10,8 @@ const taskGroupSlice = createSlice({
     name: 'taskGroupsStates',
     initialState: {
         selectedTaskGroup: JSON.parse(
-            localStorage.getItem('selectedTaskGroup')
-        ) || initialGroup,
+                localStorage.getItem('selectedTaskGroup')
+            ) || initialGroup,
 
         allTaskGroups: {
             base: defaultGroups,

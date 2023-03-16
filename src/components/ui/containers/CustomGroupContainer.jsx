@@ -9,7 +9,7 @@ import TaskGroup from '../cards/TaskGroup';
 
 import styles from './styles/CustomGroupContainer.module.scss';
 
-const CustomGroupContainer = () => {
+const CustomGroupContainer = ({ customStyles = {} }) => {
     const selectedTaskGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
@@ -39,19 +39,19 @@ const CustomGroupContainer = () => {
 
     return (
          <div className={styles.custom_group__container}
-              style={hideOverflow}
+              style={Object.assign(hideOverflow, customStyles)}
          >
             {
             customGroups.map(group =>
                 <TaskGroup
                     key={group.id}
-                    icon={group.icon}
-                    title={group.title}
-                    counter={group.counter}
+                    taskGroupData={{
+                        icon: group.icon,
+                        title: group.title,
+                        counter: group.counter,
+                        isActive: group.id === selectedTaskGroup.id ? 'active' : null
+                    }}
                     onClick={() => clickHandler(group)}
-                    isActive={
-                        group.id === selectedTaskGroup.id ? 'active' : null
-                    }
                 />
                 )
             }

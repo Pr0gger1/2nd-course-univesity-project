@@ -38,14 +38,19 @@ const taskSlice = createSlice({
             const reminder = action.payload.taskData.reminder;
 
             state.tasks.push({
-                    taskName, completed,
-                    favorite, createdAt,
-                    subTasks, notes,
-                    category, groupId,
-                    deadline, repeat,
-                    reminder, id: taskId
+                taskName, completed,
+                favorite, createdAt,
+                subTasks, notes,
+                category, groupId,
+                deadline, repeat,
+                reminder, id: taskId
             });
+        },
 
+        deleteTask(state, action) {
+            const taskId = action.payload.taskId;
+            if (state.tasks.length)
+                state.tasks = state.tasks.filter(task => task.id !== taskId);
         },
 
         updateTaskData(state, action) {
@@ -60,7 +65,7 @@ const taskSlice = createSlice({
 
 export const {
     setCurrentGroupTasks, setSelectedTask,
-    addTask, updateTaskData
+    addTask, updateTaskData, deleteTask
 } = taskSlice.actions;
 
 export default taskSlice.reducer;

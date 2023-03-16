@@ -39,7 +39,7 @@ const CreateListButton = () => {
         if (!isLSidebarOpened) setShowInput(false);
     }, [isLSidebarOpened, showInput])
 
-    const handleInputSubmit = (event) => {
+    const handleInputSubmit = event => {
         if (event.key === 'Enter' && inputValue.length) {
             setInputValue('');
             setShowInput(false);
@@ -90,7 +90,10 @@ const CreateListButton = () => {
                     onClose={() => setShowInput(false)}
                 />
 
-                <CloseIcon className={styles.close_icon} onClick={() => setShowInput(false)}/>
+                <CloseIcon
+                    className={styles.close_icon}
+                    onClick={() => setShowInput(false)}
+                />
             </>
         </CSSTransition>
 

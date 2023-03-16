@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentGroupTasks } from "../../store/reducers/TaskSlice";
-import Task from "../ui/cards/Task";
+import { setCurrentGroupTasks } from "../../../store/reducers/TaskSlice";
+import Task from "../../ui/cards/Task";
 
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
-import styles from '../ui/containers/styles/TasksContainer.module.scss';
+import styles from '../../ui/containers/styles/TaskContainer.module.scss';
 
 const FilteredContent = () => {
     const dispatch = useDispatch();

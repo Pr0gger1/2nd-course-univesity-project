@@ -4,6 +4,7 @@ const mobileSlice = createSlice({
     name: 'mobileStates',
     initialState: {
         isMobile: /Mobi/i.test(navigator.userAgent)
+        // isMobile:window.matchMedia('(max-width: 1180px)').matches
     },
     reducers: {
         setIsMobile(state, action) {

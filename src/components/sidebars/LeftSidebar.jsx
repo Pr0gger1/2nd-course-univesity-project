@@ -12,7 +12,7 @@ import CreateListButton from '../ui/button/CreateListButton';
 import { useDispatch, useSelector } from "react-redux";
 import { setLSidebarOpen } from "../../store/reducers/SidebarSlice";
 
-export const LeftSidebar = () => {
+const LeftSidebar = () => {
     const isLSidebarOpened = useSelector(
         state => state.sidebarStates.isLeftSidebarOpen
     );
@@ -49,3 +49,5 @@ export const LeftSidebar = () => {
         </aside>
     );
 }
+
+export default LeftSidebar;

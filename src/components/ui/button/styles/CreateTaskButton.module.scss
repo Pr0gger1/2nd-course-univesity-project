@@ -3,6 +3,9 @@
     background: var(--bgButtonColor) url("../../../../assets/img/icons/add_task_btn.svg")
     no-repeat 6% 50%;
 
+    max-width: 15rem;
+    min-width: 10rem;
+
     color: var(--fontColor);
     font-weight: 500;
 
@@ -12,9 +15,13 @@
     border-radius: 0.25rem;
     cursor: pointer;
 
+    @media screen and (max-width: 1100px) {
+        max-width: 100%;
+        width: 100%;
+    }
+
     &:hover {
         background-color: var(--bgButtonColorHover);
-
     }
 }
 

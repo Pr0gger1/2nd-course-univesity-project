@@ -78,7 +78,8 @@ const Task = ({ taskDataProps }) => {
 
     return (
         <div className={styles.task}
-            onClick={() => onTaskClick()}>
+            onClick={() => onTaskClick()}
+        >
 
             <div className={styles.task__checkbox_info}>
                 <Checkbox 
@@ -92,7 +93,7 @@ const Task = ({ taskDataProps }) => {
                             color: '#68d96d',
                         }
                     }}
-                    onClick={e => onTaskCheckboxClick(e)}
+                    onClick={onTaskCheckboxClick}
                     checked={isTaskCompleted}
                 />
 
@@ -130,7 +131,7 @@ const Task = ({ taskDataProps }) => {
                     fontSize: 32,
                     borderRadius: "15px"
                     }}
-                    onClick={e => onFavoriteToggle(e)}
+                    onClick={onFavoriteToggle}
                 />
                 
                 : <StarBorderIcon
@@ -138,7 +139,7 @@ const Task = ({ taskDataProps }) => {
                         fontSize: 32,
                         color: 'var(--starColor)'
                     }}
-                    onClick={e => onFavoriteToggle(e)}
+                    onClick={onFavoriteToggle}
                 />
             }
         </div>

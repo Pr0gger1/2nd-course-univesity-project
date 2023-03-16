@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useTask } from '../../../hooks/useTask';
 import { setCurrentGroupTasks } from '../../../store/reducers/TaskSlice';
 
 import { baseGroupIds } from '../../../store/defaultData/baseGroups';
@@ -9,9 +10,8 @@ import Task from '../cards/Task';
 
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-import styles from './styles/TasksContainer.module.scss';
+import styles from './styles/TaskContainer.module.scss';
 import '../animations/Task/TaskAnimation.css';
-import {useTask} from "../../../hooks/useTask";
 
 const NoTasksMessage = () => {
     return (
@@ -21,14 +21,14 @@ const NoTasksMessage = () => {
     )
 }
 
-const TasksContainer = () => {
+const TaskContainer = () => {
     const dispatch = useDispatch();
 
-    const currentGroupTasks = useSelector(
-        state => state.tasksStates.currentGroupTasks
-    );
     const tasks = useSelector(
         state => state.tasksStates.tasks
+    );
+    const currentGroupTasks = useSelector(
+        state => state.tasksStates.currentGroupTasks
     );
     const taskFilter = useSelector(
         state => state.filterStates.taskFilter
@@ -36,12 +36,9 @@ const TasksContainer = () => {
     const selectedGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
-    const sortedTasks = useTask(currentGroupTasks, taskFilter);
 
-    
-    // useEffect(() => {
-    //     console.log(currentGroupTasks.createdAt)
-    // }, [currentGroupTasks])
+    // Конечный массив с отсортированными задачами
+    const sortedTasks = useTask(currentGroupTasks, taskFilter);
 
     useEffect(() => {
         let currentTasks = [...tasks].filter(
@@ -72,7 +69,7 @@ const TasksContainer = () => {
                 <CreateTaskButton/>
             }
             {
-                !currentGroupTasks.length && <NoTasksMessage/>
+                !sortedTasks.length && <NoTasksMessage/>
             }
 
             <TransitionGroup style={{paddingLeft: '0.5rem'}}>
@@ -97,4 +94,4 @@ const TasksContainer = () => {
     );
 };
 
-export default TasksContainer;
+export default TaskContainer;

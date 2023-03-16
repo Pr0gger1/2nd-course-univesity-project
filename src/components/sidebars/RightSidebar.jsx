@@ -10,14 +10,8 @@ import CheckboxInput from '../ui/input/CheckboxInput';
 import { CSSTransition } from 'react-transition-group';
 import '../ui/animations/Button/createListBtnAnimation.css'
 
-// import DatePicker from 'react-widgets/DatePicker';
 import styles from './styles/RightSidebar.module.scss';
 import InputField from '../ui/input/InputField';
-import InputFieldWithIcon from '../ui/input/InputFieldWithIcon';
-// import "react-widgets/styles.css";
-
-import reminderIcon from '../../assets/img/icons/reminder_icon.svg';
-
 
 const RightSidebar = () => {
     const dispatch = useDispatch();
@@ -161,7 +155,19 @@ const RightSidebar = () => {
                         value='default'
                     >
                         Повтор
-                        </option>
+                    </option>
+
+                    <option>
+                        Каждый день
+                    </option>
+                        
+                    <option>
+                        Каждую неделю
+                    </option>
+
+                    <option>
+                        Каждый месяц
+                    </option>
                 </select>
             </div>
 
@@ -170,7 +176,26 @@ const RightSidebar = () => {
                 placeholder="Напоминание"
             /> */}
             
-            <InputFieldWithIcon inputIcon={reminderIcon}/>
+            {/* <InputFieldWithIcon inputIcon={reminderIcon}/> */}
+
+            <select className={styles.reminder}>
+                <option>
+                    Через час
+                </option>
+
+                <option>
+                    Через пять часов
+                </option>
+
+                <option>
+                    Завтра
+                </option>
+
+                <option>
+                    Через неделю
+                </option>
+            </select>
+
 
             <textarea 
                 className={styles.notes}

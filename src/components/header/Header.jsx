@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setLSidebarOpen } from "../../store/reducers/SidebarSlice";
 import { setTheme, themes } from "../../store/reducers/ThemeSlice";
 
+import TaskGroupMenuContainer from "../ui/contextMenu/TaskGroupMenuContainer";
 import ImgButton from "../ui/button/ImgButton";
+
 import MenuIcon from "@mui/icons-material/Menu";
 import { StyledBadge } from "../ui/customComponents/CustomBadge";
 
@@ -16,22 +18,31 @@ import settingsIconDark from "../../assets/img/icons/settings_dark.svg";
 
 import styles from "./styles/Header.module.scss";
 
-export const Header = () => {
+const Header = () => {
     const dispatch = useDispatch();
     const currentTheme = useSelector(
         state => state.themeState.theme
     );
 
+    const isMobile = useSelector(
+        state => state.mobileStates.isMobile
+    );
+
     return (
         <header className={styles.header__app}>
-            <div className={styles.hamburger_menu__btn}>
-                <MenuIcon
-                    onClick={() => dispatch(setLSidebarOpen())}
-                    sx={{
-                        fontSize: 30
-                    }}
-                />
-            </div>
+            {
+                isMobile ?
+                    <TaskGroupMenuContainer/>
+                :
+                <div className={styles.hamburger_menu__btn}>
+                    <MenuIcon
+                        onClick={() => dispatch(setLSidebarOpen())}
+                        sx={{
+                            fontSize: 30
+                        }}
+                    />
+                </div>
+            }
 
             <div className={styles.settings__buttons}>
                 <ImgButton
@@ -64,3 +75,5 @@ export const Header = () => {
         </header>
     );
 }
+
+export default Header;

@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import ToastContext from './context/toast.context';
 
 import { useToast } from './hooks/useToast';
@@ -10,6 +10,7 @@ import Toast from './components/ui/toast/Toast';
 import { setUser } from "./store/reducers/AuthSlice";
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase.config';
+import {useNavigate} from "react-router-dom";
 
 
 function App() {
@@ -19,9 +20,27 @@ function App() {
     const [toastPosition, setToastPosition] = useState('top_right');
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const currentTheme = useSelector(state => state.themeState.theme);
 
+    const isMobile = useSelector(
+        state => state.mobileStates.isMobile
+    );
+
+    const selectedTaskGroup = useSelector(
+        state => state.taskGroupStates.selectedTaskGroup
+    );
+
+    /*
+     Перенаправление пользователя в корень
+      при первой загрузке мобильной версии приложения
+     */
+    useEffect(() => {
+        if (isMobile && !localStorage.getItem('selectedTaskGroup')) {
+            navigate('/');
+        }
+    }, [selectedTaskGroup, isMobile, navigate])
 
     useEffect(() => {
         onAuthStateChanged(auth, user => {
@@ -32,8 +51,11 @@ function App() {
         })
     }, [dispatch, isAuth]);
 
-    useEffect(() => {
+
+    // изменение цвета адресной строки для мобильных устройств
+    useMemo(() => {
         localStorage.setItem('theme', currentTheme);
+
         const meta = document.querySelector('meta[name="theme-color"]');
 
         let themeColor = "#dfdfdf";
@@ -42,6 +64,7 @@ function App() {
         if (meta) meta.setAttribute('content', themeColor);
     }, [currentTheme]);
 
+    // изменение значения атрибута data-theme при изменении темы в приложении
     useMemo(() => {
         document.documentElement.setAttribute("data-theme", currentTheme)
     }, [currentTheme]);

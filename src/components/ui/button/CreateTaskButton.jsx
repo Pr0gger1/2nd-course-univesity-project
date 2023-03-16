@@ -12,7 +12,7 @@ import { CSSTransition } from 'react-transition-group';
 
 import styles from './styles/CreateTaskButton.module.scss';
 import '../animations/Button/createTaskBtnAnimation.css';
-import '../animations/input/InputAnimation.css';
+import '../animations/Input/InputAnimation.css';
 
 const CreateTaskButton = () => {
     const [showInput, setShowInput] = useState(false);
@@ -45,18 +45,18 @@ const CreateTaskButton = () => {
             taskData.favorite = true;
 
         dispatch(addTask({taskData}));
-
         setTaskName('');
     }
 
-    const onEnterPressed = (event) => {
+    const onInputKeyDown = (event) => {
         if (event.key === 'Enter' && event.target.value.length)
             addTaskHandler();
+        else if (event.key === 'Escape')
+            setShowInput(false);
     }
 
-
     return (
-        <div>
+        <>
             <CSSTransition
                 in={showButton}
                 timeout={300}
@@ -94,14 +94,14 @@ const CreateTaskButton = () => {
                     }
                     <InputField
                         customClasses={[styles.add_task__btn]}
-                        onChange={e => setTaskName(e.target.value)}
                         value={taskName}
-                        onKeyDown={e => onEnterPressed(e)}
+                        onChange={e => setTaskName(e.target.value)}
+                        onKeyDown={e => onInputKeyDown(e)}
                         onClose={() => setShowInput(false)}
                     />
                 </div>
             </CSSTransition>
-        </div>
+        </>
     );
 };
 

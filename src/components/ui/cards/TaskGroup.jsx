@@ -3,15 +3,16 @@ import { useSelector } from 'react-redux';
 
 import styles from './styles/TaskGroups.module.scss';
 
-const TaskGroup = ({ title, icon, counter, isActive, onClick }) => {
-    const sidebarState = useSelector(
+const TaskGroup = ({ taskGroupData, onClick }) => {
+    const isLSidebarOpened = useSelector(
         state => state.sidebarStates.isLeftSidebarOpen
     );
 
-    const groupAdaptiveStyle = sidebarState
+    let groupAdaptiveStyle = isLSidebarOpened
                 ? {} : {justifyContent: "center", alignItems: 'center'}
 
-    let groupStyle = `${styles.group}${isActive ? ` ${styles['active']}`: ''}${!sidebarState ? ` ${styles['closed']}` : ''}`;
+
+    let groupStyle = `${styles.group}${taskGroupData.isActive ? ` ${styles['active']}`: ''}${!isLSidebarOpened ? ` ${styles['closed']}` : ''}`;
 
     return (
         <div 
@@ -20,12 +21,12 @@ const TaskGroup = ({ title, icon, counter, isActive, onClick }) => {
             onClick={onClick}
         >
             <div className={styles.icon_title}>
-                <img src={icon} alt={`${title}_icon`} className={styles.group__icon}/>
-                <p>{ title }</p>
+                <img src={taskGroupData.icon} alt={`${taskGroupData.title}_icon`} className={styles.group__icon}/>
+                <p>{ taskGroupData.title }</p>
             {
-                counter !== 0 &&
+                taskGroupData.counter !== 0 &&
                 <div className={styles.counter}>
-                    {counter}
+                    {taskGroupData.counter}
                 </div>
             }
             </div>
