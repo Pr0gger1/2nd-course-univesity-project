@@ -41,6 +41,9 @@ const TaskContainer = () => {
     const sortedTasks = useTask(currentGroupTasks, taskFilter);
 
     useEffect(() => {
+        // console.log('all tasks ', tasks)
+        // console.log('selected group ', selectedGroup)
+
         let currentTasks = [...tasks].filter(
             task => task.groupId === selectedGroup.id
         );
@@ -57,6 +60,7 @@ const TaskContainer = () => {
         if (selectedGroup.id === baseGroupIds.completed)
             currentTasks = tasks.filter(task => task.completed);
 
+        // console.log('current group tasks ', currentTasks)
         dispatch(setCurrentGroupTasks({tasks: currentTasks}));
 
     }, [dispatch, selectedGroup, taskFilter.type, tasks]);

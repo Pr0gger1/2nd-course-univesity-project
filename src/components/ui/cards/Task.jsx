@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setRSidebarOpen } from '../../../store/reducers/SidebarSlice';
@@ -56,7 +56,7 @@ const Task = ({ taskDataProps }) => {
 
     }
 
-    const onFavoriteToggle = event => {
+    const favoriteToggleHandler = event => {
         event.stopPropagation();
 
         const favorite = !taskDataProps.favorite;
@@ -128,10 +128,9 @@ const Task = ({ taskDataProps }) => {
                 taskDataProps.favorite ? 
                 <StarIcon sx={{
                     color: "#ffc107",
-                    fontSize: 32,
-                    borderRadius: "15px"
+                    fontSize: 32
                     }}
-                    onClick={onFavoriteToggle}
+                    onClick={favoriteToggleHandler}
                 />
                 
                 : <StarBorderIcon
@@ -139,7 +138,7 @@ const Task = ({ taskDataProps }) => {
                         fontSize: 32,
                         color: 'var(--starColor)'
                     }}
-                    onClick={onFavoriteToggle}
+                    onClick={favoriteToggleHandler}
                 />
             }
         </div>

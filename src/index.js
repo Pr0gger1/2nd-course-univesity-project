@@ -8,7 +8,7 @@ import store from './store/store.js';
 import { Provider } from 'react-redux';
 import { themes } from "./store/reducers/ThemeSlice";
 
-import './index.css';
+import './index.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 document.title = 'Productify ToDo App';

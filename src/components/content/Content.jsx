@@ -12,6 +12,9 @@ import styles from './styles/Content.module.scss';
 const Content = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isMobile = useSelector(
+        state => state.mobileStates.isMobile
+    );
 
     const selectedGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
@@ -54,7 +57,9 @@ const Content = () => {
     }, [selectedGroup]);
 
     return (
-        <div className={styles.content}>
+        <div className={styles.content}
+            style={!isMobile && {width: '100vw'}}
+        >
             {
                 filter.length
                 ? <FilteredContent/>

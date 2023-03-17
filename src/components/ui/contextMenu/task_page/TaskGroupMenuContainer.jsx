@@ -1,14 +1,14 @@
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
-import ContextMenu from "./ContextMenu";
-import TaskGroupMenuList from "../containers/TaskGroupMenuList";
-import IconButton from "../button/IconButton";
+import ContextMenu from "../ContextMenu";
+import TaskGroupMenuList from "./TaskGroupMenuList";
+import IconButton from "../../button/IconButton";
 
 import { CSSTransition } from "react-transition-group";
-import ModalWindow from "../modal/ModalWindow";
+import ModalWindow from "../../modal/ModalWindow";
 
-import styles from "../../content/styles/ContentTopPanel.module.scss";
+import styles from "../../../content/styles/ContentTopPanel.module.scss";
 
 const TaskGroupMenuContainer = () => {
     const [isMenuOpened, setIsMenuOpened] = useState(false);
@@ -37,26 +37,26 @@ const TaskGroupMenuContainer = () => {
                             setIsMenuOpened={setIsMenuOpened}
                             menuRef={menuContainerRef}
                         >
-                            <TaskGroupMenuList/>
+                            <TaskGroupMenuList />
                         </ContextMenu>
                     </ModalWindow>
-                :
-                <CSSTransition
-                    in={isMenuOpened}
-                    timeout={500}
-                    classNames='menu_page'
-                    onEnter={() => setIsMenuOpened(true)}
-                    onExited={() => setIsMenuOpened(false)}
-                    unmountOnExit
-                >
-                    <ContextMenu
-                        isMenuOpened={isMenuOpened}
-                        setIsMenuOpened={setIsMenuOpened}
-                        menuRef={menuContainerRef}
+                    :
+                    <CSSTransition
+                        in={isMenuOpened}
+                        timeout={500}
+                        classNames='menu_page'
+                        onEnter={() => setIsMenuOpened(true)}
+                        onExited={() => setIsMenuOpened(false)}
+                        unmountOnExit
                     >
-                        <TaskGroupMenuList/>
-                    </ContextMenu>
-                </CSSTransition>
+                        <ContextMenu
+                            isMenuOpened={isMenuOpened}
+                            setIsMenuOpened={setIsMenuOpened}
+                            menuRef={menuContainerRef}
+                        >
+                            <TaskGroupMenuList />
+                        </ContextMenu>
+                    </CSSTransition>
             }
         </div>
     );

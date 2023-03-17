@@ -1,17 +1,17 @@
 import React from 'react';
-import { useSelector } from "react-redux";
-import { useMediaQuery } from "react-responsive";
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 
-import IconButton from "../../ui/button/IconButton";
+import IconButton from '../../ui/button/IconButton';
 import WestRoundedIcon from '@mui/icons-material/WestRounded';
 
-import TaskGroupMenuContainer from "../../ui/contextMenu/TaskGroupMenuContainer";
+import TaskGroupMenuContainer from '../../ui/contextMenu/task_page/TaskGroupMenuContainer';
 
 import { DateFormatter } from '../../../utils/DateFormatter';
 
 import styles from '../styles/ContentTopPanel.module.scss';
 import '../../ui/animations/ContextMenu/ContextMenuPageAnimation.scss';
-import {useNavigate} from "react-router-dom";
 
 const ContentTopPanel = () => {
     const contextMenuMedia = useMediaQuery({minWidth: 1101});
@@ -28,13 +28,11 @@ const ContentTopPanel = () => {
         <section className={styles.content__top_panel}>
             {
                 isMobile &&
-                <div
-                    onClick={() => navigate('/')}
+                <IconButton
+                onClick={() => navigate('/')}
                 >
-                    <IconButton>
-                        <WestRoundedIcon/>
-                    </IconButton>
-                </div>
+                    <WestRoundedIcon/>
+                </IconButton>
             }
 
             <div className={styles.top_panel__left}>

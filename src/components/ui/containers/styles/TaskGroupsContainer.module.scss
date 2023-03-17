@@ -1,0 +1,37 @@
+@import "../../cards/styles/TaskGroups.module";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 42%;
+}
+
+.base_group__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.7rem;
+
+  border-bottom: var(--borderBottomSidebar);
+  padding-bottom: 0.5rem;
+}
+
+.custom_group__container {
+  overflow-y: auto;
+  max-height: 75%;
+  height: 75%;
+  min-height: 0;
+
+  & > div:not(:last-child) {
+    margin-bottom: 0.5rem;
+  }
+
+  @media (max-width: 1180px) {
+    margin-top: 0.5rem;
+    height: 50%;
+  }
+  @media (max-width: 400px) {
+    height: 40%;
+  }
+}

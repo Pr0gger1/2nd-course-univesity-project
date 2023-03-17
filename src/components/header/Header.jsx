@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setLSidebarOpen } from "../../store/reducers/SidebarSlice";
 import { setTheme, themes } from "../../store/reducers/ThemeSlice";
 
-import TaskGroupMenuContainer from "../ui/contextMenu/TaskGroupMenuContainer";
+import TaskGroupMenuContainer from "../ui/contextMenu/task_page/TaskGroupMenuContainer";
 import ImgButton from "../ui/button/ImgButton";
 
 import MenuIcon from "@mui/icons-material/Menu";
@@ -32,16 +32,16 @@ const Header = () => {
         <header className={styles.header__app}>
             {
                 isMobile ?
-                    <TaskGroupMenuContainer/>
-                :
-                <div className={styles.hamburger_menu__btn}>
-                    <MenuIcon
-                        onClick={() => dispatch(setLSidebarOpen())}
-                        sx={{
-                            fontSize: 30
-                        }}
-                    />
-                </div>
+                    <TaskGroupMenuContainer />
+                    :
+                    <div className={styles.hamburger_menu__btn}>
+                        <MenuIcon
+                            onClick={() => dispatch(setLSidebarOpen())}
+                            sx={{
+                                fontSize: 30
+                            }}
+                        />
+                    </div>
             }
 
             <div className={styles.settings__buttons}>
@@ -49,7 +49,7 @@ const Header = () => {
                     onClick={() => dispatch(setTheme())}
                     src={
                         currentTheme === themes.light
-                        ? themeIconLight : themeIconDark
+                            ? themeIconLight : themeIconDark
                     }
                     alt="theme button"
                 />
@@ -58,8 +58,8 @@ const Header = () => {
                     <ImgButton
                         src={
                             currentTheme === themes.light
-                            ? notificationIconLight : notificationIconDark
-                    }
+                                ? notificationIconLight : notificationIconDark
+                        }
                         alt="notification button"
                     />
                 </StyledBadge>
@@ -67,7 +67,7 @@ const Header = () => {
                 <ImgButton
                     src={
                         currentTheme === themes.light
-                        ? settingsIconLight : settingsIconDark
+                            ? settingsIconLight : settingsIconDark
                     }
                     alt="settings icon"
                 />

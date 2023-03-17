@@ -4,7 +4,7 @@ import Checkbox from '@mui/material/Checkbox';
 
 import styles from './styles/CheckboxInput.module.scss';
 
-const CheckboxInput = ({
+const CheckboxInputField = ({
     placeholder, inputValue, onChangeInput,
     checkboxChecked, onChangeCheckbox, onCheckboxClick
 }) => {
@@ -35,4 +35,4 @@ const CheckboxInput = ({
     );
 };
 
-export default CheckboxInput;
+export default CheckboxInputField;

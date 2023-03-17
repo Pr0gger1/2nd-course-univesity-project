@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import useToggleIconTheme from '../../../hooks/useToggleIconTheme';
+import useToggleIconTheme from '../../../../hooks/useToggleIconTheme';
 
-import filterIcon from '../../../assets/img/icons/filter_icon.svg';
-import deleteGroupIcon from '../../../assets/img/icons/delete_icon.svg';
 
-import { ContextMenuSelect } from '../customComponents/ContextMenuSelect';
-import { CustomTextField } from "../customComponents/CustomInputs";
+import { ContextMenuSelect } from '../../customComponents/ContextMenuSelect';
+import { CustomTextField } from "../../customComponents/CustomInputs";
 
 import { MenuItem, Tooltip } from '@mui/material';
-import { baseGroupIds } from '../../../store/defaultData/baseGroups';
+import { baseGroupIds } from '../../../../store/defaultData/baseGroups';
 import Stack from '@mui/material/Stack';
 
-import { setTaskFilter } from '../../../store/reducers/FilterSlice';
-import {deleteCustomTaskGroup, renameCustomTaskGroup} from '../../../store/reducers/TaskGroupSlice';
+import { setTaskFilter } from '../../../../store/reducers/FilterSlice';
+import { deleteCustomTaskGroup, renameCustomTaskGroup } from '../../../../store/reducers/TaskGroupSlice';
 
-import upArrowFilterDark from '../../../assets/img/icons/filter/up_arrow_dark.svg';
-import downArrowFilterDark from '../../../assets/img/icons/filter/down_arrow_dark.svg';
-import upArrowFilterLight from '../../../assets/img/icons/filter/up_arrow_light.svg';
-import downArrowFilterLight from '../../../assets/img/icons/filter/down_arrow_light.svg';
-import editIcon from '../../../assets/img/icons/edit_icon.svg';
+import deleteGroupIcon from '../../../../assets/img/icons/delete_icon.svg';
+import filterIcon from '../../../../assets/img/icons/filter_icon.svg';
+import upArrowFilterDark from '../../../../assets/img/icons/filter/up_arrow_dark.svg';
+import downArrowFilterDark from '../../../../assets/img/icons/filter/down_arrow_dark.svg';
+import upArrowFilterLight from '../../../../assets/img/icons/filter/up_arrow_light.svg';
+import downArrowFilterLight from '../../../../assets/img/icons/filter/down_arrow_light.svg';
+import editIcon from '../../../../assets/img/icons/edit_icon.svg';
 
-import styles from "../../content/styles/ContentTopPanel.module.scss";
+import styles from "../../../content/styles/ContentTopPanel.module.scss";
 
 const TaskGroupMenuList = () => {
     const dispatch = useDispatch();
@@ -85,7 +85,7 @@ const TaskGroupMenuList = () => {
     return (
         <Stack spacing={1}>
             <div className={styles.menu__item}>
-                <img src={filterIcon} alt="Сортировка задач"/>
+                <img src={filterIcon} alt="Сортировка задач" />
                 <div className={styles.select__container}>
                     <Tooltip
                         title={taskFilter.desc ? 'По возрастанию' : 'По убыванию'}
@@ -93,9 +93,9 @@ const TaskGroupMenuList = () => {
                         <span onClick={toggleFilterModeHandler}>
                             {
                                 taskFilter.desc ?
-                            <img src={filterModeIconUp} alt="сортировка"/>
-                            :
-                            <img src={filterModeIconDown} alt="сортировка"/>
+                                    <img src={filterModeIconUp} alt="сортировка" />
+                                    :
+                                    <img src={filterModeIconDown} alt="сортировка" />
                             }
                         </span>
                     </Tooltip>
@@ -130,41 +130,41 @@ const TaskGroupMenuList = () => {
             </div>
 
             {
-            !baseGroupIds[selectedGroup.id] &&
-            <>
-                <div className={styles.menu__item}
-                    onClick={() => setShowEditInput(true)}
-                >
-                    <img
-                        src={editIcon}
-                        alt="Переименовать список"
-                        onClick={onEditGroupTitleClick}
-                    />
-                    {
-                    showEditInput ?
-                        <CustomTextField
-                            variant='standard'
-                            value={editInputText}
-                            onChange={e => setEditInputText(e.target.value)}
-                            onKeyDown={onEditTitleEnterPressed}
+                !baseGroupIds[selectedGroup.id] &&
+                <>
+                    <div className={styles.menu__item}
+                        onClick={() => setShowEditInput(true)}
+                    >
+                        <img
+                            src={editIcon}
+                            alt="Переименовать список"
+                            onClick={onEditGroupTitleClick}
                         />
-                        :
-                        <span>
-                            Переименование списка
+                        {
+                            showEditInput ?
+                                <CustomTextField
+                                    variant='standard'
+                                    value={editInputText}
+                                    onChange={e => setEditInputText(e.target.value)}
+                                    onKeyDown={onEditTitleEnterPressed}
+                                />
+                                :
+                                <span>
+                                    Переименование списка
+                                </span>
+
+                        }
+                    </div>
+
+                    <div className={styles.menu__item}
+                        onClick={deleteCustomTaskGroupHandler}
+                    >
+                        <img src={deleteGroupIcon} alt="Удалить группу задач" />
+                        <span style={{ color: '#ff634c' }}>
+                            Удалить список
                         </span>
-
-                    }
-                </div>
-
-                <div className={styles.menu__item}
-                    onClick={deleteCustomTaskGroupHandler}
-                >
-                    <img src={deleteGroupIcon} alt="Удалить группу задач"/>
-                    <span style={{color: '#ff634c'}}>
-                        Удалить список
-                    </span>
-                </div>
-            </>
+                    </div>
+                </>
             }
         </Stack>
     );

@@ -1,15 +1,15 @@
 import React from "react";
-import Button from "./Button";
 
 import styles from "./styles/IconButton.module.scss";
 
-const IconButton = ({ onClick, children }) => {
+const IconButton = ({ onClick, children, imgIcon = '' }) => {
     return (
-        <Button customClass={styles.icon__button}
+        <button className={styles.icon__button}
                 onClick={onClick}
         >
+            { imgIcon && <img src={imgIcon} alt=""/>}
             { children }
-        </Button>
+        </button>
     );
 };
 

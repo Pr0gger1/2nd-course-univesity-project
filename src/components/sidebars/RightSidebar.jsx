@@ -6,7 +6,7 @@ import { updateTaskData } from '../../store/reducers/TaskSlice';
 import Button from '../ui/button/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
-import CheckboxInput from '../ui/input/CheckboxInput';
+import CheckboxInputField from '../ui/input/CheckboxInputField';
 import { CSSTransition } from 'react-transition-group';
 import '../ui/animations/Button/createListBtnAnimation.css'
 
@@ -28,11 +28,16 @@ const RightSidebar = () => {
             state.taskGroupStates.allTaskGroups.custom
         )
     );
-
-    const [taskNameValue, setTaskNameValue] = useState(selectedTask.taskName);
-
-    const [isTaskCompleted, setIsTaskCompleted] = useState(selectedTask.completed);
-
+    const [taskData, setTaskData] = useState({
+        taskName: selectedTask.taskName,
+        completed: selectedTask.completed,
+        subTasks: selectedTask.subTasks,
+        category: selectedTask.category,
+        deadline: selectedTask.deadline,
+        repeatTask: selectedTask.repeat,
+        remindTask: selectedTask.reminder,
+        taskNotes: selectedTask.notes
+    });
 
     const [showButton, setShowButton] = useState(true);
     const [showInput, setShowInput] = useState(false);
@@ -49,8 +54,8 @@ const RightSidebar = () => {
     }
 
     const onTaskCheckboxChange = () => {
-        const completed = !isTaskCompleted;
-        setIsTaskCompleted(prev => !prev);
+        const completed = !taskData.completed;
+        setTaskData({...taskData, completed});
 
         dispatch(updateTaskData({
             taskData: {...selectedTask, completed}
@@ -58,12 +63,14 @@ const RightSidebar = () => {
     }
 
 
-    useEffect(() => {
-        setTaskNameValue(selectedTask.taskName)
-        setIsTaskCompleted(selectedTask.completed)
+    // useEffect(() => {
+    //     setTaskData({
+    //         ...taskData, taskName: selectedTask.taskName,
+    //         completed: selectedTask.completed
+    //     })
 
-        console.log(selectedTask)
-    }, [selectedTask]);
+    //     // console.log(selectedTask)
+    // }, [selectedTask, taskData]);
 
     // useEffect(() => {
     //     setIsTaskCompleted(!isTaskCompleted)
@@ -73,137 +80,139 @@ const RightSidebar = () => {
 
     return (
         <aside className={sidebarStyles}>
-            <div className={styles.sidebar_close__btn}>
-                <CloseIcon 
-                    onClick={() => dispatch(setRSidebarOpen())}
-                />
-            </div>
-
-            <section className={styles.add_task__section}>
-                <CheckboxInput
-                    placeholder='Ваша задача'
-                    inputValue={taskNameValue}
-                    checkboxChecked={isTaskCompleted}
-                    onChangeCheckbox={onTaskCheckboxChange}
-                    onChangeInput={e => setTaskNameValue(e.target.value)}
-                    value={taskNameValue || ''}
-                />
-
-                <div className={styles.add_subtask__btn}>
-                    {showButton && (
-                        <Button onClick={() => setShowInput(true)}>
-                            <AddIcon 
-                                className={styles.add_subtask__icon}
-                                sx = {{
-                                    fontSize: 32,
-                                    color: 'var(--addSubtaskIconColor)'
-                                }}
-                            />
-                            <span>Добавить подзадачу</span>
-                        </Button>
-                    )}
-                    <CSSTransition
-                        in={showInput}
-                        timeout={300}
-                        classNames="input"
-                        unmountOnExit
-                        onEnter={() => setShowButton(false)}
-                        onExited={() => setShowButton(true)}
-                    >
-                        <CheckboxInput/>
-                    </CSSTransition>
+            <div className={styles.sidebar_container}>
+                <div className={styles.sidebar_close__btn}>
+                    <CloseIcon 
+                        onClick={() => dispatch(setRSidebarOpen())}
+                    />
                 </div>
 
-            </section>
+                <section className={styles.add_task__section}>
+                    <CheckboxInputField
+                        placeholder='Ваша задача'
+                        inputValue={taskData.taskName}
+                        checkboxChecked={taskData.completed}
+                        onChangeCheckbox={onTaskCheckboxChange}
+                        onChangeInput={e => setTaskData({...taskData, taskName: e.target.value})}
+                        value={taskData.taskName || ''}
+                    />
 
-            <section className={styles.task_category__section}>
-                <select className={styles.choose_group} name="" id="">
-                    {
-                        taskGroups.map((group, index) => 
-                            <option
-                                value={group.id}
-                                key={index}
-                                onClick={onTaskCategoryClick}
-                            >
-                                {group.title}
-                            </option>    
-                        )
-                    }
-                </select>
-            </section>
-                        
-            
-            <div className={styles.date_and_repeat}>
-                <InputField className={styles.deadline}
-                    type="date"
-                />
-                {/* <DatePicker
-                    placeholderText=""
-                    showIcon
-                    dateFormat='dd/MM/yyyy'
-                    selected={new Date()}
-                    customInput={<CustomInputCalendar/>}
+                    <div className={styles.add_subtask__btn}>
+                        {showButton && (
+                            <Button onClick={() => setShowInput(true)}>
+                                <AddIcon 
+                                    className={styles.add_subtask__icon}
+                                    sx = {{
+                                        fontSize: 32,
+                                        color: 'var(--addSubtaskIconColor)'
+                                    }}
+                                />
+                                <span>Добавить подзадачу</span>
+                            </Button>
+                        )}
+                        <CSSTransition
+                            in={showInput}
+                            timeout={300}
+                            classNames="input"
+                            unmountOnExit
+                            onEnter={() => setShowButton(false)}
+                            onExited={() => setShowButton(true)}
+                        >
+                            <CheckboxInputField/>
+                        </CSSTransition>
+                    </div>
+
+                </section>
+
+                <section className={styles.task_category__section}>
+                    <select className={styles.choose_group} name="" id="">
+                        {
+                            taskGroups.map((group, index) => 
+                                <option
+                                    value={group.id}
+                                    key={index}
+                                    onClick={onTaskCategoryClick}
+                                >
+                                    {group.title}
+                                </option>    
+                            )
+                        }
+                    </select>
+                </section>
+                            
+                
+                <div className={styles.date_and_repeat}>
+                    <InputField className={styles.deadline}
+                        type="date"
+                    />
+                    {/* <DatePicker
+                        placeholderText=""
+                        showIcon
+                        dateFormat='dd/MM/yyyy'
+                        selected={new Date()}
+                        customInput={<CustomInputCalendar/>}
+                    /> */}
+                    {/* <DatePicker 
+                    defaultValue={new Date()}
+
+                    /> */}
+
+                    <select className={styles.repeat}
+                        defaultValue={'default'}>
+                        <option disabled
+                            value='default'
+                        >
+                            Повтор
+                        </option>
+
+                        <option>
+                            Каждый день
+                        </option>
+                            
+                        <option>
+                            Каждую неделю
+                        </option>
+
+                        <option>
+                            Каждый месяц
+                        </option>
+                    </select>
+                </div>
+
+                {/* <InputField 
+                    className={styles.reminder}
+                    placeholder="Напоминание"
                 /> */}
-                {/* <DatePicker 
-                defaultValue={new Date()}
+                
+                {/* <InputFieldWithIcon inputIcon={reminderIcon}/> */}
 
-                /> */}
-
-                <select className={styles.repeat}
-                    defaultValue={'default'}>
-                    <option disabled
-                        value='default'
-                    >
-                        Повтор
+                <select className={styles.reminder}>
+                    <option>
+                        Через час
                     </option>
 
                     <option>
-                        Каждый день
-                    </option>
-                        
-                    <option>
-                        Каждую неделю
+                        Через пять часов
                     </option>
 
                     <option>
-                        Каждый месяц
+                        Завтра
+                    </option>
+
+                    <option>
+                        Через неделю
                     </option>
                 </select>
+
+
+                <textarea 
+                    className={styles.notes}
+                    placeholder="Ваши заметки"
+                    onInput={e => textAreaAdjust(e)}
+                >
+
+                </textarea>
             </div>
-
-            {/* <InputField 
-                className={styles.reminder}
-                placeholder="Напоминание"
-            /> */}
-            
-            {/* <InputFieldWithIcon inputIcon={reminderIcon}/> */}
-
-            <select className={styles.reminder}>
-                <option>
-                    Через час
-                </option>
-
-                <option>
-                    Через пять часов
-                </option>
-
-                <option>
-                    Завтра
-                </option>
-
-                <option>
-                    Через неделю
-                </option>
-            </select>
-
-
-            <textarea 
-                className={styles.notes}
-                placeholder="Ваши заметки"
-                onInput={e => textAreaAdjust(e)}
-            >
-
-            </textarea>
         </aside>
     );
 };

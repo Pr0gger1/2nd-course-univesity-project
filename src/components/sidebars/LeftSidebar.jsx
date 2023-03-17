@@ -5,12 +5,10 @@ import SearchInput from "../ui/input/SearchInput";
 import styles from "./styles/LeftSidebar.module.scss";
 
 import testAvatar from '../../assets/test/testAvatar.jpg';
-import BaseGroupContainer from "../ui/containers/BaseGroupContainer";
-import CustomGroupContainer from '../ui/containers/CustomGroupContainer';
-import CreateListButton from '../ui/button/CreateListButton';
 
 import { useDispatch, useSelector } from "react-redux";
 import { setLSidebarOpen } from "../../store/reducers/SidebarSlice";
+import TaskGroupsContainer from "../ui/containers/TaskGroupsContainer";
 
 const LeftSidebar = () => {
     const isLSidebarOpened = useSelector(
@@ -40,12 +38,7 @@ const LeftSidebar = () => {
                 onClick={searchClickHandler}
                 placeholder="Поиск..."
             />
-
-            <BaseGroupContainer/>
-            <div className={styles.container}>
-                <CustomGroupContainer/>
-                <CreateListButton/>
-            </div>
+            <TaskGroupsContainer/>
         </aside>
     );
 }

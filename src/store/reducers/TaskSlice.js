@@ -57,6 +57,7 @@ const taskSlice = createSlice({
             const taskIndex = state.tasks.findIndex(
                 task => task.id === action.payload.taskData.id
             );
+
             if (taskIndex !== -1)
                 state.tasks[taskIndex] = action.payload.taskData;
         }
