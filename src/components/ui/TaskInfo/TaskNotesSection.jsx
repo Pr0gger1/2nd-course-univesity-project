@@ -1,5 +1,7 @@
-export const TaskNotesSection = () => {
+const TaskNotesSection = () => {
     return (
         <></>
     );
 };
+
+export default TaskNotesSection;

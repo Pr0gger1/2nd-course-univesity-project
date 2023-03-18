@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import { setRSidebarOpen } from '../../store/reducers/SidebarSlice';
 import { updateTaskData } from '../../store/reducers/TaskSlice';
 
-import Button from '../ui/button/Button';
 import CloseIcon from '@mui/icons-material/Close';
-import AddIcon from '@mui/icons-material/Add';
-import CheckboxInputField from '../ui/input/CheckboxInputField';
-import { CSSTransition } from 'react-transition-group';
+import InputField from '../ui/input/InputField';
+import TaskNameSection from "../ui/TaskInfo/TaskNameSection";
+import SubTaskContainer from "../ui/containers/SubTaskContainer";
+import TaskCategorySection from "../ui/TaskInfo/TaskCategorySection";
+
 import '../ui/animations/Button/createListBtnAnimation.css'
 
 import styles from './styles/RightSidebar.module.scss';
-import InputField from '../ui/input/InputField';
 
 const RightSidebar = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const isRSidebarOpened = useSelector(
         state => state.sidebarStates.isRightSidebarOpen
     );
@@ -23,13 +26,21 @@ const RightSidebar = () => {
         state => state.tasksStates.selectedTask
     );
 
-    const taskGroups = useSelector(
-        state => state.taskGroupStates.allTaskGroups.base.concat(
-            state.taskGroupStates.allTaskGroups.custom
-        )
+    const selectedTaskGroup = useSelector(
+        state => state.taskGroupStates.selectedTaskGroup
     );
+
+    // const taskGroups = useSelector(
+    //     state => state.taskGroupStates.allTaskGroups.base.concat(
+    //         state.taskGroupStates.allTaskGroups.custom
+    //     )
+    // );
     const [taskData, setTaskData] = useState({
+        id: selectedTask.id,
+        groupId: selectedTask.groupId,
         taskName: selectedTask.taskName,
+        favorite: selectedTask.favorite,
+        createdAt: selectedTask.createdAt,
         completed: selectedTask.completed,
         subTasks: selectedTask.subTasks,
         category: selectedTask.category,
@@ -39,8 +50,8 @@ const RightSidebar = () => {
         taskNotes: selectedTask.notes
     });
 
-    const [showButton, setShowButton] = useState(true);
-    const [showInput, setShowInput] = useState(false);
+    // const [showButton, setShowButton] = useState(true);
+    // const [showInput, setShowInput] = useState(false);
 
     const sidebarStyles = `${styles.sidebar__right}${!isRSidebarOpened ? ' ' + styles['closed'] : ''}`;
 
@@ -49,18 +60,27 @@ const RightSidebar = () => {
         event.target.style.height = `${event.target.scrollHeight + 2}px`
     }
 
-    const onTaskCategoryClick = () => {
-        
-    }
+    // const onTaskCategoryClick = () => {
+    //
+    // }
 
-    const onTaskCheckboxChange = () => {
-        const completed = !taskData.completed;
-        setTaskData({...taskData, completed});
+    // const onTaskCheckboxChange = () => {
+    //     const completed = !taskData.completed;
+    //     setTaskData({...taskData, completed});
+    //
+    //     dispatch(updateTaskData({
+    //         taskData: {...selectedTask, completed}
+    //     }));
+    // }
 
-        dispatch(updateTaskData({
-            taskData: {...selectedTask, completed}
-        }));
-    }
+    useEffect(() => {
+        dispatch(updateTaskData({taskData}))
+    }, [dispatch, taskData]);
+
+    useEffect(() => {
+        if (!isRSidebarOpened)
+            navigate(`/tasks/${selectedTaskGroup.id}`)
+    }, [isRSidebarOpened, navigate, selectedTaskGroup.id]);
 
 
     // useEffect(() => {
@@ -87,75 +107,22 @@ const RightSidebar = () => {
                     />
                 </div>
 
-                <section className={styles.add_task__section}>
-                    <CheckboxInputField
-                        placeholder='Ваша задача'
-                        inputValue={taskData.taskName}
-                        checkboxChecked={taskData.completed}
-                        onChangeCheckbox={onTaskCheckboxChange}
-                        onChangeInput={e => setTaskData({...taskData, taskName: e.target.value})}
-                        value={taskData.taskName || ''}
-                    />
+                {
+                    taskData.subTasks &&
+                    taskData.subTasks.length !== 0 &&
+                    <SubTaskContainer taskId={selectedTask.id}/>
+                }
+                <TaskNameSection
+                    taskData={taskData}
+                    setTaskData={setTaskData}
+                />
 
-                    <div className={styles.add_subtask__btn}>
-                        {showButton && (
-                            <Button onClick={() => setShowInput(true)}>
-                                <AddIcon 
-                                    className={styles.add_subtask__icon}
-                                    sx = {{
-                                        fontSize: 32,
-                                        color: 'var(--addSubtaskIconColor)'
-                                    }}
-                                />
-                                <span>Добавить подзадачу</span>
-                            </Button>
-                        )}
-                        <CSSTransition
-                            in={showInput}
-                            timeout={300}
-                            classNames="input"
-                            unmountOnExit
-                            onEnter={() => setShowButton(false)}
-                            onExited={() => setShowButton(true)}
-                        >
-                            <CheckboxInputField/>
-                        </CSSTransition>
-                    </div>
-
-                </section>
-
-                <section className={styles.task_category__section}>
-                    <select className={styles.choose_group} name="" id="">
-                        {
-                            taskGroups.map((group, index) => 
-                                <option
-                                    value={group.id}
-                                    key={index}
-                                    onClick={onTaskCategoryClick}
-                                >
-                                    {group.title}
-                                </option>    
-                            )
-                        }
-                    </select>
-                </section>
-                            
+                <TaskCategorySection/>
                 
                 <div className={styles.date_and_repeat}>
                     <InputField className={styles.deadline}
                         type="date"
                     />
-                    {/* <DatePicker
-                        placeholderText=""
-                        showIcon
-                        dateFormat='dd/MM/yyyy'
-                        selected={new Date()}
-                        customInput={<CustomInputCalendar/>}
-                    /> */}
-                    {/* <DatePicker 
-                    defaultValue={new Date()}
-
-                    /> */}
 
                     <select className={styles.repeat}
                         defaultValue={'default'}>

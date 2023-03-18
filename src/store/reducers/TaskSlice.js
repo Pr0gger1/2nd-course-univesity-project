@@ -60,13 +60,27 @@ const taskSlice = createSlice({
 
             if (taskIndex !== -1)
                 state.tasks[taskIndex] = action.payload.taskData;
+        },
+
+        updateSubTaskData(state, action) {
+            const parentTaskId = action.payload.parentTaskId;
+            const subTaskId = action.payload.subTaskId;
+            const subTaskData = action.payload.subTaskData;
+
+            const parentTaskIndex = state.tasks
+                .findIndex(task => task.id === parentTaskId);
+
+            const subTaskIndex = state.tasks[parentTaskIndex].subTasks
+                .findIndex(subTask => subTask.id === subTaskId);
+
+            state.tasks[parentTaskIndex].subTasks[subTaskIndex] = subTaskData;
         }
     }
 });
 
 export const {
     setCurrentGroupTasks, setSelectedTask,
-    addTask, updateTaskData, deleteTask
+    addTask, updateTaskData, updateSubTaskData, deleteTask
 } = taskSlice.actions;
 
 export default taskSlice.reducer;

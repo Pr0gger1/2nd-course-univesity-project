@@ -1,25 +1,25 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 import CheckboxInputField from "../input/CheckboxInputField";
+import SubTaskContainer from "../containers/SubTaskContainer";
 import Button from "../button/Button";
+import ConfirmationButton from "../button/ConfirmationButton";
+
+import { generateUniqueId } from "../../../utils/generateUniqueId";
 
 import StarBorderIcon from "@mui/icons-material/StarBorderRounded";
 import StarIcon from "@mui/icons-material/StarRounded";
 import AddIcon from "@mui/icons-material/Add";
-import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 import { CSSTransition } from "react-transition-group";
 
-import styles from "../../pages/mobile/styles/TaskInfoPage.module.scss";
-import { generateUniqueId } from "../../../utils/generateUniqueId";
-import SubTaskContainer from "../containers/SubTaskContainer";
+import styles from "./styles/TaskNameSelection.module.scss";
 
 export const TaskNameSection = ({ taskData, setTaskData }) => {
     const [showButton, setShowButton] = useState(true);
     const [showInput, setShowInput] = useState(false);
 
-    const [subTaskName, setSubTaskName] = useState('');
+    const [subTaskNameInput, setSubTaskNameInput] = useState('');
 
     const onTaskNameChange = event => {
         setTaskData({
@@ -43,24 +43,36 @@ export const TaskNameSection = ({ taskData, setTaskData }) => {
     }
 
     const saveSubTaskHandler = () => {
+        console.log(taskData)
         setTaskData({
             ...taskData,
             subTasks: taskData.subTasks.concat({
                 id: generateUniqueId('task', 12, true),
-                taskName: subTaskName,
+                taskName: subTaskNameInput,
                 completed: false,
                 createdAt: new Date().getTime()
             })
         });
 
         setShowInput(false);
-        setSubTaskName('');
+        setSubTaskNameInput('');
     }
+
+    // const onSubTaskInputEnterPressed = event => {
+    //     console.log(event.key)
+    //     if (event.key === 'Enter') {
+    //         saveSubTaskHandler();
+    //     }
+    // }
 
     return (
         <section className={styles.task_name__section}>
             <div className={styles.main_taskName__container}>
                 <CheckboxInputField
+                    style={{
+                        textDecoration:
+                            taskData.completed ? 'line-through' : 'none'
+                    }}
                     inputValue={taskData.taskName}
                     onChangeInput={onTaskNameChange}
                     onChangeCheckbox={onTaskCompletedChange}
@@ -93,15 +105,17 @@ export const TaskNameSection = ({ taskData, setTaskData }) => {
 
             {
             taskData.subTasks && taskData.subTasks.length !== 0 &&
-            <SubTaskContainer
-                taskId={taskData.id}
-            /> 
+                <SubTaskContainer
+                    taskId={taskData.id}
+                />
             }
 
             <div className={styles.add_subtask__btn}>
             
                 {showButton && (
-                    <Button onClick={() => setShowInput(true)}>
+                    <Button
+                        onClick={() => setShowInput(true)}
+                    >
                         <AddIcon
                             className={styles.add_subtask__icon}
                             sx = {{
@@ -123,30 +137,21 @@ export const TaskNameSection = ({ taskData, setTaskData }) => {
                 >
                     <>
                         <CheckboxInputField
-                            inputValue={subTaskName}
-                            onChangeInput={e => setSubTaskName(e.target.value)}
+                            inputValue={subTaskNameInput}
+                            onChangeInput={e => setSubTaskNameInput(e.target.value)}
+                            // onKeyDown={onSubTaskInputEnterPressed}
                         />
                         {
-                            subTaskName.length ?
-                            <CheckRoundedIcon
-                                sx={{
-                                    fontSize: 32,
-                                    color: 'var(--starColor)',
-                                    backgroundColor: 'var(--bgColorFirst)',
-                                    borderRadius: '0.5rem',
-                                    padding: 1
-                                }}
+                            subTaskNameInput.length ?
+                            <ConfirmationButton
+                                backgroundColor='var(--bgColorFirst)'
+                                variant='ok'
                                 onClick={saveSubTaskHandler}
                             />
                             :
-                            <CloseRoundedIcon
-                                sx={{
-                                    fontSize: 32,
-                                    color: 'var(--starColor)',
-                                    backgroundColor: 'var(--bgColorFirst)',
-                                    borderRadius: '0.5rem',
-                                    padding: 1
-                                }}
+                            <ConfirmationButton
+                                backgroundColor='var(--bgColorFirst)'
+                                variant='cancel'
                                 onClick={() => setShowInput(false)}
                             />
                         }

@@ -30,7 +30,7 @@ const taskGroupSlice = createSlice({
                 title: name,
                 icon: customGroupDefaultIcon,
                 counter: 0,
-                id: generateUniqueId('task', 4),
+                id: generateUniqueId('task_group', 12, true),
                 pageTitle: name,
                 webTitle: `Productify - ${name}`
             });

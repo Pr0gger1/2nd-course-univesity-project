@@ -10,6 +10,9 @@ import TaskGroup from "../cards/TaskGroup";
 const TaskGroupsContainer = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isMobile = useSelector(
+        state => state.mobileStates.isMobile
+    );
 
     const selectedTaskGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
@@ -45,7 +48,8 @@ const TaskGroupsContainer = () => {
                             icon: group.icon,
                             title: group.title,
                             counter: group.counter,
-                            isActive: group.id === selectedTaskGroup.id ? 'active' : null
+                            isActive: !isMobile && group.id === selectedTaskGroup.id
+                            ? 'active' : null
                         }}
                         onClick={() => clickHandler(group)}
                     />
@@ -64,7 +68,7 @@ const TaskGroupsContainer = () => {
                             icon: group.icon,
                             title: group.title,
                             counter: group.counter,
-                            isActive: group.id === selectedTaskGroup.id ? 'active' : null
+                            isActive: !isMobile && group.id === selectedTaskGroup.id ? 'active' : null
                         }}
                         onClick={() => clickHandler(group)}
                     />

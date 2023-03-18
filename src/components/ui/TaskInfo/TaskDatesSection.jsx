@@ -1,5 +1,7 @@
-export const TaskDatesSection = () => {
+const TaskDatesSection = () => {
     return (
         <></>
     );
 };
+
+export default TaskDatesSection;
