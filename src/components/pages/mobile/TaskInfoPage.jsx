@@ -51,24 +51,21 @@ const TaskInfoPage = () => {
             navigate(`/tasks/${selectedTaskGroup.id}`);
     }, [navigate, selectedTaskGroup, selectedTask]);
 
-
-    useEffect(() => {
-        console.log(taskData);
-    }, [taskData])
-
     return (
         <main className={styles.main__container}>
             <Header/>
 
             <div className={styles.content}>
-                <BackButton
-                    to={`/tasks/${selectedTaskGroup.id}`}
-                />
+                <BackButton to={`/tasks/${selectedTaskGroup.id}`}/>
 
                 <TaskNameSection
                     taskData={taskData}
                     setTaskData={setTaskData}
                 />
+
+                {
+                    // taskData
+                }
                 <TaskCategorySection
                     taskData={taskData}
                     setTaskData={setTaskData}

@@ -53,6 +53,33 @@ const taskSlice = createSlice({
                 state.tasks = state.tasks.filter(task => task.id !== taskId);
         },
 
+        deleteSubTask(state, action) {
+            const taskId = action.payload.taskId;
+            const subTaskId = action.payload.subTaskId;
+
+            console.log(taskId);
+            console.log(subTaskId);
+            const taskIndex = state.tasks.findIndex(
+                task => task.id === taskId
+            );
+
+            console.log(taskIndex)
+            console.log(JSON.stringify(state.tasks[taskIndex].subTasks))
+
+            const filteredTasks = state.tasks[taskIndex].subTasks.filter(
+                    task => task.id !== subTaskId
+            );
+
+            state.tasks[taskIndex] = {
+                ...state.tasks[taskIndex],
+                subTasks: filteredTasks
+            }
+
+            console.log(JSON.stringify(state.tasks[taskIndex].subTasks.filter(
+                    task => task.id !== subTaskId
+            )))
+        },
+
         updateTaskData(state, action) {
             const taskIndex = state.tasks.findIndex(
                 task => task.id === action.payload.taskData.id
@@ -80,7 +107,8 @@ const taskSlice = createSlice({
 
 export const {
     setCurrentGroupTasks, setSelectedTask,
-    addTask, updateTaskData, updateSubTaskData, deleteTask
+    addTask, updateTaskData, updateSubTaskData,
+    deleteTask, deleteSubTask
 } = taskSlice.actions;
 
 export default taskSlice.reducer;

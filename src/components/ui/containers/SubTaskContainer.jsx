@@ -1,7 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateSubTaskData } from "../../../store/reducers/TaskSlice";
+import { deleteSubTask, updateSubTaskData } from "../../../store/reducers/TaskSlice";
 import CheckboxInputField from '../input/CheckboxInputField';
+import DeleteButton from "../button/DeleteButton";
 
 import styles from './styles/SubTaskContainer.module.scss';
 
@@ -32,20 +33,37 @@ const SubTaskContainer = ({ taskId }) => {
     }
 
     return (
-        <div className={styles.subtask__container}>
+        <>
             {
-                subTasks && subTasks.length &&
-                subTasks.map(subTask => 
-                    <CheckboxInputField
-                        key={subTask.id}
-                        inputValue={subTask.taskName || ''}
-                        onChangeInput={e => onTaskNameChange(e, subTask)}
-                        onChangeCheckbox={() => onCheckboxChange(subTask)}
-                        checked={subTask.completed || false}
-                    />
-                )
+                subTasks &&
+                subTasks.length !== 0 &&
+                <div className={styles.subtask__container}>
+                {
+                    subTasks.map(subTask =>
+                        <div className={styles.subtask}
+                            key={subTask.id}
+                        >
+                            <CheckboxInputField
+                                inputValue={subTask.taskName || ''}
+                                onChangeInput={e => onTaskNameChange(e, subTask)}
+                                onChangeCheckbox={() => onCheckboxChange(subTask)}
+                                checked={subTask.completed || false}
+                                inputStyle={{
+                                    textDecoration: subTask.completed ? 'line-through' : 'none'
+                                }}
+                            />
+                            <DeleteButton
+                                onClick={() => dispatch(deleteSubTask({
+                                    taskId,
+                                    subTaskId: subTask.id
+                                }))}
+                            />
+                        </div>
+                    )
+                }
+            </div>
             }
-        </div>
+        </>
     );
 };
 

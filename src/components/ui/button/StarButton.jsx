@@ -9,7 +9,8 @@ const StarButton = ({ isFavorite, onClick, sx = {} }) => {
                 isFavorite ?
                     <StarIcon sx={Object.assign({
                         color: "#ffc107",
-                        fontSize: 32
+                        fontSize: 32,
+                        cursor: 'pointer'
                     }, sx)}
                     onClick={onClick}
                 />
@@ -17,7 +18,8 @@ const StarButton = ({ isFavorite, onClick, sx = {} }) => {
                     <StarBorderIcon
                     sx={Object.assign({
                         fontSize: 32,
-                        color: 'var(--starColor)'
+                        color: 'var(--starColor)',
+                        cursor: 'pointer'
                     }, sx)}
                     onClick={onClick}
                 />

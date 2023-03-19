@@ -5,7 +5,7 @@ import { TaskCategorySelect } from "../customComponents/TaskCategorySelect";
 
 
 const TaskCategorySection = ({ taskData, setTaskData }) => {
-    const taskGroups = useSelector(
+    const customTaskGroups = useSelector(
         state => state.taskGroupStates.allTaskGroups.custom
     );
 
@@ -15,48 +15,51 @@ const TaskCategorySection = ({ taskData, setTaskData }) => {
         setTaskData({
             ...taskData,
             groupId: event.target.value,
-            category: taskGroups.find(
+            category: customTaskGroups.find(
                 group => group.id === newTaskGroup
             ).title
         });
     }
 
     return (
-        <div>
-            <FormControl fullWidth variant="filled">
-                <InputLabel
-                    style={{color: 'var(--fontColor)'}}
-                    id='task_group_label'
-                >
-                    Категория задачи
-                </InputLabel>
+        <>
+            {
+                customTaskGroups.length !== 0 &&
+                <FormControl fullWidth variant="filled">
+                    <InputLabel
+                        style={{color: 'var(--fontColor)'}}
+                        id='task_group_label'
+                    >
+                        Категория задачи
+                    </InputLabel>
 
-                <TaskCategorySelect
-                    labelId='task_group_label'
-                    value={taskData.groupId || 'ety'}
-                    MenuProps={{
-                        PaperProps: {
-                            sx: {
-                                backgroundColor: 'var(--bgColorFirst)',
-                                color: 'var(--fontColor)'
+                    <TaskCategorySelect
+                        labelId='task_group_label'
+                        value={taskData.groupId || ''}
+                        MenuProps={{
+                            PaperProps: {
+                                sx: {
+                                    backgroundColor: 'var(--bgColorFirst)',
+                                    color: 'var(--fontColor)'
+                                }
                             }
+                        }}
+                        onChange={onCategoryChange}
+                    >
+                        {
+                            customTaskGroups.map(group =>
+                                <MenuItem
+                                    key={group.id}
+                                    value={group.id}
+                                >
+                                    {group.title}
+                                </MenuItem>
+                            )
                         }
-                    }}
-                    onChange={onCategoryChange}
-                >
-                    {
-                        taskGroups.map(group =>
-                            <MenuItem
-                                key={group.id}
-                                value={group.id}
-                            >
-                                {group.title}
-                            </MenuItem>
-                        )
-                    }
-                </TaskCategorySelect>
-            </FormControl>
-        </div>
+                    </TaskCategorySelect>
+                </FormControl>
+            }
+        </>
     );
 };
 

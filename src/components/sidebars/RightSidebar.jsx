@@ -23,9 +23,6 @@ const RightSidebar = () => {
     const selectedTask = useSelector(
         state => state.tasksStates.selectedTask
     );
-    const customGroups = useSelector(
-        state => state.taskGroupStates.allTaskGroups.custom
-    );
     const selectedTaskGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
@@ -86,7 +83,7 @@ const RightSidebar = () => {
                 />
 
                 {
-                    customGroups.length !== 0 &&
+                    // customGroups.length !== 0 &&
                     <TaskCategorySection
                         taskData={
                         Object.values(taskData).every(val => val === undefined)

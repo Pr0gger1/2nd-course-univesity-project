@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import CheckboxInputField from "../input/CheckboxInputField";
 import SubTaskContainer from "../containers/SubTaskContainer";
@@ -14,25 +14,13 @@ import { CSSTransition } from "react-transition-group";
 import styles from "./styles/TaskNameSelection.module.scss";
 
 export const TaskNameSection = ({ taskData, setTaskData }) => {
-    // локальные состояния необходимы для того, чтобы при
-    // скрытии сайдбара информация не пропадала
-    const [isCompleted, setIsCompleted] = useState(taskData.completed || false);
-    const [taskName, setTaskName] = useState(taskData.taskName || '');
-
     const [subTaskNameInput, setSubTaskNameInput] = useState('');
 
     const [showButton, setShowButton] = useState(true);
     const [showInput, setShowInput] = useState(false);
 
 
-    useEffect(() => {
-        setTaskName(taskData.taskName)
-        setIsCompleted(taskData.completed)
-    }, [taskData])
-
     const onTaskNameChange = event => {
-        setTaskName(event.target.value);
-
         setTaskData({
             ...taskData,
             taskName: event.target.value
@@ -41,7 +29,6 @@ export const TaskNameSection = ({ taskData, setTaskData }) => {
 
     const onTaskCompletedChange = event => {
         const completed = event.target.checked;
-        setIsCompleted(completed);
 
         setTaskData({
             ...taskData,
@@ -72,9 +59,8 @@ export const TaskNameSection = ({ taskData, setTaskData }) => {
     }
 
     const onSubTaskInputEnterPressed = event => {
-        if (event.key === 'Enter' && taskName.length) {
+        if (event.key === 'Enter' && subTaskNameInput.length)
             saveSubTaskHandler();
-        }
     }
 
     return (
@@ -85,10 +71,10 @@ export const TaskNameSection = ({ taskData, setTaskData }) => {
                         textDecoration:
                             taskData.completed ? 'line-through' : 'none'
                     }}
-                    inputValue={taskData.taskName || taskName || ''}
+                    inputValue={taskData.taskName || ''}
                     onChangeInput={onTaskNameChange}
                     onChangeCheckbox={onTaskCompletedChange}
-                    checked={taskData.completed || isCompleted || false}
+                    checked={taskData.completed || false}
                 />
                 <StarButton
                     onClick={favoriteToggleHandler}
