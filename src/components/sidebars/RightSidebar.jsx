@@ -53,18 +53,9 @@ const RightSidebar = () => {
     }
 
     useEffect(() => {
-        if (isRSidebarOpened)
-            dispatch(setRSidebarOpen());
-    }, [dispatch, isRSidebarOpened, selectedTaskGroup]);
-
-    useEffect(() => {
         dispatch(updateTaskData({taskData}));
         dispatch(setSelectedTask({taskData}));
     }, [dispatch, taskData]);
-
-    // useEffect(() => {
-    //     console.log(taskData)
-    // }, [taskData])
 
     useEffect(() => {
         setTaskData(selectedTask)

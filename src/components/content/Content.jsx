@@ -42,7 +42,6 @@ const Content = () => {
             dispatch(setSelectedGroup({ group }));
         else navigate('/');
 
-
     }, [
         allGroupsObject.base,
         allGroupsObject.custom,
