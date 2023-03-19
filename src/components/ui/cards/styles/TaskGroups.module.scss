@@ -1,11 +1,14 @@
 .group {
     width: 100%;
-    padding: 2.5%;
+    /* не фиксированные величины для всего,
+     кроме width и height, - literally the devil */
+    // padding: 2.5%;
+    padding: 8px 7px 8px 9px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-
+    position: relative;
     cursor: pointer;
 
     transition: box-shadow 500ms;
@@ -18,13 +21,14 @@
         box-shadow: inset 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
     }
 
-    &.closed {
-        padding: 0.3125rem;
-        p {
-            animation: fadeTitle .5s ease-in-out;
-            display: none;
-        }
-    }
+    // &.closed {
+    //     // padding: 2.5%;
+    //     //padding: 0.3125rem;
+    //     p {
+    //         // animation: fadeTitle .5s ease-in-out;
+    //         //display: none;
+    //     }
+    // }
 
     &.active {
         box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.4);
@@ -78,6 +82,3 @@
         opacity: 0;
     }
 }
-
-
-

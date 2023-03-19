@@ -37,7 +37,7 @@ const TaskGroupsContainer = () => {
         } : {};
 
     return (
-        <>
+        <div className={styles.groups}>
             <div className={styles.base_group__container}>
             {
                 taskGroups.base.map(group =>
@@ -54,9 +54,7 @@ const TaskGroupsContainer = () => {
                     />
                 )
             }
-            </div>
-            <div className={styles.container}>
-                <div className={styles.custom_group__container}
+            <div className={styles.custom_group__container}
                       style={hideOverflow}
                  >
                 {
@@ -74,9 +72,9 @@ const TaskGroupsContainer = () => {
                     )
                 }
                  </div>
-                <CreateListButton/>
             </div>
-        </>
+                <CreateListButton/>
+        </div>
     );
 };
 
