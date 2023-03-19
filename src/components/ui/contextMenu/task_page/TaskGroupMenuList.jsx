@@ -111,7 +111,7 @@ const TaskGroupMenuList = () => {
                                     }
                                 }
                             }}
-                            onChange={e => onFilterChange(e)}
+                            onChange={onFilterChange}
                         >
                             <MenuItem value="alphabet">
                                 По алфавиту

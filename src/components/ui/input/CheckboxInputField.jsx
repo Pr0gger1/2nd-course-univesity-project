@@ -6,7 +6,8 @@ import styles from './styles/CheckboxInput.module.scss';
 
 const CheckboxInputField = ({
     placeholder, inputValue, onChangeInput,
-    checkboxChecked, onChangeCheckbox, onCheckboxClick
+    checkboxChecked, onChangeCheckbox, onCheckboxClick,
+    style
 }) => {
     return (
         <div className={styles.checkbox_input__container}>
@@ -27,6 +28,7 @@ const CheckboxInputField = ({
             />
             
             <InputField customClasses={[styles.checkbox__input]}
+                style={style}
                 placeholder={placeholder}
                 value={inputValue}
                 onChange={onChangeInput}

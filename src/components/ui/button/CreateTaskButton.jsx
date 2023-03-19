@@ -4,8 +4,7 @@ import { addTask } from '../../../store/reducers/TaskSlice';
 
 import InputField from '../input/InputField';
 import Button from './Button';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
+import ConfirmationButton from "./ConfirmationButton";
 
 import { baseGroupIds } from '../../../store/defaultData/baseGroups';
 import { CSSTransition } from 'react-transition-group';
@@ -82,15 +81,15 @@ const CreateTaskButton = () => {
                 <div className={styles.add_task_input__container}>
                     {
                         taskName.length ?
-                        <CheckRoundedIcon
-                            className={[styles.close_input__btn, styles.send_task__btn].join(' ')}
-                            onClick={addTaskHandler}
-                        />
+                            <ConfirmationButton
+                                variant='ok'
+                                onClick={addTaskHandler}
+                            />
                         :
-                        <CloseRoundedIcon
-                            className={styles.close_input__btn}
-                            onClick={() => setShowInput(false)}
-                    />
+                            <ConfirmationButton
+                                variant='cancel'
+                                onClick={() => setShowInput(false)}
+                            />
                     }
                     <InputField
                         customClasses={[styles.add_task__btn]}

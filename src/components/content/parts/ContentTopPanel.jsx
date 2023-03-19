@@ -1,12 +1,9 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 
-import IconButton from '../../ui/button/IconButton';
-import WestRoundedIcon from '@mui/icons-material/WestRounded';
-
 import TaskGroupMenuContainer from '../../ui/contextMenu/task_page/TaskGroupMenuContainer';
+import BackButton from "../../ui/button/BackButton";
 
 import { DateFormatter } from '../../../utils/DateFormatter';
 
@@ -18,21 +15,17 @@ const ContentTopPanel = () => {
     const isMobile = useSelector(
         state => state.mobileStates.isMobile
     );
-    const navigate = useNavigate();
 
     const selectedGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
 
+
     return (
         <section className={styles.content__top_panel}>
             {
                 isMobile &&
-                <IconButton
-                onClick={() => navigate('/')}
-                >
-                    <WestRoundedIcon/>
-                </IconButton>
+                <BackButton to='/'/>
             }
 
             <div className={styles.top_panel__left}>
