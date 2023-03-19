@@ -11,8 +11,9 @@
     max-width: 30%;
     min-width: 2.5rem;
 
-    height: 100vh;
-    max-height: 100vh;
+    height: 100%;
+    // отнимаем высоту хедера
+    max-height: calc(100% - 37px);
 
     background-color: var(--bgColorThird);
     white-space: nowrap;

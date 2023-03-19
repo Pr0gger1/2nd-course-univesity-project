@@ -35,7 +35,7 @@ const TaskGroupsContainer = () => {
         } : {};
 
     return (
-        <>
+        <div className={styles.groups}>
             <div className={styles.base_group__container}>
             {
                 taskGroups.base.map(group =>
@@ -70,11 +70,8 @@ const TaskGroupsContainer = () => {
                 }
                  </div>
             </div>
-            <div className={styles.container}>
-                
                 <CreateListButton/>
-            </div>
-        </>
+        </div>
     );
 };
 

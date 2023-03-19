@@ -1,5 +1,12 @@
 @import "../../cards/styles/TaskGroups.module";
 
+.groups {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .base_group__container {
   display: flex;
   flex-direction: column;
