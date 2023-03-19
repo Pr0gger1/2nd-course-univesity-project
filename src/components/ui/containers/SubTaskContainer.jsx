@@ -38,10 +38,10 @@ const SubTaskContainer = ({ taskId }) => {
                 subTasks.map(subTask => 
                     <CheckboxInputField
                         key={subTask.id}
-                        inputValue={subTask.taskName}
+                        inputValue={subTask.taskName || ''}
                         onChangeInput={e => onTaskNameChange(e, subTask)}
                         onChangeCheckbox={() => onCheckboxChange(subTask)}
-                        checkboxChecked={subTask.completed}
+                        checked={subTask.completed || false}
                     />
                 )
             }

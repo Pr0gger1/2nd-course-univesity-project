@@ -18,7 +18,7 @@ const NoTasksMessage = () => {
         <div className={styles.no_tasks__message}>
             В этой группе нет задач. Вперед к приключениям :)
         </div>
-    )
+    );
 }
 
 const TaskContainer = () => {
@@ -41,9 +41,6 @@ const TaskContainer = () => {
     const sortedTasks = useTask(currentGroupTasks, taskFilter);
 
     useEffect(() => {
-        // console.log('all tasks ', tasks)
-        // console.log('selected group ', selectedGroup)
-
         let currentTasks = [...tasks].filter(
             task => task.groupId === selectedGroup.id
         );

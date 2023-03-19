@@ -1,27 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import CheckboxInputField from "../input/CheckboxInputField";
 import SubTaskContainer from "../containers/SubTaskContainer";
 import Button from "../button/Button";
 import ConfirmationButton from "../button/ConfirmationButton";
+import StarButton from "../button/StarButton";
 
 import { generateUniqueId } from "../../../utils/generateUniqueId";
 
-import StarBorderIcon from "@mui/icons-material/StarBorderRounded";
-import StarIcon from "@mui/icons-material/StarRounded";
 import AddIcon from "@mui/icons-material/Add";
 
 import { CSSTransition } from "react-transition-group";
-
 import styles from "./styles/TaskNameSelection.module.scss";
 
 export const TaskNameSection = ({ taskData, setTaskData }) => {
-    const [showButton, setShowButton] = useState(true);
-    const [showInput, setShowInput] = useState(false);
+    // локальные состояния необходимы для того, чтобы при
+    // скрытии сайдбара информация не пропадала
+    const [isCompleted, setIsCompleted] = useState(taskData.completed || false);
+    const [taskName, setTaskName] = useState(taskData.taskName || '');
 
     const [subTaskNameInput, setSubTaskNameInput] = useState('');
 
+    const [showButton, setShowButton] = useState(true);
+    const [showInput, setShowInput] = useState(false);
+
+
+    useEffect(() => {
+        setTaskName(taskData.taskName)
+        setIsCompleted(taskData.completed)
+    }, [taskData])
+
     const onTaskNameChange = event => {
+        setTaskName(event.target.value);
+
         setTaskData({
             ...taskData,
             taskName: event.target.value
@@ -29,9 +40,12 @@ export const TaskNameSection = ({ taskData, setTaskData }) => {
     }
 
     const onTaskCompletedChange = event => {
+        const completed = event.target.checked;
+        setIsCompleted(completed);
+
         setTaskData({
             ...taskData,
-            completed: event.target.checked
+            completed
         });
     }
 
@@ -43,7 +57,6 @@ export const TaskNameSection = ({ taskData, setTaskData }) => {
     }
 
     const saveSubTaskHandler = () => {
-        console.log(taskData)
         setTaskData({
             ...taskData,
             subTasks: taskData.subTasks.concat({
@@ -58,56 +71,42 @@ export const TaskNameSection = ({ taskData, setTaskData }) => {
         setSubTaskNameInput('');
     }
 
-    // const onSubTaskInputEnterPressed = event => {
-    //     console.log(event.key)
-    //     if (event.key === 'Enter') {
-    //         saveSubTaskHandler();
-    //     }
-    // }
+    const onSubTaskInputEnterPressed = event => {
+        if (event.key === 'Enter' && taskName.length) {
+            saveSubTaskHandler();
+        }
+    }
 
     return (
         <section className={styles.task_name__section}>
             <div className={styles.main_taskName__container}>
                 <CheckboxInputField
-                    style={{
+                    inputStyle={{
                         textDecoration:
                             taskData.completed ? 'line-through' : 'none'
                     }}
-                    inputValue={taskData.taskName}
+                    inputValue={taskData.taskName || taskName || ''}
                     onChangeInput={onTaskNameChange}
                     onChangeCheckbox={onTaskCompletedChange}
-                    checkboxChecked={taskData.completed}
+                    checked={taskData.completed || isCompleted || false}
                 />
-                {
-                taskData.favorite ?
-                    <StarIcon sx={{
-                        color: "#ffc107",
-                        fontSize: 32,
+                <StarButton
+                    onClick={favoriteToggleHandler}
+                    isFavorite={taskData.favorite}
+                    sx={{
                         backgroundColor: 'var(--bgColorFirst)',
                         borderRadius: '0.5rem',
                         padding: 1
-                        }}
-                      onClick={favoriteToggleHandler}
-                    />
-
-                    : <StarBorderIcon
-                        sx={{
-                            fontSize: 32,
-                            color: 'var(--starColor)',
-                            backgroundColor: 'var(--bgColorFirst)',
-                            borderRadius: '0.5rem',
-                            padding: 1
-                        }}
-                        onClick={favoriteToggleHandler}
-                    />
-                }
+                    }}
+                />
             </div>
 
             {
-            taskData.subTasks && taskData.subTasks.length !== 0 &&
-                <SubTaskContainer
-                    taskId={taskData.id}
-                />
+                taskData.subTasks &&
+                taskData.subTasks.length !== 0 &&
+                    <SubTaskContainer
+                        taskId={taskData.id}
+                    />
             }
 
             <div className={styles.add_subtask__btn}>
@@ -139,7 +138,7 @@ export const TaskNameSection = ({ taskData, setTaskData }) => {
                         <CheckboxInputField
                             inputValue={subTaskNameInput}
                             onChangeInput={e => setSubTaskNameInput(e.target.value)}
-                            // onKeyDown={onSubTaskInputEnterPressed}
+                            onInputKeyDown={onSubTaskInputEnterPressed}
                         />
                         {
                             subTaskNameInput.length ?

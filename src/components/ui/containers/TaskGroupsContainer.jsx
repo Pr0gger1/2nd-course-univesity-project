@@ -27,7 +27,6 @@ const TaskGroupsContainer = () => {
 
     const clickHandler = (group) => {
         dispatch(setSelectedGroup({ group }));
-        localStorage.setItem('selectedTaskGroup', JSON.stringify(group));
 
         dispatch(setCurrentRoute(`/tasks/${group.id}`));
         navigate(`/tasks/${group.id}`);

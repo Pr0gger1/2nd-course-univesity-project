@@ -25,15 +25,15 @@ const TaskInfoPage = () => {
         id: selectedTask.id,
         groupId: selectedTask.groupId,
         taskName: selectedTask.taskName,
+        completed: selectedTask.completed,
         favorite: selectedTask.favorite,
         createdAt: selectedTask.createdAt,
-        completed: selectedTask.completed,
         subTasks: selectedTask.subTasks,
         category: selectedTask.category,
         deadline: selectedTask.deadline,
-        repeatTask: selectedTask.repeat,
-        remindTask: selectedTask.reminder,
-        taskNotes: selectedTask.notes
+        repeat: selectedTask.repeat,
+        reminder: selectedTask.reminder,
+        notes: selectedTask.notes
     });
 
     const selectedTaskGroup = useSelector(
@@ -50,6 +50,7 @@ const TaskInfoPage = () => {
         if (!Object.keys(selectedTask).length)
             navigate(`/tasks/${selectedTaskGroup.id}`);
     }, [navigate, selectedTaskGroup, selectedTask]);
+
 
     useEffect(() => {
         console.log(taskData);

@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setRSidebarOpen } from '../../../store/reducers/SidebarSlice';
 import { setSelectedTask, updateTaskData } from "../../../store/reducers/TaskSlice";
 
-import StarIcon from '@mui/icons-material/StarRounded';
-import StarBorderIcon from '@mui/icons-material/StarBorderRounded';
+import StarButton from "../button/StarButton";
+
 import SyncRoundedIcon from '@mui/icons-material/SyncRounded';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import Checkbox from '@mui/material/Checkbox';
@@ -16,24 +16,21 @@ import styles from './styles/Task.module.scss';
 const Task = ({ taskDataProps }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
 
     const [isTaskCompleted, setIsTaskCompleted] = useState(taskDataProps.completed);
 
     const isRSidebarOpened = useSelector(
         state => state.sidebarStates.isRightSidebarOpen
     );
-
     const selectedGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
-
     const selectedTask = useSelector(
         state => state.tasksStates.selectedTask
     );
 
     const taskStyle = {
-        textDecoration: isTaskCompleted ? 'line-through' : 'none',
+        textDecoration: taskDataProps.completed ? 'line-through' : 'none',
     };
 
     const onTaskClick = () => {
@@ -63,6 +60,10 @@ const Task = ({ taskDataProps }) => {
         dispatch(updateTaskData({
             taskData: {...taskDataProps, favorite}
         }));
+
+        dispatch(setSelectedTask({
+            taskData: {...taskDataProps, favorite}
+        }));
     }
 
     const onTaskCheckboxClick = event => {
@@ -73,12 +74,16 @@ const Task = ({ taskDataProps }) => {
             taskData: {...taskDataProps, completed}
         }));
 
+        dispatch(setSelectedTask({
+            taskData: {...taskDataProps, completed}
+        }));
+
         setIsTaskCompleted(completed);
     }
 
     return (
         <div className={styles.task}
-            onClick={() => onTaskClick()}
+            onClick={onTaskClick}
         >
 
             <div className={styles.task__checkbox_info}>
@@ -94,7 +99,7 @@ const Task = ({ taskDataProps }) => {
                         }
                     }}
                     onClick={onTaskCheckboxClick}
-                    checked={isTaskCompleted}
+                    checked={taskDataProps.completed || isTaskCompleted}
                 />
 
                 <div className={styles.task__info}>
@@ -124,23 +129,11 @@ const Task = ({ taskDataProps }) => {
                     </div>
                 </div>
             </div>
-            {
-                taskDataProps.favorite ? 
-                <StarIcon sx={{
-                    color: "#ffc107",
-                    fontSize: 32
-                    }}
-                    onClick={favoriteToggleHandler}
-                />
-                
-                : <StarBorderIcon
-                    sx={{
-                        fontSize: 32,
-                        color: 'var(--starColor)'
-                    }}
-                    onClick={favoriteToggleHandler}
-                />
-            }
+
+            <StarButton
+                onClick={favoriteToggleHandler}
+                isFavorite={taskDataProps.favorite}
+            />
         </div>
     )
 }
