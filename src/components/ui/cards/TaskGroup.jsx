@@ -8,16 +8,15 @@ const TaskGroup = ({ taskGroupData, onClick }) => {
         state => state.sidebarStates.isLeftSidebarOpen
     );
 
-    let groupAdaptiveStyle = isLSidebarOpened
-                ? {} : {justifyContent: "center", alignItems: 'center'}
+    // let groupAdaptiveStyle = isLSidebarOpened ? {} : {justifyContent: "center", alignItems: 'center'}
 
 
+    //let groupStyle = `${styles.group}${taskGroupData.isActive ? ` ${styles['active']}`: ''}${!isLSidebarOpened ? ` ${styles['closed']}` : ''}`;
     let groupStyle = `${styles.group}${taskGroupData.isActive ? ` ${styles['active']}`: ''}${!isLSidebarOpened ? ` ${styles['closed']}` : ''}`;
-
     return (
         <div 
             className={groupStyle}
-            style={groupAdaptiveStyle}
+            //style={groupAdaptiveStyle}
             onClick={onClick}
         >
             <div className={styles.icon_title}>

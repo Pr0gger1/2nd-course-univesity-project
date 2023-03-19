@@ -1,15 +1,19 @@
-.create_list__btn {
+// Что с названиями классов?
+// block__element_modificator / block__element--modificator
+// Для названий из нескольких слов kebab case
+// e.g. my-block__my-el 
+.create-list {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 
     @media (max-width: 1180px) {
-        position: fixed;
+        // position: fixed;
         bottom: 1rem;
     }
 
-    .btn {
+    &__input-btn {
         display: flex;
         justify-content: space-around;
         align-items: center;
@@ -19,11 +23,27 @@
 
         padding: 10px;
         width: 100%;
+        max-width: 100%;
         background: none;
         letter-spacing: 0.2em;
         cursor: pointer;
         color: var(--fontColor);
+        max-height: 40px;
+        position: relative;
+
+        span {
+            padding-left: 24px;
+        }
+
     }
+
+    &__add-icon{
+        position: absolute;
+        top: 50%;
+        left: 8px;
+        margin-top: -12px;
+    }
+
 
     .close_icon {
         cursor: pointer;

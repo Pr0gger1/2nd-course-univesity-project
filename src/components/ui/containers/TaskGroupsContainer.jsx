@@ -51,9 +51,7 @@ const TaskGroupsContainer = () => {
                     />
                 )
             }
-            </div>
-            <div className={styles.container}>
-                <div className={styles.custom_group__container}
+            <div className={styles.custom_group__container}
                       style={hideOverflow}
                  >
                 {
@@ -71,6 +69,9 @@ const TaskGroupsContainer = () => {
                     )
                 }
                  </div>
+            </div>
+            <div className={styles.container}>
+                
                 <CreateListButton/>
             </div>
         </>
