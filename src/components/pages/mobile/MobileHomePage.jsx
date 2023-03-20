@@ -2,7 +2,7 @@ import React from 'react';
 import Header from "../../header/Header";
 import TaskGroupsContainer from "../../ui/containers/TaskGroupsContainer";
 
-import styles from '../styles/HomePage.module.scss';
+import styles from './styles/MobileHomePage.module.scss';
 
 const MobileHomePage = () => {
     return (

@@ -1,65 +1,82 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { updateTaskData } from "../../../store/reducers/TaskSlice";
+
 import { FormControl, InputLabel, MenuItem } from "@mui/material";
 import { TaskCategorySelect } from "../customComponents/TaskCategorySelect";
+import { baseGroupIds } from "../../../store/defaultData/baseGroups";
 
 
-const TaskCategorySection = ({ taskData, setTaskData }) => {
-    const customTaskGroups = useSelector(
-        state => state.taskGroupStates.allTaskGroups.custom
+const TaskCategorySection = () => {
+    const dispatch = useDispatch();
+    const selectedTask = useSelector(
+        state => state.tasksStates.selectedTask
     );
+    const taskGroups = useSelector(
+        state => state.taskGroupStates.allTaskGroups
+    );
+
+    const isBaseTaskGroup = Object.values(baseGroupIds)
+        .includes(selectedTask.groupId);
+
+    const taskGroupList = taskGroups.custom.length &&
+    !isBaseTaskGroup ?
+        taskGroups.custom :
+        taskGroups.custom.concat(
+            taskGroups.base
+        );
 
     const onCategoryChange = event => {
         const newTaskGroup = event.target.value;
-
-        setTaskData({
-            ...taskData,
+        const taskData = {
+            ...selectedTask,
             groupId: event.target.value,
-            category: customTaskGroups.find(
+            category: taskGroups.custom.find(
                 group => group.id === newTaskGroup
             ).title
-        });
+        };
+
+        dispatch(updateTaskData({taskData}));
     }
 
     return (
-        <>
-            {
-                customTaskGroups.length !== 0 &&
-                <FormControl fullWidth variant="filled">
-                    <InputLabel
-                        style={{color: 'var(--fontColor)'}}
-                        id='task_group_label'
-                    >
-                        Категория задачи
-                    </InputLabel>
+        <FormControl
+            fullWidth
+            variant="filled"
+            disabled={!(taskGroups.custom.length && !isBaseTaskGroup)}
+        >
+            <InputLabel
+                style={{color: 'var(--fontColor)'}}
+                id='task_group_label'
+            >
+                Категория задачи
+            </InputLabel>
 
-                    <TaskCategorySelect
-                        labelId='task_group_label'
-                        value={taskData.groupId || ''}
-                        MenuProps={{
-                            PaperProps: {
-                                sx: {
-                                    backgroundColor: 'var(--bgColorFirst)',
-                                    color: 'var(--fontColor)'
-                                }
-                            }
-                        }}
-                        onChange={onCategoryChange}
-                    >
-                        {
-                            customTaskGroups.map(group =>
-                                <MenuItem
-                                    key={group.id}
-                                    value={group.id}
-                                >
-                                    {group.title}
-                                </MenuItem>
-                            )
+            <TaskCategorySelect
+                labelId='task_group_label'
+                value={selectedTask.groupId || ''}
+                MenuProps={{
+                    PaperProps: {
+                        sx: {
+                            backgroundColor: 'var(--bgColorFirst)',
+                            color: 'var(--fontColor)'
                         }
-                    </TaskCategorySelect>
-                </FormControl>
-            }
-        </>
+                    }
+                }}
+                onChange={onCategoryChange}
+            >
+                {
+                    taskGroupList.map(group =>
+                    <MenuItem
+                        key={group.id}
+                        value={group.id}
+                    >
+                        {group.title}
+                    </MenuItem>
+                    )
+                }
+            </TaskCategorySelect>
+        </FormControl>
     );
 };
 

@@ -61,9 +61,6 @@ const Task = ({ taskDataProps }) => {
             taskData: {...taskDataProps, favorite}
         }));
 
-        dispatch(setSelectedTask({
-            taskData: {...taskDataProps, favorite}
-        }));
     }
 
     const onTaskCheckboxClick = event => {
@@ -71,10 +68,6 @@ const Task = ({ taskDataProps }) => {
 
         const completed = !isTaskCompleted;
         dispatch(updateTaskData({
-            taskData: {...taskDataProps, completed}
-        }));
-
-        dispatch(setSelectedTask({
             taskData: {...taskDataProps, completed}
         }));
 

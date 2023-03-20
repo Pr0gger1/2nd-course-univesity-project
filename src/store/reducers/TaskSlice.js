@@ -49,22 +49,19 @@ const taskSlice = createSlice({
 
         deleteTask(state, action) {
             const taskId = action.payload.taskId;
-            if (state.tasks.length)
+            if (state.tasks.length) {
                 state.tasks = state.tasks.filter(task => task.id !== taskId);
+                state.selectedTask = {};
+            }
         },
 
         deleteSubTask(state, action) {
             const taskId = action.payload.taskId;
             const subTaskId = action.payload.subTaskId;
 
-            console.log(taskId);
-            console.log(subTaskId);
             const taskIndex = state.tasks.findIndex(
                 task => task.id === taskId
             );
-
-            console.log(taskIndex)
-            console.log(JSON.stringify(state.tasks[taskIndex].subTasks))
 
             const filteredTasks = state.tasks[taskIndex].subTasks.filter(
                     task => task.id !== subTaskId
@@ -73,11 +70,9 @@ const taskSlice = createSlice({
             state.tasks[taskIndex] = {
                 ...state.tasks[taskIndex],
                 subTasks: filteredTasks
-            }
+            };
 
-            console.log(JSON.stringify(state.tasks[taskIndex].subTasks.filter(
-                    task => task.id !== subTaskId
-            )))
+            state.selectedTask = state.tasks[taskIndex];
         },
 
         updateTaskData(state, action) {
@@ -85,8 +80,11 @@ const taskSlice = createSlice({
                 task => task.id === action.payload.taskData.id
             );
 
-            if (taskIndex !== -1)
+            if (taskIndex !== -1) {
                 state.tasks[taskIndex] = action.payload.taskData;
+                state.selectedTask = action.payload.taskData;
+            }
+
         },
 
         updateSubTaskData(state, action) {
@@ -101,6 +99,7 @@ const taskSlice = createSlice({
                 .findIndex(subTask => subTask.id === subTaskId);
 
             state.tasks[parentTaskIndex].subTasks[subTaskIndex] = subTaskData;
+            state.selectedTask.subTasks[subTaskIndex] = subTaskData;
         }
     }
 });

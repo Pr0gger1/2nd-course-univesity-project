@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import CheckboxInputField from "../input/CheckboxInputField";
 import SubTaskContainer from "../containers/SubTaskContainer";
@@ -12,8 +13,14 @@ import AddIcon from "@mui/icons-material/Add";
 
 import { CSSTransition } from "react-transition-group";
 import styles from "./styles/TaskNameSelection.module.scss";
+import {updateTaskData} from "../../../store/reducers/TaskSlice";
 
-export const TaskNameSection = ({ taskData, setTaskData }) => {
+export const TaskNameSection = () => {
+    const dispatch = useDispatch();
+    const selectedTask = useSelector(
+        state => state.tasksStates.selectedTask
+    );
+
     const [subTaskNameInput, setSubTaskNameInput] = useState('');
 
     const [showButton, setShowButton] = useState(true);
@@ -21,38 +28,43 @@ export const TaskNameSection = ({ taskData, setTaskData }) => {
 
 
     const onTaskNameChange = event => {
-        setTaskData({
-            ...taskData,
+        const taskData = {
+            ...selectedTask,
             taskName: event.target.value
-        });
+        }
+        dispatch(updateTaskData({taskData}));
     }
 
     const onTaskCompletedChange = event => {
         const completed = event.target.checked;
-
-        setTaskData({
-            ...taskData,
+        const taskData = {
+            ...selectedTask,
             completed
-        });
+        }
+        dispatch(updateTaskData({taskData}));
     }
 
     const favoriteToggleHandler = () => {
-        setTaskData({
-            ...taskData,
-            favorite: !taskData.favorite
-        });
+        const taskData = {
+            ...selectedTask,
+            favorite: !selectedTask.favorite
+        };
+
+        dispatch(updateTaskData({taskData}));
     }
 
     const saveSubTaskHandler = () => {
-        setTaskData({
-            ...taskData,
-            subTasks: taskData.subTasks.concat({
+        const taskData = {
+             ...selectedTask,
+            subTasks: selectedTask.subTasks.concat({
                 id: generateUniqueId('task', 12, true),
                 taskName: subTaskNameInput,
                 completed: false,
                 createdAt: new Date().getTime()
             })
-        });
+        };
+
+        dispatch(updateTaskData({taskData}));
 
         setShowInput(false);
         setSubTaskNameInput('');
@@ -69,16 +81,16 @@ export const TaskNameSection = ({ taskData, setTaskData }) => {
                 <CheckboxInputField
                     inputStyle={{
                         textDecoration:
-                            taskData.completed ? 'line-through' : 'none'
+                            selectedTask.completed ? 'line-through' : 'none'
                     }}
-                    inputValue={taskData.taskName || ''}
+                    inputValue={selectedTask.taskName || ''}
                     onChangeInput={onTaskNameChange}
                     onChangeCheckbox={onTaskCompletedChange}
-                    checked={taskData.completed || false}
+                    checked={selectedTask.completed || false}
                 />
                 <StarButton
                     onClick={favoriteToggleHandler}
-                    isFavorite={taskData.favorite}
+                    isFavorite={selectedTask.favorite}
                     sx={{
                         backgroundColor: 'var(--bgColorFirst)',
                         borderRadius: '0.5rem',
@@ -88,11 +100,9 @@ export const TaskNameSection = ({ taskData, setTaskData }) => {
             </div>
 
             {
-                taskData.subTasks &&
-                taskData.subTasks.length !== 0 &&
-                    <SubTaskContainer
-                        taskId={taskData.id}
-                    />
+                selectedTask.subTasks &&
+                selectedTask.subTasks.length !== 0 &&
+                    <SubTaskContainer/>
             }
 
             <div className={styles.add_subtask__btn}>

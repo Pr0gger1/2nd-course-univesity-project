@@ -1,0 +1,48 @@
+.date_and_repeat {
+    display: flex;
+    flex-direction: row;
+    gap: 0.6rem;
+}
+
+
+ .deadline, .repeat {
+    width: 50%;
+    color: var(--fontColor);
+    background-color: var(--bgColorFirst);
+    border: none;
+    border-radius: 5px;
+    padding: 0.6rem;
+    outline: none;
+}
+
+.repeat {
+    content: "";
+    background-image: url("../../../../assets/img/icons/task_list/plan_task_icon.svg");
+    background-repeat: no-repeat;
+    background-size: 1.5rem;
+    background-position: 8% 50%;
+    padding: 1rem 2rem 1rem 3rem;
+
+    appearance: none;
+}
+
+.reminder {
+    color: var(--fontColor);
+    background-color: var(--bgColorFirst);
+
+    border: none;
+    outline: none;
+    border-radius: 5px;
+
+    // padding: 0.6rem;
+    padding: 1rem 2rem 1rem 3rem;
+
+    box-sizing: border-box;
+
+    background-image: url("../../../../assets/img/icons/reminder_icon.svg");
+    background-repeat: no-repeat;
+    background-size: 1.5rem;
+    background-position: 3% 50%;
+
+    appearance: none;
+}
