@@ -13,9 +13,10 @@ const authSlice = createSlice({
         async setUser(state, action) {
             state.isAuth = true;
             localStorage.setItem("isAuth", state.isAuth);
-
+            // if(state.isAuth)
+            //     window.location.pathname = '/tasks/today'
             state.userData = action.payload;
-            console.log(state.userData)
+            //console.log(state.userData)
 
         },
         async registerHandler(state, action) {

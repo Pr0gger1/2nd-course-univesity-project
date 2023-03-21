@@ -6,7 +6,6 @@ import Header from "../header/Header";
 import Content from "../content/Content";
 import RightSidebar from "../sidebars/RightSidebar";
 import MobileHomePage from "./mobile/MobileHomePage";
-
 import styles from './styles/HomePage.module.scss';
 
 const HomePage = () => {
