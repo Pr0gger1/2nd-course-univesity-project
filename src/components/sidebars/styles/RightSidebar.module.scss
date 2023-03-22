@@ -1,7 +1,7 @@
 .sidebar__right {
     transition: width .6s;
 
-    // padding: 2rem;
+    overflow-y: auto;
 
     display: flex;
     flex-direction: column;
@@ -16,7 +16,6 @@
 
     &.closed {
         width: 0;
-        // padding: 0;
         transition: width .6s ease-in;
     }
 
@@ -88,83 +87,4 @@
         }
 
     }
-
-    .reminder {
-        color: var(--fontColor);
-        background-color: var(--bgColorFirst);
-        
-        border: none;
-        outline: none;
-        border-radius: 5px;
-    
-        // padding: 0.6rem;
-        padding: 1rem 2rem 1rem 3rem;
-    
-        box-sizing: border-box;
-    
-        background-image: url("../../../assets/img/icons/reminder_icon.svg");
-        background-repeat: no-repeat;
-        background-size: 1.5rem;
-        background-position: 3% 50%;
-    
-        appearance: none;
-    }
 }
-
-
-.date_and_repeat {
-    display: flex;
-    flex-direction: row;
-    gap: 0.6rem;
-}
-
-
- .deadline, .repeat {
-    width: 50%;
-    color: var(--fontColor);
-    background-color: var(--bgColorFirst);
-    border: none;
-    border-radius: 5px;
-    padding: 0.6rem;
-    outline: none;
-}
-
-.repeat {
-    content: "";
-    background-image: url("../../../assets/img/icons/task_list/plan_task_icon.svg");
-    background-repeat: no-repeat;
-    background-size: 1.5rem;
-    background-position: 8% 50%;
-    padding: 1rem 2rem 1rem 3rem;
-
-    appearance: none;
-}
-
-
-
-.notes {
-    color: var(--fontColor);
-    background-color: var(--bgColorFirst);
-
-    padding: 0.6rem;
-    resize: none;
-    min-height: 12rem;
-    
-    border: none;
-    border-radius: 5px;
-    outline: none;
-
-    //box-sizing: border-box;
-
-    &::placeholder {
-        color: var(--fontColor);
-    }
-}
-
-
-
-//.add_task {
-//    display: flex;
-//    background-color: var(--bgColorContent);
-//    border-radius: 5px;
-//}

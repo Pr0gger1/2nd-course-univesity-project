@@ -19,12 +19,15 @@ const Content = () => {
     const selectedGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
+
     const allGroupsObject = useSelector(
         state => state.taskGroupStates.allTaskGroups
     );
+
     const currentRoute = useSelector(
         state => state.routeState.currentRoute
     );
+
     const filter = useSelector(
         state => state.filterStates.searchFilter
     );
@@ -39,7 +42,6 @@ const Content = () => {
             dispatch(setSelectedGroup({ group }));
         else navigate('/');
 
-
     }, [
         allGroupsObject.base,
         allGroupsObject.custom,
@@ -48,12 +50,7 @@ const Content = () => {
     ]);
 
     useEffect(() => {
-        try {
-            document.title = selectedGroup.webTitle
-        }
-        catch (e) {
-            document.title = 'Productify';
-        }
+         document.title = selectedGroup.webTitle || 'Productify'
     }, [selectedGroup]);
 
     return (

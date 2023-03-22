@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateTaskData } from "../../../store/reducers/TaskSlice";
+import { useSelector } from 'react-redux';
 
 import TaskNameSection from "../../ui/TaskInfo/TaskNameSection";
 import TaskDatesSection from "../../ui/TaskInfo/TaskDatesSection";
@@ -15,63 +14,27 @@ import styles from './styles/TaskInfoPage.module.scss';
 
 const TaskInfoPage = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const selectedTask = useSelector(
         state => state.tasksStates.selectedTask
     );
-
-    const [taskData, setTaskData] = useState({
-        id: selectedTask.id,
-        groupId: selectedTask.groupId,
-        taskName: selectedTask.taskName,
-        favorite: selectedTask.favorite,
-        createdAt: selectedTask.createdAt,
-        completed: selectedTask.completed,
-        subTasks: selectedTask.subTasks,
-        category: selectedTask.category,
-        deadline: selectedTask.deadline,
-        repeatTask: selectedTask.repeat,
-        remindTask: selectedTask.reminder,
-        taskNotes: selectedTask.notes
-    });
-
     const selectedTaskGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
-
-
-    // при обновлении локального состояния, также обновляем глобальный
-    useEffect(() => {
-        dispatch(updateTaskData({taskData}));
-    }, [dispatch, taskData]);
 
     useEffect(() => {
         if (!Object.keys(selectedTask).length)
             navigate(`/tasks/${selectedTaskGroup.id}`);
     }, [navigate, selectedTaskGroup, selectedTask]);
 
-    useEffect(() => {
-        console.log(taskData);
-    }, [taskData])
-
     return (
         <main className={styles.main__container}>
             <Header/>
 
             <div className={styles.content}>
-                <BackButton
-                    to={`/tasks/${selectedTaskGroup.id}`}
-                />
-
-                <TaskNameSection
-                    taskData={taskData}
-                    setTaskData={setTaskData}
-                />
-                <TaskCategorySection
-                    taskData={taskData}
-                    setTaskData={setTaskData}
-                />
+                <BackButton to={`/tasks/${selectedTaskGroup.id}`}/>
+                <TaskNameSection/>
+                <TaskCategorySection/>
                 <TaskDatesSection/>
                 <TaskNotesSection/>
             </div>

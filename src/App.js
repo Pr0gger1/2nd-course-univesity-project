@@ -58,22 +58,24 @@ function App() {
     });
   }, [dispatch, isAuth]);
 
-  // изменение цвета адресной строки для мобильных устройств
-  useMemo(() => {
-    localStorage.setItem("theme", currentTheme);
+    useMemo(() => {
+        // изменение значения атрибута data-theme при изменении темы в приложении
+        document.documentElement.setAttribute("data-theme", currentTheme)
+        localStorage.setItem('theme', currentTheme);
 
+        // изменение цвета адресной строки для мобильных устройств
     const meta = document.querySelector('meta[name="theme-color"]');
 
     let themeColor = "#dfdfdf";
     if (currentTheme === "dark") themeColor = "#232323";
 
-    if (meta) meta.setAttribute("content", themeColor);
-  }, [currentTheme]);
+        if (meta) meta.setAttribute('content', themeColor);
+    }, [currentTheme]);
 
-  // изменение значения атрибута data-theme при изменении темы в приложении
-  useMemo(() => {
-    document.documentElement.setAttribute("data-theme", currentTheme);
-  }, [currentTheme]);
+    // изменение значения атрибута data-theme при изменении темы в приложении
+    useMemo(() => {
+        document.documentElement.setAttribute("data-theme", currentTheme)
+    }, [currentTheme]);
 
   return (
     <ToastContext.Provider

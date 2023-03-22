@@ -27,7 +27,6 @@ const TaskGroupsContainer = () => {
 
     const clickHandler = (group) => {
         dispatch(setSelectedGroup({ group }));
-        localStorage.setItem('selectedTaskGroup', JSON.stringify(group));
 
         dispatch(setCurrentRoute(`/tasks/${group.id}`));
         navigate(`/tasks/${group.id}`);
@@ -55,26 +54,29 @@ const TaskGroupsContainer = () => {
                     />
                 )
             }
-            <div className={styles.custom_group__container}
-                      style={hideOverflow}
-                 >
-                {
-                taskGroups.custom.map(group =>
-                    <TaskGroup
-                        key={group.id}
-                        taskGroupData={{
-                            icon: group.icon,
-                            title: group.title,
-                            counter: group.counter,
-                            isActive: !isMobile && group.id === selectedTaskGroup.id ? 'active' : null
-                        }}
-                        onClick={() => clickHandler(group)}
-                    />
-                    )
-                }
-                 </div>
             </div>
+
+            <div className={styles.container}>
+                <div className={styles.custom_group__container}
+                    style={hideOverflow}
+                 >
+                    {
+                    taskGroups.custom.map(group =>
+                        <TaskGroup
+                            key={group.id}
+                            taskGroupData={{
+                                icon: group.icon,
+                                title: group.title,
+                                counter: group.counter,
+                                isActive: !isMobile && group.id === selectedTaskGroup.id ? 'active' : null
+                            }}
+                            onClick={() => clickHandler(group)}
+                        />
+                        )
+                    }
+                 </div>
                 <CreateListButton/>
+            </div>
         </div>
     );
 };

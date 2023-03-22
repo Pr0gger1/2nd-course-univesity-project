@@ -6,15 +6,14 @@ import styles from './styles/CheckboxInput.module.scss';
 
 const CheckboxInputField = ({
     placeholder, inputValue, onChangeInput,
-    checkboxChecked, onChangeCheckbox, onCheckboxClick,
-    style
+    checked, onChangeCheckbox,
+    onInputKeyDown, inputStyle,
 }) => {
     return (
         <div className={styles.checkbox_input__container}>
             <Checkbox
-                checked={checkboxChecked}
+                checked={checked}
                 onChange={onChangeCheckbox}
-                onClick={onCheckboxClick}
                 sx={{
                     color: "var(--checkboxColor)",
                     '& .MuiSvgIcon-root': {
@@ -28,10 +27,11 @@ const CheckboxInputField = ({
             />
             
             <InputField customClasses={[styles.checkbox__input]}
-                style={style}
+                style={inputStyle}
                 placeholder={placeholder}
                 value={inputValue}
                 onChange={onChangeInput}
+                onKeyDown={onInputKeyDown}
             />
         </div>
     );

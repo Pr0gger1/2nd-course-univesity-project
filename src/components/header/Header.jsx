@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { setLSidebarOpen } from "../../store/reducers/SidebarSlice";
 import { setTheme, themes } from "../../store/reducers/ThemeSlice";
@@ -17,6 +18,7 @@ import settingsIconLight from "../../assets/img/icons/settings_light.svg";
 import settingsIconDark from "../../assets/img/icons/settings_dark.svg";
 
 import styles from "./styles/Header.module.scss";
+import Popover from '@mui/material/Popover';
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -27,6 +29,16 @@ const Header = () => {
     const isMobile = useSelector(
         state => state.mobileStates.isMobile
     );
+
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         <header className={styles.header__app}>
@@ -61,7 +73,45 @@ const Header = () => {
                                 ? notificationIconLight : notificationIconDark
                         }
                         alt="notification button"
+                        onClick={handleClick}
                     />
+                    <Popover
+                        sx={{
+                            "& .MuiPaper-root": {
+                                backgroundColor: "var(--bgColor)",
+                                color: "var(--fontColor)",
+                                borderRadius: "8px",
+                                padding: "1rem",
+                                width: "12rem",
+                            },
+                            "& .MuiTypography-root": {
+                                fontSize: "18px",
+                            },
+                        }}
+                        PaperProps={{
+                            style: {
+                                // backgroundColor: "var(--bgColorFirst)",
+                                backdropFilter: "blur(5px)"
+                            }
+                        }}
+                        open={Boolean(anchorEl)}
+                        anchorEl={anchorEl}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                        }}
+                    >
+                        <div className={styles.notification_container}>
+                            Уведомление 1
+                            Уведомление 2
+                            Уведомление 3
+                        </div>
+                    </Popover>
                 </StyledBadge>
 
                 <ImgButton

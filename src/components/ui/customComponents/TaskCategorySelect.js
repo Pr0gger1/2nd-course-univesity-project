@@ -1,4 +1,4 @@
-import {styled} from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Select from "@mui/material/Select";
 
 
@@ -6,7 +6,10 @@ export const TaskCategorySelect = styled(Select)`
   & {
     width: 100%;
     background-color: var(--bgColorFirst);
-    //color: #dadada;
+  }
+  
+  .Mui-disabled {
+    color: var(--fontColor) !important;
   }
   
   .MuiInputBase-input {

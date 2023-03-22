@@ -108,18 +108,3 @@ input::placeholder {
 button {
   cursor: pointer;
 }
-
-@mixin addTask {
-  cursor: pointer;
-  padding: 0.65rem;
-  background-color: var(--bgColorInput);
-  border-radius: 0.25rem;
-  color: #fd5649;
-
-  transition: background-color .5s ease;
-
-  &:hover {
-      background-color: var(--bgButtonColorHover);
-      transition: background-color .5s ease;
-    }
-}

@@ -14,10 +14,7 @@ const LeftSidebar = () => {
     const isLSidebarOpened = useSelector(
         state => state.sidebarStates.isLeftSidebarOpen
     );
-    // const isLSidebarOpened = localStorage.getItem('LSidebarOpened');
-
     const dispatch = useDispatch();
-
     const searchClickHandler = () => {
         if (!isLSidebarOpened) dispatch(setLSidebarOpen());
     }
@@ -42,5 +39,4 @@ const LeftSidebar = () => {
         </aside>
     );
 }
-
 export default LeftSidebar;
