@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import {useNavigate} from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { useToast } from './hooks/useToast';
+import { useMediaQuery } from "react-responsive";
 import ToastContext from './context/toast.context';
 
-import { useToast } from './hooks/useToast';
-import { useDispatch, useSelector } from 'react-redux';
 
 import AppRouter from './router/AppRouter';
 import Toast from './components/ui/toast/Toast';
@@ -10,7 +12,6 @@ import Toast from './components/ui/toast/Toast';
 import { setUser } from "./store/reducers/AuthSlice";
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase.config';
-import {useNavigate} from "react-router-dom";
 
 
 function App() {
@@ -24,13 +25,20 @@ function App() {
 
     const currentTheme = useSelector(state => state.themeState.theme);
 
+
+    const mobileScreen =  useMediaQuery({maxWidth: 768});
     const isMobile = useSelector(
         state => state.mobileStates.isMobile
-    );
+    ) || mobileScreen;
 
     const selectedTaskGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
+
+    useEffect(() => {
+        Notification.requestPermission().then(r => console.log(r))
+
+    }, [])
 
     /*
      Перенаправление пользователя в корень

@@ -1,63 +1,63 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import { useSelector } from "react-redux";
 
-import { MenuItem } from "@mui/material";
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
-import { TaskCategorySelect } from "../customComponents/TaskCategorySelect";
+import DeadlinePicker from "./components/DeadlinePicker";
+import ReminderPicker from "./components/ReminderPicker";
+import RepeatComponent from "./components/RepeatComponent";
+
 import styles from "./styles/TaskDatesSection.module.scss";
 
-
-const repeatItems = [
-    {
-        title: 'Каждый день',
-        value: 'every_day'
-    },
-    {
-        title: 'Каждую неделю',
-        value: 'every_week'
-    },
-    {
-        title: 'Каждый месяц',
-        value: 'every_month'
-    }
-];
-
 const TaskDatesSection = () => {
+    const selectedTask = useSelector(
+        state => state.tasksStates.selectedTask
+    );
+
+    const [showDeadlinePicker,
+        setShowDeadlinePicker] = useState(false);
+
+    const [showReminderPicker,
+        setShowReminderPicker] = useState(false);
+
+    useEffect(() => {
+        if (!selectedTask.reminder)
+            setShowReminderPicker(false);
+
+        if (!selectedTask.deadline)
+            setShowDeadlinePicker(false);
+    }, [selectedTask])
+
     return (
         <>
             <div className={styles.date_and_repeat}>
-                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <MobileDateTimePicker/>
-                 </LocalizationProvider>
-                <TaskCategorySelect>
-                    {
-                        repeatItems.map(item =>
-                            <MenuItem key={item.value}>
-                                {item.title}
-                            </MenuItem>
-                        )
-                    }
-                </TaskCategorySelect>
+                {
+                    selectedTask.deadline || showDeadlinePicker ?
+                    <DeadlinePicker
+                        setShowDeadlinePicker={setShowDeadlinePicker}
+                    />
+                    :
+                    <div className={styles.deadline__btn}
+                        onClick={() => setShowDeadlinePicker(prev => !prev)}
+                    >
+                        Дата выполнения
+                    </div>
+                }
+
+                <RepeatComponent/>
+
+                {
+                    selectedTask.reminder || showReminderPicker ?
+                    <ReminderPicker
+                        setShowReminderPicker={setShowReminderPicker}
+                    />
+                    :
+                    <div className={styles.reminder__btn}
+                        onClick={() => setShowReminderPicker(prev => !prev)}
+                    >
+                        Напоминание
+                    </div>
+                }
             </div>
 
-            <select className={styles.reminder}>
-                <option>
-                    Через час
-                </option>
-
-                <option>
-                    Через пять часов
-                </option>
-
-                <option>
-                    Завтра
-                </option>
-
-                <option>
-                    Через неделю
-                </option>
-            </select>
         </>
     );
 };

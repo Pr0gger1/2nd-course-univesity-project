@@ -9,10 +9,12 @@ import HomePage from '../components/pages/HomePage';
 import ConditionalRoute from './ConditionalRoute';
 import TaskPage from "../components/pages/mobile/TaskPage";
 import TaskInfoPage from "../components/pages/mobile/TaskInfoPage";
+import {useMediaQuery} from "react-responsive";
 
 
 const AppRouter = ({ isAuth = false }) => {
-    const isMobile = useSelector(state => state.mobileStates.isMobile);
+    const mobileScreen =  useMediaQuery({maxWidth: 768});
+    const isMobile = useSelector(state => state.mobileStates.isMobile) || mobileScreen;
 
     const UnauthorizedRoutes = [
         { path: "/", element: <Navigate to="/login"/> },

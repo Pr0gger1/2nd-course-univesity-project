@@ -11,10 +11,12 @@ import styles from '../styles/ContentTopPanel.module.scss';
 import '../../ui/animations/ContextMenu/ContextMenuPageAnimation.scss';
 
 const ContentTopPanel = () => {
-    const contextMenuMedia = useMediaQuery({minWidth: 1101});
+    const contextMenuMedia = useMediaQuery({minWidth: 1100});
+
+    const mobileScreen =  useMediaQuery({maxWidth: 768});
     const isMobile = useSelector(
         state => state.mobileStates.isMobile
-    );
+    ) || mobileScreen;
 
     const selectedGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup

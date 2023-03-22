@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,11 +11,14 @@ import SyncRoundedIcon from '@mui/icons-material/SyncRounded';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import Checkbox from '@mui/material/Checkbox';
 
+import { themes } from "../../../store/reducers/ThemeSlice";
 import styles from './styles/Task.module.scss';
 
 const Task = ({ taskDataProps }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const currentTheme = useSelector(state => state.themeState.theme);
 
     const [isTaskCompleted, setIsTaskCompleted] = useState(taskDataProps.completed);
 
@@ -28,6 +31,10 @@ const Task = ({ taskDataProps }) => {
     const selectedTask = useSelector(
         state => state.tasksStates.selectedTask
     );
+
+    useEffect(() => {
+        console.log(taskDataProps)
+    }, [taskDataProps])
 
     const taskStyle = {
         textDecoration: taskDataProps.completed ? 'line-through' : 'none',
@@ -77,6 +84,7 @@ const Task = ({ taskDataProps }) => {
     return (
         <div className={styles.task}
             onClick={onTaskClick}
+             style={isTaskCompleted && currentTheme === themes.light ? {backgroundColor: '#dcfce3'} : {}}
         >
 
             <div className={styles.task__checkbox_info}>
@@ -108,13 +116,13 @@ const Task = ({ taskDataProps }) => {
                             {taskDataProps.category}
                         </span>
                         {
-                            // taskData.repeat &&
+                            taskDataProps.repeat &&
                             <span className={styles.task__repeat}>
                                 <SyncRoundedIcon className={styles.task__icons}/>
                             </span>
                         }
                         {
-                            // taskData.deadline &&
+                            taskDataProps.deadline &&
                             <span className={styles.task__deadline}>
                                 <CalendarMonthOutlinedIcon className={styles.task__icons}/>
                             </span>

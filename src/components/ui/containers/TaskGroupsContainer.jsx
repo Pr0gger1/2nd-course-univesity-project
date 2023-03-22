@@ -1,18 +1,23 @@
 import React from "react";
+import { useMediaQuery } from "react-responsive";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import { setSelectedGroup } from "../../../store/reducers/TaskGroupSlice";
 import { setCurrentRoute } from "../../../store/reducers/RouteSlice";
-import {useDispatch, useSelector} from "react-redux";
-import { useNavigate } from "react-router-dom";
+import TaskGroup from "../cards/TaskGroup";
+
 import CreateListButton from "../button/CreateListButton";
 import styles from "./styles/TaskGroupsContainer.module.scss";
-import TaskGroup from "../cards/TaskGroup";
 
 const TaskGroupsContainer = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const mobileScreen =  useMediaQuery({maxWidth: 768});
     const isMobile = useSelector(
         state => state.mobileStates.isMobile
-    );
+    ) || mobileScreen;
 
     const selectedTaskGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup

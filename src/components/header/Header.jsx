@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { useDispatch, useSelector } from 'react-redux';
 import { setLSidebarOpen } from "../../store/reducers/SidebarSlice";
 import { setTheme, themes } from "../../store/reducers/ThemeSlice";
@@ -7,6 +8,7 @@ import { setTheme, themes } from "../../store/reducers/ThemeSlice";
 import TaskGroupMenuContainer from "../ui/contextMenu/task_page/TaskGroupMenuContainer";
 import ImgButton from "../ui/button/ImgButton";
 
+import Popover from '@mui/material/Popover';
 import MenuIcon from "@mui/icons-material/Menu";
 import { StyledBadge } from "../ui/customComponents/CustomBadge";
 
@@ -18,7 +20,6 @@ import settingsIconLight from "../../assets/img/icons/settings_light.svg";
 import settingsIconDark from "../../assets/img/icons/settings_dark.svg";
 
 import styles from "./styles/Header.module.scss";
-import Popover from '@mui/material/Popover';
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -26,9 +27,10 @@ const Header = () => {
         state => state.themeState.theme
     );
 
+    const mobileScreen =  useMediaQuery({maxWidth: 768});
     const isMobile = useSelector(
         state => state.mobileStates.isMobile
-    );
+    ) || mobileScreen;
 
     const [anchorEl, setAnchorEl] = useState(null);
 

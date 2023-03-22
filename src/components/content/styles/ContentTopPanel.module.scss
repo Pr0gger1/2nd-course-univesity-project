@@ -3,7 +3,7 @@
     flex-direction: row;
     justify-content: space-between;
 
-    @media (max-width: 1180px) {
+    @media (max-width: 768px) {
         justify-content: normal;
         flex-direction: column;
         gap: 0.5rem;

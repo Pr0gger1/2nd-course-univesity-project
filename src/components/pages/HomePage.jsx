@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useMediaQuery } from "react-responsive";
 
 import LeftSidebar from "../sidebars/LeftSidebar";
 import Header from "../header/Header";
@@ -10,11 +11,14 @@ import MobileHomePage from "./mobile/MobileHomePage";
 import styles from './styles/HomePage.module.scss';
 
 const HomePage = () => {
+    const mobileScreen = useMediaQuery({maxWidth: 768});
     const isMobile = useSelector(
         state => state.mobileStates.isMobile
-    );
+    ) || mobileScreen;
 
-    if (isMobile) return <MobileHomePage/>
+    if (isMobile)
+        return <MobileHomePage/>
+
 
     return (
         <main className={styles.main__container}>
