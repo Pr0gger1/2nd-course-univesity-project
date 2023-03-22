@@ -76,13 +76,14 @@ const taskSlice = createSlice({
         },
 
         updateTaskData(state, action) {
+            const taskData = action.payload.taskData;
             const taskIndex = state.tasks.findIndex(
-                task => task.id === action.payload.taskData.id
+                task => task.id === taskData.id
             );
 
             if (taskIndex !== -1) {
-                state.tasks[taskIndex] = action.payload.taskData;
-                state.selectedTask = action.payload.taskData;
+                state.tasks[taskIndex] = taskData;
+                state.selectedTask = taskData;
             }
 
         },

@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useMediaQuery } from "react-responsive";
+
 import { setSelectedGroup } from '../../store/reducers/TaskGroupSlice';
 
 import TaskContainer from '../ui/containers/TaskContainer';
@@ -12,9 +14,11 @@ import styles from './styles/Content.module.scss';
 const Content = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const mobileScreen =  useMediaQuery({maxWidth: 768});
     const isMobile = useSelector(
         state => state.mobileStates.isMobile
-    );
+    ) || mobileScreen;
 
     const selectedGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup

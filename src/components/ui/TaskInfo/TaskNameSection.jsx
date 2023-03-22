@@ -41,6 +41,7 @@ export const TaskNameSection = () => {
             ...selectedTask,
             completed
         }
+
         dispatch(updateTaskData({taskData}));
     }
 
