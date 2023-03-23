@@ -15,10 +15,10 @@ import { deleteCustomTaskGroup, renameCustomTaskGroup } from '../../../../store/
 
 import deleteGroupIcon from '../../../../assets/img/icons/delete_icon.svg';
 import filterIcon from '../../../../assets/img/icons/filter_icon.svg';
-import upArrowFilterDark from '../../../../assets/img/icons/filter/up_arrow_dark.svg';
-import downArrowFilterDark from '../../../../assets/img/icons/filter/down_arrow_dark.svg';
-import upArrowFilterLight from '../../../../assets/img/icons/filter/up_arrow_light.svg';
-import downArrowFilterLight from '../../../../assets/img/icons/filter/down_arrow_light.svg';
+import upArrowFilterLight from '../../../../assets/img/icons/filter/up_arrow_dark.svg';
+import downArrowFilterLight from '../../../../assets/img/icons/filter/down_arrow_dark.svg';
+import upArrowFilterDark from '../../../../assets/img/icons/filter/up_arrow_light.svg';
+import downArrowFilterDark from '../../../../assets/img/icons/filter/down_arrow_light.svg';
 import editIcon from '../../../../assets/img/icons/edit_icon.svg';
 
 import styles from "../../../content/styles/ContentTopPanel.module.scss";

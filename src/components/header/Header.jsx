@@ -2,14 +2,16 @@ import React from "react";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useDispatch, useSelector } from 'react-redux';
-import { setLSidebarOpen } from "../../store/reducers/SidebarSlice";
-import { setTheme, themes } from "../../store/reducers/ThemeSlice";
+import useToggleIconTheme from "../../hooks/useToggleIconTheme";
+
+import { setTheme } from "../../store/reducers/ThemeSlice";
 
 import TaskGroupMenuContainer from "../ui/contextMenu/task_page/TaskGroupMenuContainer";
+import HamburgerMenu from "./components/hamburgerMenu/HamburgerMenu";
+import NotificationWindow from "./components/notifications/NotificationWindow";
+import SettingsWindow from "./components/settings/SettingsWindow";
 import ImgButton from "../ui/button/ImgButton";
 
-import Popover from '@mui/material/Popover';
-import MenuIcon from "@mui/icons-material/Menu";
 import { StyledBadge } from "../ui/customComponents/CustomBadge";
 
 import themeIconLight from "../../assets/img/icons/theme_icon_light.svg";
@@ -27,20 +29,25 @@ const Header = () => {
         state => state.themeState.theme
     );
 
+    const themeIcon = useToggleIconTheme(themeIconLight, themeIconDark, currentTheme);
+    const notificationIcon = useToggleIconTheme(notificationIconLight, notificationIconDark, currentTheme);
+    const settingsIcon = useToggleIconTheme(settingsIconLight, settingsIconDark, currentTheme);
+
     const mobileScreen =  useMediaQuery({maxWidth: 768});
     const isMobile = useSelector(
         state => state.mobileStates.isMobile
     ) || mobileScreen;
-
+    
+    const [settingsAnchor, setSettingsAnchor] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    const settingsHandleClick = (event) => {
+        setSettingsAnchor(event.currentTarget);
+    }
 
     return (
         <header className={styles.header__app}>
@@ -48,80 +55,37 @@ const Header = () => {
                 isMobile ?
                     <TaskGroupMenuContainer />
                     :
-                    <div className={styles.hamburger_menu__btn}>
-                        <MenuIcon
-                            onClick={() => dispatch(setLSidebarOpen())}
-                            sx={{
-                                fontSize: 30
-                            }}
-                        />
-                    </div>
+                    <HamburgerMenu/>
             }
 
             <div className={styles.settings__buttons}>
                 <ImgButton
                     onClick={() => dispatch(setTheme())}
-                    src={
-                        currentTheme === themes.light
-                            ? themeIconLight : themeIconDark
-                    }
+                    src={themeIcon}
                     alt="theme button"
                 />
 
                 <StyledBadge badgeContent={2}>
                     <ImgButton
-                        src={
-                            currentTheme === themes.light
-                                ? notificationIconLight : notificationIconDark
-                        }
+                        src={notificationIcon}
                         alt="notification button"
                         onClick={handleClick}
                     />
-                    <Popover
-                        sx={{
-                            "& .MuiPaper-root": {
-                                backgroundColor: "var(--bgColor)",
-                                color: "var(--fontColor)",
-                                borderRadius: "8px",
-                                padding: "1rem",
-                                width: "12rem",
-                            },
-                            "& .MuiTypography-root": {
-                                fontSize: "18px",
-                            },
-                        }}
-                        PaperProps={{
-                            style: {
-                                // backgroundColor: "var(--bgColorFirst)",
-                                backdropFilter: "blur(5px)"
-                            }
-                        }}
-                        open={Boolean(anchorEl)}
-                        anchorEl={anchorEl}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'center',
-                        }}
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'center',
-                        }}
-                    >
-                        <div className={styles.notification_container}>
-                            Уведомление 1
-                            Уведомление 2
-                            Уведомление 3
-                        </div>
-                    </Popover>
+
+                    <NotificationWindow
+                        setAnchor={setAnchorEl}
+                        anchor={anchorEl}
+                    />
                 </StyledBadge>
 
                 <ImgButton
-                    src={
-                        currentTheme === themes.light
-                            ? settingsIconLight : settingsIconDark
-                    }
+                    src={settingsIcon}
                     alt="settings icon"
+                    onClick={settingsHandleClick}
+                />
+                <SettingsWindow
+                    anchor={settingsAnchor}
+                    setAnchor={setSettingsAnchor}
                 />
             </div>
         </header>

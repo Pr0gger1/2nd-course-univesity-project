@@ -1,43 +1,76 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { auth } from '../../firebase.config';
 import { signOut } from "firebase/auth";
+import { AuthService } from "../../services/auth.service";
+export const login = createAsyncThunk(
+    'auth/login',
+    async data => {
+        await AuthService.login(data.email, data.password);
+    }
+);
 
+export const register = createAsyncThunk(
+    'auth/register',
+    async data => {
+        await AuthService.register(data.email, data.password);
+    }
+);
 const authSlice = createSlice({
     name: 'authStates',
     initialState: {
-        isAuth: localStorage.getItem('isAuth') || false,
         userData: null,
-        authError: null
+        authError: null,
+        status: ''
     },
+    
     reducers: {
-        async setUser(state, action) {
-            state.isAuth = true;
-            localStorage.setItem("isAuth", state.isAuth);
-            // if(state.isAuth)
-            //     window.location.pathname = '/tasks/today'
-            state.userData = action.payload;
-            //console.log(state.userData)
+        setUser(state, action) {
+            state.userData = action.payload.data;
+            localStorage.setItem("userData",
+                JSON.stringify(state.userData));
+        },
 
-        },
-        async registerHandler(state, action) {
-            state.isAuth = true;
-            state.userData = action.payload.data;
-            state.authError = action.payload.error;
-        },
-        async loginHandler(state, action) {
-            state.isAuth = true;
-            state.userData = action.payload.data;
-        },
         async logoutHandler(state) {
             await signOut(auth)
                 .then(() => {
-                    state.isAuth = false;
                     state.userData = null;
-                    localStorage.setItem('isAuth', false);
+                    localStorage.removeItem("userData");
+                    window.location.pathname = '/login';
             })
                 .catch( error => state.authError = error);
         }
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(login.pending, state => {
+                state.status = 'loading';
+            })
+
+            .addCase(login.fulfilled, (state, action) => {
+                state.status = 'success';
+                state.userData = action.payload;
+                window.location.pathname = '/';
+            })
+
+            .addCase(login.rejected, (state, action) => {
+                state.status = 'failed';
+                state.authError = action.error;
+            })
+
+            .addCase(register.pending, state => {
+                state.status = 'loading';
+            })
+
+            .addCase(register.fulfilled, (state, action) => {
+                state.status = 'success';
+                state.userData = action.payload;
+            })
+            .addCase(register.rejected, (state, action) => {
+                state.status = 'failed';
+                state.authError = action.error;
+            })
     }
 })
-export const { setUser, loginHandler, logoutHandler, registerHandler } = authSlice.actions;
+
+export const { setUser, logoutHandler } = authSlice.actions;
 export default authSlice.reducer;

@@ -63,8 +63,8 @@
 
   font-family: 'Montserrat', sans-serif;
   font-size: 1rem;
-
-  overflow: hidden;
+  overflow-x: hidden;
+  //overflow: hidden;
 
   -webkit-transition: background-color .5s ease-in-out;
   -moz-transition: background-color .5s ease-in-out;
@@ -73,6 +73,7 @@
 }
 
 main {
+  overflow-y: hidden;
   color: var(--fontColor);
   background-color: var(--bgColorFirst);
 }
@@ -107,4 +108,6 @@ input::placeholder {
 
 button {
   cursor: pointer;
+  overflow: hidden;
+  word-wrap: break-word;
 }

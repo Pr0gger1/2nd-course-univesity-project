@@ -18,6 +18,14 @@ const taskSlice = createSlice({
             state.currentGroupTasks = action.payload.tasks;
         },
 
+        getTasks(state, action) {
+            const userId = action.payload.userId;
+
+            // Достаем из сервера данные пользователя
+            const tasks = [];
+            state.tasks = tasks;
+        },
+
         setSelectedTask(state, action) {
             state.selectedTask = action.payload.taskData;
         },
@@ -108,7 +116,7 @@ const taskSlice = createSlice({
 export const {
     setCurrentGroupTasks, setSelectedTask,
     addTask, updateTaskData, updateSubTaskData,
-    deleteTask, deleteSubTask
+    deleteTask, deleteSubTask, getTasks
 } = taskSlice.actions;
 
 export default taskSlice.reducer;

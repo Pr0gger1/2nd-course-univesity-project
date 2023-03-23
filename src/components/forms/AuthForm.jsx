@@ -1,142 +1,145 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, register as registerHandler } from '../../store/reducers/AuthSlice';
 import ToastContext from "../../context/toast.context";
 
-import {Link, useNavigate} from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import { auth } from '../../firebase.config';
-import { loginHandler, registerHandler } from '../../store/reducers/AuthSlice';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-
-import InputField from '../ui/input/InputField';
 import Button from '../ui/button/Button';
 
-import styles from './AuthForm.module.scss';
+import { FormControl, IconButton, InputAdornment, TextField } from "@mui/material";
+import KeyTwoToneIcon from '@mui/icons-material/KeyTwoTone';
+import EmailTwoToneIcon from '@mui/icons-material/EmailTwoTone';
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const fieldStyle = {
-    padding: "1rem 0.5rem 1rem 3rem"
-}
+import styles from './AuthForm.module.scss';
 
 const AuthForm = ({ register = false, data, setData}) => {
     const {setPosition, toastElement} = useContext(ToastContext);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const authError =  useSelector(
+        state => state.authStates.authError
+    );
+
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => setShowPassword(show => !show);
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
+    const emailValidation = !/\S+@\S+\.\S+/.test(data.email)
+        && data.email.length !== 0;
 
     useEffect(() => {
         setPosition('top_center');
     }, [setPosition]);
 
-    async function loginUser() {
-        await signInWithEmailAndPassword(
-            auth, data.email, data.password
-        )
-            .then(creds => {
-                if (creds.user) {
-                    console.log(creds.user)
-                    dispatch(loginHandler({data: creds.user}))
-                }
-            })
-            // .catch(error => dispatch());
-    }
-
-    async function registerUser() {
-        await createUserWithEmailAndPassword(
-            auth, data.email, data.password
-        )
-            .then(creds => {
-                if (creds.user) {
-                    dispatch(registerHandler({data: creds.user}));
-                    navigate('/');
-                }
-            })
-
-            .catch(error => dispatch(registerHandler({error})));
-    }
-
     const onChangeHandler = event => {
-        setData({...data, [event.target.name]: event.target.value})
+        setData({...data, [event.target.id]: event.target.value})
     }
-
 
     const onSubmitHandler = async event => {
         event.preventDefault();
-        if (!data.email || !data.password || (register && !data.repeatPassword)) {
-            return new toastElement("Остались пустые поля", "Ошибка!").error
-        }
+        if (!data.email || !data.password || (register && !data.repeatPassword))
+            return new toastElement("Остались пустые поля", "Ошибка!").error;
+
         if (register) {
-            await registerUser();
-            navigate('/');
+            if (data.password === data.repeatPassword)
+                dispatch(registerHandler(data));
+            else return new toastElement("Пароли не совпадают", "Ошибка регистрации").error;
         }
-        else {
-            await loginUser();
-            navigate('/')
-        }
-        return new toastElement("This is a description", "Title").success
+        else dispatch(login(data));
     }
+
+    useEffect(() => {
+            console.log(authError);
+    }, [authError])
+
     return (
         <form className={styles.auth__form}>
             <div className={styles.form__fields}>
-                <div>
-                    <label htmlFor="email_field">
-                        Логин
-                    </label>
-                    <InputField type='email'
-                        onChange={e => onChangeHandler(e)}
+                <FormControl>
+                    <TextField
+                        helperText={emailValidation ? 'Некорректный email' : ''}
+                        error={emailValidation}
+                        id='email'
+                        label='Email'
                         value={data.email}
-                        customStyles={fieldStyle}
-                        customClasses={[styles.email_icon]}
-                        placeholder='example@mail.com'
-                        htmlFor='email_field'
-                        name='email'
-                        maxLength={50}
+                        onChange={onChangeHandler}
+                        placeholder='example@example.com'
+                        InputProps={{
+                            startAdornment:
+                            <InputAdornment position='start'>
+                                <EmailTwoToneIcon/>
+                            </InputAdornment>
+                        }}
                     />
-                </div>
-
-                <div>
-                    <label htmlFor="password_field">
-                        Пароль
-                    </label>
-                    <InputField
-                        type='password'
-                        onChange={e => onChangeHandler(e)}
+                </FormControl>
+                <FormControl>
+                    <TextField
+                        type={showPassword ? 'text' : 'password'}
+                        InputProps={{
+                            startAdornment:
+                                <InputAdornment position='start'>
+                                    <KeyTwoToneIcon/>
+                                </InputAdornment>,
+                            endAdornment:
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={handleClickShowPassword}
+                                  onMouseDown={handleMouseDownPassword}
+                                  edge="end"
+                                >
+                                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                              </InputAdornment>
+                        }}
+                        id='password'
+                        label='Пароль'
                         value={data.password}
-                        customStyles={fieldStyle}
-                        customClasses={[styles.password_icon]}
-                        placeholder='your password'
-                        htmlFor='password_field'
-                        name='password'
-                        maxLength={100}
-                        minLength={8}
+                        onChange={onChangeHandler}
+                        placeholder='Минимум 8 символов'
                     />
-                </div>
+                </FormControl>
 
                 {
-                register &&
-                <div>
-                    <label htmlFor="password_repeat_field">
-                        Повторите пароль
-                    </label>
-                    <InputField
-                        type='password'
-                        onChange={e => onChangeHandler(e)}
+                    register &&
+                <FormControl>
+                    <TextField
+                        type={showPassword ? 'text' : 'password'}
+                        InputProps={{
+                            startAdornment:
+                                <InputAdornment position='start'>
+                                    <KeyTwoToneIcon/>
+                                </InputAdornment>,
+                            endAdornment:
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={handleClickShowPassword}
+                                  onMouseDown={handleMouseDownPassword}
+                                  edge="end"
+                                >
+                                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                              </InputAdornment>
+                        }}
+                        id='repeatPassword'
+                        label='Повторите пароль'
                         value={data.repeatPassword}
-                        customStyles={fieldStyle}
-                        customClasses={[styles.password_icon]}
-                        placeholder='repeat your password'
-                        htmlFor='password_repeat_field'
-                        name='repeatPassword'
-                        maxLength={100}
-                        minLength={8}
+                        onChange={onChangeHandler}
+                        placeholder='Минимум 8 символов'
                     />
-                </div>
-            }
+                </FormControl>
+                }
             </div>
 
             <Button
                 type='submit'
                 customClass={styles.login_button}
                 variant='long'
-                onClick={e => onSubmitHandler(e)}>
+                onClick={onSubmitHandler}>
                 {register ? 'Зарегистрироваться' : 'Войти'}
                 <i className="fa-solid fa-arrow-right-to-bracket"></i>
             </Button>
