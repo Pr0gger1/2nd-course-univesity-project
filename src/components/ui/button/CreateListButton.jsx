@@ -26,14 +26,13 @@ const CreateListButton = () => {
         state => state.sidebarStates.isLeftSidebarOpen
     );
 
-    // const adaptiveSpan = !isLSidebarOpened ? {
-    //     display: 'none',
-    //     } : {};
-const adaptiveSpan ={}
-const adaptiveBtn = {}
-    // const adaptiveBtn = !isLSidebarOpened ? {
-    //     padding: '0.25rem'
-    //     } : {}
+    const adaptiveSpan = !isLSidebarOpened ? {
+        display: 'none',
+        } : {};
+
+    const adaptiveBtn = !isLSidebarOpened ? {
+        padding: '0.25rem'
+        } : {}
 
 
     useEffect(() => {
@@ -54,18 +53,16 @@ const adaptiveBtn = {}
     }
 
   return (
-    <div className={styles['create-list']}>
+    <div className={styles.create__list}>
         {showButton &&
-            <Button className={styles['create-list__input-btn']}
+            <Button className={styles.create__list_input_btn}
                     onClick={onCreateListBtnClick}
                     style={adaptiveBtn}
             >
-                <AddBoxIcon className={styles['create-list__add-icon']}/>
-                    <span
-                        style={adaptiveSpan}
-                    >
-                        Создать список
-                    </span>
+                <AddBoxIcon className={styles.create__list_add_icon}/>
+                <span style={adaptiveSpan}>
+                    Создать список
+                </span>
             </Button>
         }
 

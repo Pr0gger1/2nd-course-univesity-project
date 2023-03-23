@@ -1,0 +1,19 @@
+.logout_btn {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    svg {
+        color: #FD5649;
+    }
+
+    background-color: var(--bgColorFirst);
+
+    color: var(--font);
+    border: 1px solid rgb(66, 66, 66);
+    border-radius: 5px;
+
+    width: 100%;
+    padding: 0.5rem;
+    
+}

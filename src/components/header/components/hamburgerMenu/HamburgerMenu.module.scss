@@ -1,0 +1,8 @@
+.hamburger_menu__btn {
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        cursor: pointer;
+    }
+}

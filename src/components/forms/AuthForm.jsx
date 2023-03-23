@@ -13,10 +13,12 @@ import EmailTwoToneIcon from '@mui/icons-material/EmailTwoTone';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import styles from './AuthForm.module.scss';
+import {useMediaQuery} from "react-responsive";
 
 const AuthForm = ({ register = false, data, setData}) => {
-    const {setPosition, toastElement} = useContext(ToastContext);
+    const { setPosition, toastElement } = useContext(ToastContext);
     const dispatch = useDispatch();
+    const mobileScreen = useMediaQuery({maxWidth: 900});
     const authError =  useSelector(
         state => state.authStates.authError
     );
@@ -60,10 +62,10 @@ const AuthForm = ({ register = false, data, setData}) => {
             <div className={styles.form__fields}>
                 <FormControl>
                     <TextField
-                        helperText={emailValidation ? 'Некорректный email' : ''}
-                        error={emailValidation}
                         id='email'
                         label='Email'
+                        helperText={emailValidation ? 'Некорректный email' : ''}
+                        error={emailValidation}
                         value={data.email}
                         onChange={onChangeHandler}
                         placeholder='example@example.com'
@@ -72,6 +74,15 @@ const AuthForm = ({ register = false, data, setData}) => {
                             <InputAdornment position='start'>
                                 <EmailTwoToneIcon/>
                             </InputAdornment>
+                        }}
+                        sx={{
+                            // '& > *': {
+                            //     overflow: 'visible'
+                            // },
+                            // '& .MuiInputAdornment-root': {
+                            //     overflow: 'visible'
+                            // },
+                            borderColor: 'white'
                         }}
                     />
                 </FormControl>
