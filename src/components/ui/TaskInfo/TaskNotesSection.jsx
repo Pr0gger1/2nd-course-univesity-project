@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedTask, updateTaskData } from '../../../store/reducers/TaskSlice';
+import { updateTaskAsync } from '../../../store/reducers/TaskSlice';
 
 import TextArea from '../input/TextArea';
 
@@ -9,7 +9,7 @@ import styles from './styles/TaskNotesSection.module.scss';
 const TaskNotesSection = () => {
     const dispatch = useDispatch();
     const selectedTask = useSelector(
-        state => state.tasksStates.selectedTask
+        state => state.taskStates.selectedTask
     );
 
     const onTextareaChange = event => {
@@ -18,8 +18,9 @@ const TaskNotesSection = () => {
                 notes: event.target.value
         };
 
-        dispatch(updateTaskData({taskData}));
-        dispatch(setSelectedTask({taskData}))
+        // dispatch(updateTaskData({taskData}));
+        dispatch(updateTaskAsync(taskData));
+        // dispatch(setSelectedTask({taskData}))
     }
 
     const textAreaAdjust = event => {

@@ -13,12 +13,12 @@ import AddIcon from "@mui/icons-material/Add";
 
 import { CSSTransition } from "react-transition-group";
 import styles from "./styles/TaskNameSelection.module.scss";
-import {updateTaskData} from "../../../store/reducers/TaskSlice";
+import { updateTaskAsync } from "../../../store/reducers/TaskSlice";
 
 export const TaskNameSection = () => {
     const dispatch = useDispatch();
     const selectedTask = useSelector(
-        state => state.tasksStates.selectedTask
+        state => state.taskStates.selectedTask
     );
 
     const [subTaskNameInput, setSubTaskNameInput] = useState('');
@@ -32,7 +32,8 @@ export const TaskNameSection = () => {
             ...selectedTask,
             taskName: event.target.value
         }
-        dispatch(updateTaskData({taskData}));
+        // dispatch(updateTaskData({taskData}));
+        dispatch(updateTaskAsync(taskData));
     }
 
     const onTaskCompletedChange = event => {
@@ -42,7 +43,8 @@ export const TaskNameSection = () => {
             completed
         }
 
-        dispatch(updateTaskData({taskData}));
+        // dispatch(updateTaskData({taskData}));
+        dispatch(updateTaskAsync(taskData));
     }
 
     const favoriteToggleHandler = () => {
@@ -51,7 +53,8 @@ export const TaskNameSection = () => {
             favorite: !selectedTask.favorite
         };
 
-        dispatch(updateTaskData({taskData}));
+        // dispatch(updateTaskData({taskData}));
+        dispatch(updateTaskAsync(taskData));
     }
 
     const saveSubTaskHandler = () => {
@@ -65,7 +68,8 @@ export const TaskNameSection = () => {
             })
         };
 
-        dispatch(updateTaskData({taskData}));
+        // dispatch(updateTaskData({taskData}));
+        dispatch(updateTaskAsync(taskData));
 
         setShowInput(false);
         setSubTaskNameInput('');

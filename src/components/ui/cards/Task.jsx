@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setRSidebarOpen } from '../../../store/reducers/SidebarSlice';
-import { setSelectedTask, updateTaskData } from "../../../store/reducers/TaskSlice";
+import { setSelectedTask, updateTaskAsync } from "../../../store/reducers/TaskSlice";
 
 import StarButton from "../button/StarButton";
 
@@ -29,7 +29,7 @@ const Task = ({ taskDataProps }) => {
         state => state.taskGroupStates.selectedTaskGroup
     );
     const selectedTask = useSelector(
-        state => state.tasksStates.selectedTask
+        state => state.taskStates.selectedTask
     );
 
     useEffect(() => {
@@ -56,6 +56,8 @@ const Task = ({ taskDataProps }) => {
             dispatch(setRSidebarOpen());
             dispatch(setSelectedTask({taskData: taskDataProps}));
         }
+        console.log(selectedGroup.id)
+        console.log(taskDataProps)
         navigate(`/tasks/${selectedGroup.id}/${taskDataProps.id}`);
 
     }
@@ -64,18 +66,18 @@ const Task = ({ taskDataProps }) => {
         event.stopPropagation();
 
         const favorite = !taskDataProps.favorite;
-        dispatch(updateTaskData({
-            taskData: {...taskDataProps, favorite}
+        dispatch(updateTaskAsync({
+            ...taskDataProps, favorite
         }));
 
     }
 
     const onTaskCheckboxClick = event => {
         event.stopPropagation();
-
         const completed = !isTaskCompleted;
-        dispatch(updateTaskData({
-            taskData: {...taskDataProps, completed}
+
+        dispatch(updateTaskAsync({
+            ...taskDataProps, completed
         }));
 
         setIsTaskCompleted(completed);

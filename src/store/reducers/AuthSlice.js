@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { auth } from '../../firebase.config';
 import { signOut } from "firebase/auth";
 import { AuthService } from "../../services/auth.service";
+
 export const login = createAsyncThunk(
     'auth/login',
     async data => {

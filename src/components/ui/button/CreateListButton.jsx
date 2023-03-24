@@ -6,7 +6,8 @@ import { addCustomTaskGroup } from '../../../store/reducers/TaskGroupSlice';
 import { CSSTransition } from "react-transition-group";
 
 import Button from './Button';
-import CloseIcon from '@mui/icons-material/Close';
+import ConfirmationButton from "./ConfirmationButton";
+
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { CustomTextField } from '../customComponents/CustomInputs';
 
@@ -22,6 +23,7 @@ const CreateListButton = () => {
     const nodeRef = useRef(null);
 
     const dispatch = useDispatch();
+
     const isLSidebarOpened = useSelector(
         state => state.sidebarStates.isLeftSidebarOpen
     );
@@ -39,12 +41,22 @@ const CreateListButton = () => {
         if (!isLSidebarOpened) setShowInput(false);
     }, [isLSidebarOpened, showInput])
 
-    const handleInputSubmit = event => {
+    const handleInputSubmit = () => {
+        setInputValue('');
+        setShowInput(false);
+        dispatch(addCustomTaskGroup({groupName: inputValue}));
+    }
+
+    const onInputEnterPressed = event => {
         if (event.key === 'Enter' && inputValue.length) {
-            setInputValue('');
-            setShowInput(false);
-            dispatch(addCustomTaskGroup({groupName: inputValue}));
+            handleInputSubmit()
         }
+    }
+
+    const onClickCloseInput = () => {
+        if (inputValue.length)
+            handleInputSubmit();
+        else setShowInput(false);
     }
 
     const onCreateListBtnClick = () => {
@@ -59,7 +71,7 @@ const CreateListButton = () => {
                     onClick={onCreateListBtnClick}
                     style={adaptiveBtn}
             >
-                <AddBoxIcon className={styles.create__list_add_icon}/>
+                <AddBoxIcon/>
                 <span style={adaptiveSpan}>
                     Создать список
                 </span>
@@ -78,23 +90,24 @@ const CreateListButton = () => {
             <>
                 <CustomTextField
                     ref={nodeRef}
+                    sx={{width: '100%'}}
                     id="standard-basic"
                     label="Введите название списка"
                     variant="standard"
-                    onKeyDown={handleInputSubmit}
+                    onKeyDown={onInputEnterPressed}
                     onSubmit={handleInputSubmit}
                     value={inputValue}
                     onChange={e => setInputValue(e.target.value)}
                     onClose={() => setShowInput(false)}
                 />
 
-                <CloseIcon
-                    className={styles.close_icon}
-                    onClick={() => setShowInput(false)}
+                <ConfirmationButton
+                    sx={{padding: 0.5}}
+                    variant={inputValue.length ? 'ok' : 'cancel'}
+                    onClick={onClickCloseInput}
                 />
             </>
         </CSSTransition>
-
     </div>
   )
 }

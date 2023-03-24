@@ -9,9 +9,11 @@ import Toast from "./components/ui/toast/Toast";
 import { setUser } from "./store/reducers/AuthSlice";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase.config";
+import {getUserTasks} from "./store/reducers/TaskSlice";
 
 function App() {
-    const isAuth = !!useSelector(state => state.authStates.userData) || localStorage.getItem('userData');
+    const userData = useSelector(state => state.authStates.userData) || localStorage.getItem('userData');
+    const isAuth = !!userData;
 
     const { toastList, setToastList, toastElement } = useToast();
     const [toastPosition, setToastPosition] = useState("top_right");
@@ -19,10 +21,10 @@ function App() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const currentTheme = useSelector((state) => state.themeState.theme);
-
+    const currentTheme = useSelector(state => state.themeState.theme);
 
     const mobileScreen = useMediaQuery({ maxWidth: 768 });
+
     const isMobile = useSelector(
         state => state.mobileStates.isMobile
     ) || mobileScreen;
@@ -44,11 +46,18 @@ function App() {
     useMemo(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                console.log(user);
+                // console.log(user);
                 dispatch(setUser({ data: user }));
             }
         });
     }, [dispatch]);
+
+    useMemo(() => {
+        if (isAuth) {
+            console.log(isAuth)
+            dispatch(getUserTasks(userData.uid))
+        }
+    }, [dispatch, isAuth, userData])
 
     useMemo(() => {
         // изменение значения атрибута data-theme при изменении темы в приложении

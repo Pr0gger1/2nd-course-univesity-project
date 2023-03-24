@@ -10,7 +10,7 @@ import styles from './styles/SubTaskContainer.module.scss';
 const SubTaskContainer = () => {
     const dispatch = useDispatch();
     const selectedTask = useSelector(
-        state => state.tasksStates.selectedTask
+        state => state.taskStates.selectedTask
     );
 
     const onTaskNameChange = (event, subTask) => {

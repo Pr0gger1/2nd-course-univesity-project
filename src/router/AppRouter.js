@@ -47,11 +47,11 @@ const AppRouter = ({ isAuth = false }) => {
         },
         {
             path: "/login",
-            element: <AuthPage/>
+            element: <Navigate to='/'/>
         },
         {
             path: "/register",
-            element: <AuthPage register/>
+            element: <Navigate to='/'/>
         },
         {
             path: "/error",

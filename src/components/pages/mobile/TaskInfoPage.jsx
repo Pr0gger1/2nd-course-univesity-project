@@ -16,7 +16,7 @@ const TaskInfoPage = () => {
     const navigate = useNavigate();
 
     const selectedTask = useSelector(
-        state => state.tasksStates.selectedTask
+        state => state.taskStates.selectedTask
     );
     const selectedTaskGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup

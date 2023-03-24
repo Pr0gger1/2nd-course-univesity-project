@@ -29,7 +29,6 @@ const taskGroupSlice = createSlice({
             state.allTaskGroups.custom.push({
                 title: name,
                 icon: customGroupDefaultIcon,
-                counter: 0,
                 id: generateUniqueId('task_group', 12, true),
                 pageTitle: name,
                 webTitle: `Productify - ${name}`

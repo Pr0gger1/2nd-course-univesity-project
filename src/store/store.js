@@ -21,7 +21,7 @@ export default configureStore({
         taskGroupStates: taskGroupReducer,
 
         filterStates: filterReducer,
-        tasksStates: taskReducer
+        taskStates: taskReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

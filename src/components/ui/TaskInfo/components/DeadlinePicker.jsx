@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateTaskData } from "../../../../store/reducers/TaskSlice";
+import { updateTaskAsync } from "../../../../store/reducers/TaskSlice";
 
 import DeleteButton from "../../button/DeleteButton";
 
@@ -14,7 +14,7 @@ import styles from "../styles/TaskDatesSection.module.scss";
 const DeadlinePicker = ({ setShowDeadlinePicker }) => {
     const dispatch = useDispatch();
     const selectedTask = useSelector(
-        state => state.tasksStates.selectedTask
+        state => state.taskStates.selectedTask
     );
 
     const [deadlineValue, setDeadlineValue] = useState(selectedTask.deadline || '');
@@ -26,7 +26,8 @@ const DeadlinePicker = ({ setShowDeadlinePicker }) => {
         }
 
         setDeadlineValue(value);
-        dispatch(updateTaskData({taskData}))
+        // dispatch(updateTaskData({taskData}))
+        dispatch(updateTaskAsync(taskData));
     }
 
     const deleteDeadlineHandler = () => {
@@ -35,7 +36,8 @@ const DeadlinePicker = ({ setShowDeadlinePicker }) => {
             deadline: null
         };
 
-        dispatch(updateTaskData({taskData}));
+        // dispatch(updateTaskData({taskData}));
+        dispatch(updateTaskAsync(taskData));
         setShowDeadlinePicker(false);
     }
 

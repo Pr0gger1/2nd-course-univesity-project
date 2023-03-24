@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateTaskData } from "../../../../store/reducers/TaskSlice";
+import { updateTaskAsync } from "../../../../store/reducers/TaskSlice";
 
 import { FormControl, InputLabel, MenuItem } from "@mui/material";
 import { TaskCategorySelect } from "../../customComponents/TaskCategorySelect";
@@ -25,7 +25,7 @@ const repeatItems = [
 const RepeatComponent = () => {
     const dispatch = useDispatch();
     const selectedTask = useSelector(
-        state => state.tasksStates.selectedTask
+        state => state.taskStates.selectedTask
     );
 
     const [repeat, setRepeat] = useState(selectedTask.repeat || '');
@@ -38,31 +38,55 @@ const RepeatComponent = () => {
         setRepeat(value);
         switch (value) {
             case 'every_day':
-                dispatch(updateTaskData({
-                    taskData: {
+            {
+                const taskData = {
                         ...selectedTask,
                         repeat: value,
                         deadline: dayjs(new Date(date.setDate(date.getDate() + 1)))
-                    }
-                }));
+                }
+                dispatch(updateTaskAsync(taskData));
+            }
+                // dispatch(updateTaskData({
+                //     taskData: {
+                //         ...selectedTask,
+                //         repeat: value,
+                //         deadline: dayjs(new Date(date.setDate(date.getDate() + 1)))
+                //     }
+                // }));
                 break;
             case 'every_week':
-                dispatch(updateTaskData({
-                    taskData: {
+            {
+                const taskData =  {
                         ...selectedTask,
                         repeat: value,
                         deadline: dayjs(new Date(date.setDate(date.getDate() + 7)))
-                    }
-                }));
+                }
+                dispatch(updateTaskAsync(taskData));
+            }
+                // dispatch(updateTaskData({
+                //     taskData: {
+                //         ...selectedTask,
+                //         repeat: value,
+                //         deadline: dayjs(new Date(date.setDate(date.getDate() + 7)))
+                //     }
+                // }));
                 break;
             case 'every_month':
-                dispatch(updateTaskData({
-                    taskData: {
+            {
+                const taskData = {
                         ...selectedTask,
                         repeat: value,
                         deadline: dayjs(new Date(date.setMonth(date.getMonth() + 1)))
-                    }
-                }));
+                }
+                dispatch(updateTaskAsync(taskData));
+            }
+                // dispatch(updateTaskData({
+                //     taskData: {
+                //         ...selectedTask,
+                //         repeat: value,
+                //         deadline: dayjs(new Date(date.setMonth(date.getMonth() + 1)))
+                //     }
+                // }));
                 break;
             default:
                 break;

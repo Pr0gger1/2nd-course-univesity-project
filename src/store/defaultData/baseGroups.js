@@ -25,7 +25,6 @@ const defaultGroups = [
     {
         title: 'Сегодня',
         icon: todayTaskIcon,
-        counter: 0,
         id: baseGroupIds.today,
         pageTitle: '✌️Мой день',
         webTitle: 'Productify - Мой день'
@@ -33,7 +32,6 @@ const defaultGroups = [
     {
         title: 'Запланировано',
         icon: planTaskIcon,
-        counter: 0,
         id: baseGroupIds.plan,
         pageTitle: '🗓️Запланировано',
         webTitle: 'Productify - Запланировано',
@@ -41,7 +39,6 @@ const defaultGroups = [
     {
         title: "Избранные",
         icon: favoriteTaskIcon,
-        counter: 0,
         id: baseGroupIds.favorite,
         pageTitle: '✨Избранное',
         webTitle: 'Productify - Избранное'
@@ -49,7 +46,6 @@ const defaultGroups = [
     {
         title: "Завершенные",
         icon: completedTaskIcon,
-        counter: 0,
         id: baseGroupIds.completed,
         pageTitle: '✅Завершенные',
         webTitle: 'Productify - Завершенное'
@@ -57,7 +53,6 @@ const defaultGroups = [
     {
         title: "Все задачи",
         icon: allTasksIcon,
-        counter: 0,
         id: baseGroupIds.all,
         pageTitle: '🎯Все задачи',
         webTitle: 'Productify - Все задачи'

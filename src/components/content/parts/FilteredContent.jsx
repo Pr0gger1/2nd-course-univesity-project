@@ -11,7 +11,7 @@ const FilteredContent = () => {
     const dispatch = useDispatch();
 
     const currentGroupTasks = useSelector(
-        state => state.tasksStates.currentGroupTasks
+        state => state.taskStates.currentGroupTasks
     );
 
     const filter = useSelector(
@@ -19,7 +19,7 @@ const FilteredContent = () => {
     );
 
     const tasks = useSelector(
-        state => state.tasksStates.tasks
+        state => state.taskStates.tasks
     );
 
     useEffect(() => {

@@ -6,8 +6,7 @@ import ToastContext from "../../context/toast.context";
 import { Link } from 'react-router-dom';
 
 import Button from '../ui/button/Button';
-
-import { FormControl, IconButton, InputAdornment, TextField } from "@mui/material";
+import {FormControl, IconButton, InputAdornment, TextField} from "@mui/material";
 import KeyTwoToneIcon from '@mui/icons-material/KeyTwoTone';
 import EmailTwoToneIcon from '@mui/icons-material/EmailTwoTone';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -17,24 +16,31 @@ import {useMediaQuery} from "react-responsive";
 
 const AuthForm = ({ register = false, data, setData}) => {
     const { setPosition, toastElement } = useContext(ToastContext);
-    const dispatch = useDispatch();
+
+    const emailValidation = !/\S+@\S+\.\S+/.test(data.email)
+        && data.email.length !== 0;
+
     const mobileScreen = useMediaQuery({maxWidth: 900});
+    const inputColorStyles = mobileScreen ? 'white' : '';
+
+    // redux состояния
+    const dispatch = useDispatch();
+
     const authError =  useSelector(
         state => state.authStates.authError
     );
 
     const [showPassword, setShowPassword] = useState(false);
-    const handleClickShowPassword = () => setShowPassword(show => !show);
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
-
-    const emailValidation = !/\S+@\S+\.\S+/.test(data.email)
-        && data.email.length !== 0;
 
     useEffect(() => {
         setPosition('top_center');
     }, [setPosition]);
+
+    // обработчики
+    const handleClickShowPassword = () => setShowPassword(show => !show);
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
     const onChangeHandler = event => {
         setData({...data, [event.target.id]: event.target.value})
@@ -53,10 +59,6 @@ const AuthForm = ({ register = false, data, setData}) => {
         else dispatch(login(data));
     }
 
-    useEffect(() => {
-            console.log(authError);
-    }, [authError])
-
     return (
         <form className={styles.auth__form}>
             <div className={styles.form__fields}>
@@ -69,20 +71,17 @@ const AuthForm = ({ register = false, data, setData}) => {
                         value={data.email}
                         onChange={onChangeHandler}
                         placeholder='example@example.com'
+                        autoComplete='off'
                         InputProps={{
+                            style: {
+                                color: inputColorStyles,
+                            },
                             startAdornment:
                             <InputAdornment position='start'>
-                                <EmailTwoToneIcon/>
+                                <EmailTwoToneIcon
+                                    sx={{color: inputColorStyles}}
+                                />
                             </InputAdornment>
-                        }}
-                        sx={{
-                            // '& > *': {
-                            //     overflow: 'visible'
-                            // },
-                            // '& .MuiInputAdornment-root': {
-                            //     overflow: 'visible'
-                            // },
-                            borderColor: 'white'
                         }}
                     />
                 </FormControl>
@@ -90,9 +89,14 @@ const AuthForm = ({ register = false, data, setData}) => {
                     <TextField
                         type={showPassword ? 'text' : 'password'}
                         InputProps={{
+                            style: {
+                              color: inputColorStyles
+                            },
                             startAdornment:
                                 <InputAdornment position='start'>
-                                    <KeyTwoToneIcon/>
+                                    <KeyTwoToneIcon
+                                        sx={{color: inputColorStyles}}
+                                    />
                                 </InputAdornment>,
                             endAdornment:
                               <InputAdornment position="end">
@@ -100,6 +104,7 @@ const AuthForm = ({ register = false, data, setData}) => {
                                   aria-label="toggle password visibility"
                                   onClick={handleClickShowPassword}
                                   onMouseDown={handleMouseDownPassword}
+                                  sx={{color: inputColorStyles}}
                                   edge="end"
                                 >
                                   {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -122,7 +127,9 @@ const AuthForm = ({ register = false, data, setData}) => {
                         InputProps={{
                             startAdornment:
                                 <InputAdornment position='start'>
-                                    <KeyTwoToneIcon/>
+                                    <KeyTwoToneIcon
+                                        sx={{color: inputColorStyles}}
+                                    />
                                 </InputAdornment>,
                             endAdornment:
                               <InputAdornment position="end">

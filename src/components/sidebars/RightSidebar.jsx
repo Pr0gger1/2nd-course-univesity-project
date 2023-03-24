@@ -8,11 +8,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import TaskNameSection from "../ui/TaskInfo/TaskNameSection";
 import TaskCategorySection from "../ui/TaskInfo/TaskCategorySection";
 import TaskNotesSection from "../ui/TaskInfo/TaskNotesSection";
+import TaskDatesSection from "../ui/TaskInfo/TaskDatesSection";
 
 import '../ui/animations/Button/createListBtnAnimation.css'
 
 import styles from './styles/RightSidebar.module.scss';
-import TaskDatesSection from "../ui/TaskInfo/TaskDatesSection";
 
 const RightSidebar = () => {
     const dispatch = useDispatch();
@@ -43,7 +43,6 @@ const RightSidebar = () => {
                         onClick={() => dispatch(setRSidebarOpen())}
                     />
                 </div>
-
                 <TaskNameSection/>
                 <TaskCategorySection/>
                 <TaskDatesSection/>

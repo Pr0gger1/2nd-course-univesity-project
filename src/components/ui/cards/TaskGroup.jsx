@@ -1,31 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import styles from './styles/TaskGroups.module.scss';
+import styles from './styles/TaskGroup.module.scss';
 
 const TaskGroup = ({ taskGroupData, onClick }) => {
+    const [tasksCount, setTasksCount] = useState(0);
+
     const isLSidebarOpened = useSelector(
         state => state.sidebarStates.isLeftSidebarOpen
     );
 
-    // let groupAdaptiveStyle = isLSidebarOpened ? {} : {justifyContent: "center", alignItems: 'center'}
+    const tasks = useSelector(
+    state => state.taskStates.tasks
+    );
 
+    useEffect(() => {
+        if (tasks)  {
+            const count = tasks.filter(
+                task => task.groupId === taskGroupData.id
+            ).length;
 
-    //let groupStyle = `${styles.group}${taskGroupData.isActive ? ` ${styles['active']}`: ''}${!isLSidebarOpened ? ` ${styles['closed']}` : ''}`;
+            setTasksCount(count);
+        }
+    }, [taskGroupData.id, tasks]);
+
     let groupStyle = `${styles.group}${taskGroupData.isActive ? ` ${styles['active']}`: ''}${!isLSidebarOpened ? ` ${styles['closed']}` : ''}`;
+
     return (
         <div 
             className={groupStyle}
-            //style={groupAdaptiveStyle}
             onClick={onClick}
         >
             <div className={styles.icon_title}>
-                <img src={taskGroupData.icon} alt={`${taskGroupData.title}_icon`} className={styles.group__icon}/>
+                <img src={taskGroupData.icon}
+                     alt={`${taskGroupData.title}_icon`}
+                     className={styles.group__icon}
+                />
                 <p>{ taskGroupData.title }</p>
             {
-                taskGroupData.counter !== 0 &&
+                tasksCount !== 0 &&
                 <div className={styles.counter}>
-                    {taskGroupData.counter}
+                    {tasksCount}
                 </div>
             }
             </div>

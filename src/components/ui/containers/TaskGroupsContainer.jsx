@@ -41,6 +41,7 @@ const TaskGroupsContainer = () => {
         overflow: 'hidden'
         } : {};
 
+
     return (
         <div className={styles.groups}>
             <div className={styles.base_group__container}>
@@ -49,9 +50,9 @@ const TaskGroupsContainer = () => {
                     <TaskGroup
                         key={group.id}
                         taskGroupData={{
+                            id: group.id,
                             icon: group.icon,
                             title: group.title,
-                            counter: group.counter,
                             isActive: !isMobile && group.id === selectedTaskGroup.id
                             ? 'active' : null
                         }}
@@ -70,9 +71,9 @@ const TaskGroupsContainer = () => {
                         <TaskGroup
                             key={group.id}
                             taskGroupData={{
+                                id: group.id,
                                 icon: group.icon,
                                 title: group.title,
-                                counter: group.counter,
                                 isActive: !isMobile && group.id === selectedTaskGroup.id ? 'active' : null
                             }}
                             onClick={() => clickHandler(group)}

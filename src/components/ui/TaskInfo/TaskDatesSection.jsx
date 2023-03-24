@@ -9,7 +9,7 @@ import styles from "./styles/TaskDatesSection.module.scss";
 
 const TaskDatesSection = () => {
     const selectedTask = useSelector(
-        state => state.tasksStates.selectedTask
+        state => state.taskStates.selectedTask
     );
 
     const [showDeadlinePicker,

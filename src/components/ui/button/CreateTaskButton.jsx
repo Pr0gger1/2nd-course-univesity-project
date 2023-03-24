@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTask } from '../../../store/reducers/TaskSlice';
+import { addTaskAsync } from '../../../store/reducers/TaskSlice';
 
 import InputField from '../input/InputField';
 import Button from './Button';
@@ -21,6 +21,11 @@ const CreateTaskButton = () => {
         state => state.taskGroupStates.selectedTaskGroup
     );
 
+    const userCreds = useSelector(
+        state => state.authStates.userData
+    );
+
+
     const [taskName, setTaskName] = useState('');
     const dispatch = useDispatch();
 
@@ -34,6 +39,7 @@ const CreateTaskButton = () => {
             subTasks: [],
             notes: '',
             groupId: selectedGroup.id,
+            userId: userCreds.uid,
             category: selectedGroup.title,
             deadline: null,
             reminder: null,
@@ -43,7 +49,8 @@ const CreateTaskButton = () => {
         if (selectedGroup.id === baseGroupIds.favorite)
             taskData.favorite = true;
 
-        dispatch(addTask({taskData}));
+        // dispatch(addTask({taskData}));
+        dispatch(addTaskAsync(taskData));
         setTaskName('');
     }
 

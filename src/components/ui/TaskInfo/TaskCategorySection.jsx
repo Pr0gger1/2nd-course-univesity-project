@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateTaskData } from "../../../store/reducers/TaskSlice";
+import { updateTaskAsync } from "../../../store/reducers/TaskSlice";
 
 import { FormControl, InputLabel, MenuItem } from "@mui/material";
 import { TaskCategorySelect } from "../customComponents/TaskCategorySelect";
@@ -10,7 +10,7 @@ import { baseGroupIds } from "../../../store/defaultData/baseGroups";
 const TaskCategorySection = () => {
     const dispatch = useDispatch();
     const selectedTask = useSelector(
-        state => state.tasksStates.selectedTask
+        state => state.taskStates.selectedTask
     );
     const taskGroups = useSelector(
         state => state.taskGroupStates.allTaskGroups
@@ -36,7 +36,8 @@ const TaskCategorySection = () => {
             ).title
         };
 
-        dispatch(updateTaskData({taskData}));
+        // dispatch(updateTaskData({taskData}));
+        dispatch(updateTaskAsync(taskData));
     }
 
     return (

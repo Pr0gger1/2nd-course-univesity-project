@@ -25,10 +25,13 @@ const TaskContainer = () => {
     const dispatch = useDispatch();
 
     const tasks = useSelector(
-        state => state.tasksStates.tasks
+        state => state.taskStates.tasks
+    );
+    const fetchStatus = useSelector(
+        state => state.taskStates.status
     );
     const currentGroupTasks = useSelector(
-        state => state.tasksStates.currentGroupTasks
+        state => state.taskStates.currentGroupTasks
     );
     const taskFilter = useSelector(
         state => state.filterStates.taskFilter
@@ -41,24 +44,26 @@ const TaskContainer = () => {
     const sortedTasks = useTask(currentGroupTasks, taskFilter);
 
     useEffect(() => {
-        let currentTasks = [...tasks].filter(
-            task => task.groupId === selectedGroup.id
-        );
+        if (tasks) {
+            let currentTasks = [...tasks].filter(
+                task => task.groupId === selectedGroup.id
+            );
 
-        if (selectedGroup.id === baseGroupIds.all)
-            currentTasks = tasks;
+            if (selectedGroup.id === baseGroupIds.all)
+                currentTasks = tasks;
 
-        if (selectedGroup.id === baseGroupIds.plan)
-            currentTasks = tasks.filter(task => task.deadline);
+            if (selectedGroup.id === baseGroupIds.plan)
+                currentTasks = tasks.filter(task => task.deadline);
 
-        if (selectedGroup.id === baseGroupIds.favorite)
-            currentTasks = tasks.filter(task => task.favorite);
+            if (selectedGroup.id === baseGroupIds.favorite)
+                currentTasks = tasks.filter(task => task.favorite);
 
-        if (selectedGroup.id === baseGroupIds.completed)
-            currentTasks = tasks.filter(task => task.completed);
+            if (selectedGroup.id === baseGroupIds.completed)
+                currentTasks = tasks.filter(task => task.completed);
 
-        // console.log('current group tasks ', currentTasks)
-        dispatch(setCurrentGroupTasks({tasks: currentTasks}));
+            // console.log('current group tasks ', currentTasks)
+            dispatch(setCurrentGroupTasks({tasks: currentTasks}));
+        }
 
     }, [dispatch, selectedGroup, taskFilter.type, tasks]);
 
