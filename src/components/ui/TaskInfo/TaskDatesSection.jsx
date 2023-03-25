@@ -41,9 +41,7 @@ const TaskDatesSection = () => {
                         Дата выполнения
                     </div>
                 }
-
                 <RepeatComponent/>
-
                 {
                     selectedTask.reminder || showReminderPicker ?
                     <ReminderPicker

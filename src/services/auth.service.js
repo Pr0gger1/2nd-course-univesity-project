@@ -2,7 +2,7 @@ import { auth, db } from '../firebase.config';
 import { signInWithEmailAndPassword,
     createUserWithEmailAndPassword } from 'firebase/auth';
 
-import { doc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 
 export class AuthService {
     static async login(email, password) {
@@ -18,11 +18,16 @@ export class AuthService {
             .then(async creds => {
                 if (creds.user) {
                     const userId = creds.user.uid;
-                    await db.setDoc(doc('users', userId, {
-                        username,
+                    console.log(creds.user);
+                    await setDoc(doc(db, 'users', userId), {
+                        username: username,
                         email: creds.user.email,
                         user_id: creds.user.uid
-                    }))
+                    });
+
+                    await setDoc(doc(db, 'tasks', userId), {
+                        taskData: []
+                    });
                 }
             })
             .catch(error => { throw error });

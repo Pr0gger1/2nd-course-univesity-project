@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { useToast } from './hooks/useToast';
 import { useMediaQuery } from "react-responsive";
+
 import ToastContext from './context/toast.context';
 import AppRouter from "./router/AppRouter";
 import Toast from "./components/ui/toast/Toast";
+
 import { setUser } from "./store/reducers/AuthSlice";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase.config";
@@ -19,42 +21,21 @@ function App() {
     const [toastPosition, setToastPosition] = useState("top_right");
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-
     const currentTheme = useSelector(state => state.themeState.theme);
 
-    const mobileScreen = useMediaQuery({ maxWidth: 768 });
 
-    const isMobile = useSelector(
-        state => state.mobileStates.isMobile
-    ) || mobileScreen;
-
-    const selectedTaskGroup = useSelector(
-        state => state.taskGroupStates.selectedTaskGroup
-    );
- 
-    /*
-     Перенаправление пользователя в корень
-      при первой загрузке мобильной версии приложения
-    */
-    useEffect(() => {
-        if (isMobile && !localStorage.getItem("selectedTaskGroup")) {
-            navigate("/");
-        }
-    }, [selectedTaskGroup, isMobile, navigate]);
-
+    // функция отслеживания изменения состояния авторизации
     useMemo(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // console.log(user);
                 dispatch(setUser({ data: user }));
             }
         });
     }, [dispatch]);
 
-    useMemo(() => {
+    // подгрузка существующих задач
+    useEffect(() => {
         if (isAuth) {
-            console.log(isAuth)
             dispatch(getUserTasks(userData.uid))
         }
     }, [dispatch, isAuth, userData])

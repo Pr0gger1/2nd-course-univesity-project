@@ -3,24 +3,33 @@ import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setRSidebarOpen } from '../../../store/reducers/SidebarSlice';
-import { setSelectedTask, updateTaskAsync } from "../../../store/reducers/TaskSlice";
+import { deleteTaskAsync, setSelectedTask, updateTaskAsync } from "../../../store/reducers/TaskSlice";
 
 import StarButton from "../button/StarButton";
 
 import SyncRoundedIcon from '@mui/icons-material/SyncRounded';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import Checkbox from '@mui/material/Checkbox';
+
+import { DateFormatter } from "../../../utils/DateFormatter";
+import { repeatTaskData } from "../../../store/defaultData/repeatTaskData";
 
 import { themes } from "../../../store/reducers/ThemeSlice";
 import styles from './styles/Task.module.scss';
 
 const Task = ({ taskDataProps }) => {
+    const [isTaskSelected, setIsTaskSelected] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(taskDataProps.favorite);
+    const [isTaskCompleted, setIsTaskCompleted] = useState(taskDataProps.completed);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const currentTheme = useSelector(state => state.themeState.theme);
-
-    const [isTaskCompleted, setIsTaskCompleted] = useState(taskDataProps.completed);
+    const isMobile = useSelector(
+        state => state.mobileStates.isMobile
+    );
 
     const isRSidebarOpened = useSelector(
         state => state.sidebarStates.isRightSidebarOpen
@@ -32,15 +41,12 @@ const Task = ({ taskDataProps }) => {
         state => state.taskStates.selectedTask
     );
 
-    useEffect(() => {
-        console.log(taskDataProps)
-    }, [taskDataProps])
-
     const taskStyle = {
         textDecoration: taskDataProps.completed ? 'line-through' : 'none',
     };
 
     const onTaskClick = () => {
+        setIsTaskSelected(prev => !prev);
         if (selectedTask.id !== taskDataProps.id) {
             /* эта ветка нужна, чтобы при нажатии на другую задачу сайдбар
             не закрывался, а изменял данные внутри
@@ -56,20 +62,19 @@ const Task = ({ taskDataProps }) => {
             dispatch(setRSidebarOpen());
             dispatch(setSelectedTask({taskData: taskDataProps}));
         }
-        console.log(selectedGroup.id)
-        console.log(taskDataProps)
         navigate(`/tasks/${selectedGroup.id}/${taskDataProps.id}`);
-
     }
 
     const favoriteToggleHandler = event => {
         event.stopPropagation();
 
-        const favorite = !taskDataProps.favorite;
+        const favorite = !isFavorite;
+
         dispatch(updateTaskAsync({
             ...taskDataProps, favorite
         }));
 
+        setIsFavorite(prev => !prev);
     }
 
     const onTaskCheckboxClick = event => {
@@ -83,19 +88,38 @@ const Task = ({ taskDataProps }) => {
         setIsTaskCompleted(completed);
     }
 
+    useEffect(() => {
+        const onTaskPressed = event => {
+            if (event.key === 'Delete') {
+                dispatch(deleteTaskAsync(taskDataProps.id));
+                dispatch(setRSidebarOpen());
+            }
+        }
+
+        if (isTaskSelected)
+            window.addEventListener('keydown', onTaskPressed);
+
+        return () => window.removeEventListener('keydown', onTaskPressed)
+    }, [dispatch, isTaskSelected, taskDataProps.id]);
+
+
     return (
         <div className={styles.task}
             onClick={onTaskClick}
-             style={isTaskCompleted && currentTheme === themes.light ? {backgroundColor: '#dcfce3'} : {}}
+             style={
+                isTaskCompleted &&
+                 currentTheme === themes.light 
+                 ? {backgroundColor: '#dcfce3'} 
+                 : {}
+                }
         >
-
             <div className={styles.task__checkbox_info}>
                 <Checkbox 
                     sx={{
                         color: "var(--checkboxColor)",
                         '& .MuiSvgIcon-root': {
                             fontSize: 30,
-                            borderRadius: "15px"
+                            borderRadius: "1rem"
                         },
                         '&.Mui-checked': {
                             color: '#68d96d',
@@ -113,21 +137,51 @@ const Task = ({ taskDataProps }) => {
                         {taskDataProps.taskName}
                     </span>
                     
+
                     <div className={styles.task__tags}>
                         <span className={styles.group_title}>
                             {taskDataProps.category}
                         </span>
+
                         {
-                            taskDataProps.repeat &&
-                            <span className={styles.task__repeat}>
-                                <SyncRoundedIcon className={styles.task__icons}/>
-                            </span>
-                        }
-                        {
-                            taskDataProps.deadline &&
-                            <span className={styles.task__deadline}>
-                                <CalendarMonthOutlinedIcon className={styles.task__icons}/>
-                            </span>
+                            !isMobile &&
+                            <>
+                                {
+                                    taskDataProps.repeat &&
+                                    <span className={styles.task__repeat}>
+                                        <SyncRoundedIcon className={styles.task__icons}/>
+                                        {repeatTaskData[taskDataProps.repeat]}
+                                    </span>
+                                }
+                                {
+                                    taskDataProps.deadline &&
+                                    <span className={styles.task__deadline}>
+                                        <CalendarMonthOutlinedIcon className={styles.task__icons}/>
+                                        {
+                                            new Date(taskDataProps.deadline)
+                                            .toDateString() === new Date().toDateString()
+                                            ?
+                                                'Сегодня'
+                                            :
+                                            new DateFormatter().getFullDate(taskDataProps.deadline)
+                                        }
+                                    </span>
+                                }
+                                {
+                                    taskDataProps.reminder &&
+                                    <span className={styles.task__reminder}>
+                                        <NotificationsRoundedIcon/>
+                                        {
+                                            new Date(taskDataProps.reminder)
+                                            .toDateString() === new Date().toDateString()
+                                            ?
+                                                'Сегодня'
+                                            :
+                                            new DateFormatter().getFullDate(taskDataProps.reminder)
+                                        }
+                                    </span>
+                                }
+                            </>
                         }
                     </div>
                 </div>

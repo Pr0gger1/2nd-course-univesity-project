@@ -5,18 +5,20 @@ import styles from './styles/AuthPage.module.scss';
 import google_icon from '../../assets/img/icons/google.svg';
 import logo from '../../assets/img/logo/logo_vector_white.svg';
 
-const AuthPage = ( {register = false} ) => {
+const AuthPage = ({ register = false }) => {
     const [authData, setAuthData] = useState({
         email: '',
         password: '',
-        repeatPassword: ''
-    })
+        repeatPassword: '',
+        username: ''
+    });
 
     useEffect(() => {
         setAuthData({
             email: '',
             password: '',
-            repeatPassword: ''
+            repeatPassword: '',
+            username: ''
         })
     }, [register]);
 

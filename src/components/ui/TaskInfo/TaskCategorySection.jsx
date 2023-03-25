@@ -36,7 +36,6 @@ const TaskCategorySection = () => {
             ).title
         };
 
-        // dispatch(updateTaskData({taskData}));
         dispatch(updateTaskAsync(taskData));
     }
 

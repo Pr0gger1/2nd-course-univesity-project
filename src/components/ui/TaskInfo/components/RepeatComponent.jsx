@@ -42,7 +42,7 @@ const RepeatComponent = () => {
                 const taskData = {
                         ...selectedTask,
                         repeat: value,
-                        deadline: dayjs(new Date(date.setDate(date.getDate() + 1)))
+                        deadline: new Date(date.setDate(date.getDate() + 1))
                 }
                 dispatch(updateTaskAsync(taskData));
             }
@@ -59,7 +59,7 @@ const RepeatComponent = () => {
                 const taskData =  {
                         ...selectedTask,
                         repeat: value,
-                        deadline: dayjs(new Date(date.setDate(date.getDate() + 7)))
+                        deadline: new Date(date.setDate(date.getDate() + 7))
                 }
                 dispatch(updateTaskAsync(taskData));
             }
@@ -76,7 +76,7 @@ const RepeatComponent = () => {
                 const taskData = {
                         ...selectedTask,
                         repeat: value,
-                        deadline: dayjs(new Date(date.setMonth(date.getMonth() + 1)))
+                        deadline: new Date(date.setMonth(date.getMonth() + 1))
                 }
                 dispatch(updateTaskAsync(taskData));
             }
@@ -110,7 +110,7 @@ const RepeatComponent = () => {
                 PaperProps: {
                     sx: {
                         backgroundColor: 'var(--bgColorFirst)',
-                        color: 'var(--fontColor)'
+                        color: 'var(--fontColor)',
                         }
                     }
                 }}

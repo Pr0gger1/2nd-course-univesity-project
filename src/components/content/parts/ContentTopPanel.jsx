@@ -11,7 +11,7 @@ import styles from '../styles/ContentTopPanel.module.scss';
 import '../../ui/animations/ContextMenu/ContextMenuPageAnimation.scss';
 
 const ContentTopPanel = () => {
-    const contextMenuMedia = useMediaQuery({minWidth: 1100});
+    // const contextMenuMedia = useMediaQuery({minWidth: });
 
     const mobileScreen =  useMediaQuery({maxWidth: 768});
     const isMobile = useSelector(
@@ -46,7 +46,7 @@ const ContentTopPanel = () => {
             </div>
 
             {
-                contextMenuMedia &&
+                !mobileScreen &&
                 <TaskGroupMenuContainer/>
             }
         </section>

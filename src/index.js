@@ -16,12 +16,17 @@ document.title = 'Productify ToDo App';
 const currentTheme = localStorage.getItem('theme');
 if (!currentTheme) localStorage.setItem('theme', themes.light);
 
-root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>
-);
+try {
+  root.render(
+    <React.StrictMode>
+      <BrowserRouter>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </BrowserRouter>
+    </React.StrictMode>
+  );
+}
+catch (error) {
+  root.render(<div>Error</div>)
+}

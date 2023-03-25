@@ -1,18 +1,20 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import {useMediaQuery} from "react-responsive";
+
 import { login, register as registerHandler } from '../../store/reducers/AuthSlice';
 import ToastContext from "../../context/toast.context";
 
 import { Link } from 'react-router-dom';
 
 import Button from '../ui/button/Button';
-import {FormControl, IconButton, InputAdornment, TextField} from "@mui/material";
+import { FormControl, IconButton, InputAdornment, TextField } from "@mui/material";
 import KeyTwoToneIcon from '@mui/icons-material/KeyTwoTone';
 import EmailTwoToneIcon from '@mui/icons-material/EmailTwoTone';
+import BadgeTwoToneIcon from '@mui/icons-material/BadgeTwoTone';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import styles from './AuthForm.module.scss';
-import {useMediaQuery} from "react-responsive";
 
 const AuthForm = ({ register = false, data, setData}) => {
     const { setPosition, toastElement } = useContext(ToastContext);
@@ -50,7 +52,7 @@ const AuthForm = ({ register = false, data, setData}) => {
         event.preventDefault();
         if (!data.email || !data.password || (register && !data.repeatPassword))
             return new toastElement("Остались пустые поля", "Ошибка!").error;
-
+        console.log(data);
         if (register) {
             if (data.password === data.repeatPassword)
                 dispatch(registerHandler(data));
@@ -59,9 +61,35 @@ const AuthForm = ({ register = false, data, setData}) => {
         else dispatch(login(data));
     }
 
+    useEffect(() => {
+        console.log(authError);
+    }, [authError])
+
     return (
         <form className={styles.auth__form}>
             <div className={styles.form__fields}>
+                {
+                    register &&
+                    <FormControl>
+                        <TextField
+                            id='username'
+                            label='Ваш ник'
+                            value={data.username}
+                            onChange={onChangeHandler}
+                            InputProps={{
+                                style: {
+                                    color: inputColorStyles
+                                },
+                                startAdornment:
+                                <InputAdornment position='start'>
+                                    <BadgeTwoToneIcon
+                                     sx={{color: inputColorStyles}}
+                                    />
+                                </InputAdornment>
+                            }}
+                        />
+                    </FormControl>
+                }
                 <FormControl>
                     <TextField
                         id='email'
@@ -115,7 +143,7 @@ const AuthForm = ({ register = false, data, setData}) => {
                         label='Пароль'
                         value={data.password}
                         onChange={onChangeHandler}
-                        placeholder='Минимум 8 символов'
+                        placeholder='Минимум 6 символов'
                     />
                 </FormControl>
 
@@ -147,7 +175,7 @@ const AuthForm = ({ register = false, data, setData}) => {
                         label='Повторите пароль'
                         value={data.repeatPassword}
                         onChange={onChangeHandler}
-                        placeholder='Минимум 8 символов'
+                        placeholder='Повторите ваш пароль'
                     />
                 </FormControl>
                 }

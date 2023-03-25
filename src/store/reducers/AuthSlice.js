@@ -13,13 +13,14 @@ export const login = createAsyncThunk(
 export const register = createAsyncThunk(
     'auth/register',
     async data => {
-        await AuthService.register(data.email, data.password);
+        await AuthService.register(data.email, data.password, data.username);
     }
 );
+
 const authSlice = createSlice({
     name: 'authStates',
     initialState: {
-        userData: null,
+        userData: localStorage.getItem('userData') || null,
         authError: null,
         status: ''
     },

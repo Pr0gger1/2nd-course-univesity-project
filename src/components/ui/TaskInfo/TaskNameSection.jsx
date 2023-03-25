@@ -21,6 +21,8 @@ export const TaskNameSection = () => {
         state => state.taskStates.selectedTask
     );
 
+    const [taskName, setTaskName] = useState(selectedTask.taskName || '')
+
     const [subTaskNameInput, setSubTaskNameInput] = useState('');
 
     const [showButton, setShowButton] = useState(true);
@@ -28,12 +30,12 @@ export const TaskNameSection = () => {
 
 
     const onTaskNameChange = event => {
+        setTaskName(event.target.value)
         const taskData = {
             ...selectedTask,
             taskName: event.target.value
         }
-        // dispatch(updateTaskData({taskData}));
-        dispatch(updateTaskAsync(taskData));
+        dispatch(updateTaskAsync(taskData))
     }
 
     const onTaskCompletedChange = event => {
@@ -43,7 +45,6 @@ export const TaskNameSection = () => {
             completed
         }
 
-        // dispatch(updateTaskData({taskData}));
         dispatch(updateTaskAsync(taskData));
     }
 
@@ -53,7 +54,6 @@ export const TaskNameSection = () => {
             favorite: !selectedTask.favorite
         };
 
-        // dispatch(updateTaskData({taskData}));
         dispatch(updateTaskAsync(taskData));
     }
 
@@ -68,7 +68,6 @@ export const TaskNameSection = () => {
             })
         };
 
-        // dispatch(updateTaskData({taskData}));
         dispatch(updateTaskAsync(taskData));
 
         setShowInput(false);
@@ -88,7 +87,7 @@ export const TaskNameSection = () => {
                         textDecoration:
                             selectedTask.completed ? 'line-through' : 'none'
                     }}
-                    inputValue={selectedTask.taskName || ''}
+                    inputValue={taskName || selectedTask.taskName}
                     onChangeInput={onTaskNameChange}
                     onChangeCheckbox={onTaskCompletedChange}
                     checked={selectedTask.completed || false}

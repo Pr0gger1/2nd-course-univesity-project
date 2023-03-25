@@ -8,6 +8,14 @@ import { baseGroupIds } from '../../../store/defaultData/baseGroups';
 import CreateTaskButton from '../button/CreateTaskButton';
 import Task from '../cards/Task';
 
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Typography from '@mui/material/Typography';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import CircularProgress from '@mui/material/CircularProgress';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
+
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import styles from './styles/TaskContainer.module.scss';
@@ -21,14 +29,22 @@ const NoTasksMessage = () => {
     );
 }
 
+function checkDeadlines(tasks) {
+    tasks.forEach((task) => {
+        if (task.deadline && new Date(task.deadline) < new Date()) {
+        const notification = new Notification('Task deadline exceeded!', {
+            body: `The deadline for task "${task.taskName}" has passed.`,
+        });
+        setTimeout(notification.close.bind(notification), 5000);
+        }
+    });
+}
+
 const TaskContainer = () => {
     const dispatch = useDispatch();
 
     const tasks = useSelector(
         state => state.taskStates.tasks
-    );
-    const fetchStatus = useSelector(
-        state => state.taskStates.status
     );
     const currentGroupTasks = useSelector(
         state => state.taskStates.currentGroupTasks
@@ -39,9 +55,13 @@ const TaskContainer = () => {
     const selectedGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
+    const fetchStatus = useSelector(
+        state => state.taskStates.status
+    );
 
     // Конечный массив с отсортированными задачами
     const sortedTasks = useTask(currentGroupTasks, taskFilter);
+    const completedTasks = sortedTasks.filter(task => task.completed);
 
     useEffect(() => {
         if (tasks) {
@@ -61,11 +81,21 @@ const TaskContainer = () => {
             if (selectedGroup.id === baseGroupIds.completed)
                 currentTasks = tasks.filter(task => task.completed);
 
-            // console.log('current group tasks ', currentTasks)
             dispatch(setCurrentGroupTasks({tasks: currentTasks}));
         }
 
     }, [dispatch, selectedGroup, taskFilter.type, tasks]);
+
+    // useEffect(() => {
+        // const interval = setInterval(() => {
+        //     if ('Notification' in window && Notification.permission === 'granted') {
+        //       checkDeadlines(tasks);
+        //     }
+
+        // }, 5000);
+
+        // return () => clearInterval(interval);
+    //   }, [tasks]);
 
 
     return (
@@ -75,27 +105,70 @@ const TaskContainer = () => {
                 <CreateTaskButton/>
             }
             {
-                !sortedTasks.length && <NoTasksMessage/>
-            }
-
-            <TransitionGroup style={{paddingLeft: '0.5rem'}}>
+                fetchStatus === 'loading' || fetchStatus === '' ?
+                    <CircularProgress sx={{margin: '0 auto'}}/>
+                :
+                <>
                 {
-                    sortedTasks && sortedTasks.length > 0 && (
-                    sortedTasks.map((task, index) =>
-                        <CSSTransition
-                            key={index}
-                            timeout={500}
-                            classNames="item"
-                            mountOnEnter
-                        >
-                            <Task
-                                key={task.id}
-                                taskDataProps={task}
-                            />
-                        </CSSTransition>
-                    ))
+                    !sortedTasks.length &&
+                    <NoTasksMessage/>
                 }
-            </TransitionGroup>
+                
+                <TransitionGroup 
+                    style={{
+                        paddingLeft: '0.5rem',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '1rem'
+                    }}
+                >
+                    {
+                        sortedTasks && sortedTasks.length > 0 && (
+                        sortedTasks.filter(task => !task.completed).map((task, index) =>
+                            <CSSTransition
+                                key={index}
+                                timeout={500}
+                                classNames="item"
+                                mountOnEnter
+                            >
+                                <Task
+                                    key={task.id}
+                                    taskDataProps={task}
+                                />
+                            </CSSTransition>
+                        ))
+                    }
+                </TransitionGroup>
+
+                {
+                    completedTasks.length !== 0 &&
+                    <Accordion sx={{
+                            backgroundColor: 'var(--bgColorFirst)',
+                            color: 'var(--fontColor)',
+                        }}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon sx={{color: 'var(--fontColor)'}}/>}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography>
+                                Завершенные
+                            </Typography>
+                        </AccordionSummary>
+                        {
+                            completedTasks.map((task) =>
+                                <AccordionDetails key={task.id}>
+                                    <Task
+                                        key={task.id}
+                                        taskDataProps={task}
+                                    />
+                                </AccordionDetails>
+                                )
+                        }
+                    </Accordion>
+                }
+                </>
+            }
         </div>
     );
 };

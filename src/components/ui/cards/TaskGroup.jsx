@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import styles from './styles/TaskGroup.module.scss';
+import {baseGroupIds} from "../../../store/defaultData/baseGroups";
 
 const TaskGroup = ({ taskGroupData, onClick }) => {
     const [tasksCount, setTasksCount] = useState(0);
@@ -16,9 +17,16 @@ const TaskGroup = ({ taskGroupData, onClick }) => {
 
     useEffect(() => {
         if (tasks)  {
-            const count = tasks.filter(
+            // console.log(tasks);
+            let count = tasks.filter(
                 task => task.groupId === taskGroupData.id
             ).length;
+
+            if (taskGroupData.id === baseGroupIds.all)
+                count = tasks.length;
+
+            else if (taskGroupData.id === baseGroupIds.favorite)
+                count = tasks.filter(task => task.favorite).length;
 
             setTasksCount(count);
         }

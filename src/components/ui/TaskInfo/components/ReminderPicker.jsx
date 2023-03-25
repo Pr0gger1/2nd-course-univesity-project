@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateTaskAsync } from "../../../../store/reducers/TaskSlice";
 
@@ -10,6 +10,7 @@ import { LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import { ruRU } from '@mui/x-date-pickers';
 
 import styles from "../styles/TaskDatesSection.module.scss";
+import dayjs from "dayjs";
 
 const ReminderPicker = ({ setShowReminderPicker }) => {
     const dispatch = useDispatch();
@@ -17,16 +18,13 @@ const ReminderPicker = ({ setShowReminderPicker }) => {
         state => state.taskStates.selectedTask
     );
 
-    const [reminderValue, setReminderValue] = useState(null);
 
     const onReminderChange = value => {
         const taskData = {
             ...selectedTask,
-            reminder: value
+            reminder: new Date(value['$d']).getTime()
         };
 
-        setReminderValue(value);
-        // dispatch(updateTaskData({taskData}));
         dispatch(updateTaskAsync(taskData));
     }
 
@@ -36,7 +34,6 @@ const ReminderPicker = ({ setShowReminderPicker }) => {
             reminder: null
         };
 
-        // dispatch(updateTaskData({taskData}));
         dispatch(updateTaskAsync(taskData));
         setShowReminderPicker(false);
     }
@@ -48,8 +45,19 @@ const ReminderPicker = ({ setShowReminderPicker }) => {
                 localeText={ruRU.components.MuiLocalizationProvider.defaultProps.localeText}
             >
                 <MobileDateTimePicker
-                    value={selectedTask.reminder || reminderValue}
+                    value={dayjs(new Date(selectedTask.reminder))}
                     onChange={val => onReminderChange(val)}
+                    sx = {{
+                        ".css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input": {
+                            color: "var(--fontColor)",
+                        },
+                        ".css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root": {
+                            border: "1px solid var(--borderColor)"
+                        },
+                        ".MuiPickersPopper-container .MuiPaper-root": {
+                            backgroundColor: "red !important",
+                        }
+                    }}
                 />
              </LocalizationProvider>
 

@@ -16,7 +16,9 @@ import '../animations/Input/InputAnimation.css';
 const CreateTaskButton = () => {
     const [showInput, setShowInput] = useState(false);
     const [showButton, setShowButton] = useState(true);
+    const [taskName, setTaskName] = useState('');
 
+    const dispatch = useDispatch();
     const selectedGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
@@ -24,11 +26,6 @@ const CreateTaskButton = () => {
     const userCreds = useSelector(
         state => state.authStates.userData
     );
-
-
-    const [taskName, setTaskName] = useState('');
-    const dispatch = useDispatch();
-
 
     const addTaskHandler = () => {
         let taskData = {
@@ -49,7 +46,6 @@ const CreateTaskButton = () => {
         if (selectedGroup.id === baseGroupIds.favorite)
             taskData.favorite = true;
 
-        // dispatch(addTask({taskData}));
         dispatch(addTaskAsync(taskData));
         setTaskName('');
     }
@@ -102,7 +98,7 @@ const CreateTaskButton = () => {
                         customClasses={[styles.add_task__btn]}
                         value={taskName}
                         onChange={e => setTaskName(e.target.value)}
-                        onKeyDown={e => onInputKeyDown(e)}
+                        onKeyDown={onInputKeyDown}
                         onClose={() => setShowInput(false)}
                     />
                 </div>

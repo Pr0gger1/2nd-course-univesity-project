@@ -4,7 +4,7 @@ export class DateFormatter {
         "Среда", "Четверг",
         "Пятница", "Суббота",
         "Воскресенье"
-    ]
+    ];
 
     months = [
         "Январь", "Февраль",
@@ -13,32 +13,40 @@ export class DateFormatter {
         "Июль", "Август",
         "Сентябрь", "Октябрь",
         "Ноябрь", "Декабрь"
-    ]
+    ];
 
     getDayOfWeek() {
         return this.week.at(new Date().getDay() - 1);
     }
-    getMonth(initial_form = false) {
-        let month = this.months[new Date().getMonth()];
+
+    getMonth(monthIndex = null, initial_form = false) {
+        let month = (monthIndex && monthIndex >= 0 && monthIndex < 12)
+        ?
+            this.months[monthIndex]
+        :
+            this.months[new Date().getMonth()];
+
         if (!initial_form) {
-            if (month === 'Март' || month === 'Август')
-                month += 'a';
-            else
-                month = month.replace(month.at(-1), 'я');
+            month.endsWith('ь')
+                ? month = month.replace('ь', 'я')
+                : month +='a';
         }
+
         return month;
     }
+
     getTime() {
         let hour = new Date().getHours();
         let minute = new Date().getMinutes();
         return `${hour}:${minute}`;
     }
-    getFullDate() {
-        let day = new Date().getDate();
-        let month = this.getMonth();
-        let year = new Date().getFullYear();
+
+    getFullDate(customDate = null) {
+        const date = customDate ? new Date(customDate) : new Date();
+        const day = date.getDate();
+        const month = this.getMonth(date.getMonth());
+        const year = date.getFullYear();
 
         return `${day} ${month} ${year}`;
     }
-
 }

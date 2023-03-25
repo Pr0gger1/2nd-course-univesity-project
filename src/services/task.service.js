@@ -1,17 +1,17 @@
-import {db} from '../firebase.config';
+import { db } from '../firebase.config';
 
-import {doc, getDoc, setDoc} from 'firebase/firestore'
-import {generateUniqueId} from '../utils/generateUniqueId';
+import { doc, getDoc, getDocFromCache, setDoc } from 'firebase/firestore'
+import { generateUniqueId } from '../utils/generateUniqueId';
 
 export class TaskService {
-    static async updateUserTasks(taskData, userId) {
-        console.log(taskData);
+    static async updateUserTasks(tasks, userId) {
         await setDoc(doc(db, 'tasks', userId), {
-            taskData
+            taskData: tasks
         });
     }
 
     static addTask(tasks, taskData) {
+        console.log(tasks);
         const newTask = {...taskData}
         newTask.id = generateUniqueId('task', 12, true);
 
@@ -46,13 +46,10 @@ export class TaskService {
 
     static updateTask(tasks, taskData) {
         const newTasks = [...tasks];
-        console.log(tasks)
-        // console.log(newTasks)
-        console.log(taskData)
+
         const taskIndex = newTasks.findIndex(
             task => task.id === taskData.id
         );
-        console.log(taskIndex)
 
         if (taskIndex !== -1) {
             newTasks[taskIndex] = taskData;
@@ -78,12 +75,17 @@ export class TaskService {
     }
 
     static async getUserTasks(userId) {
-        const taskDoc = doc(db, "tasks", userId);
-        const docSnap = await getDoc(taskDoc);
+        try {
+            const taskDoc = doc(db, "tasks", userId);
+            const docSnap = await getDoc(taskDoc);
 
-        // console.log(docSnap.data())
-        if (docSnap.exists()) {
-            return docSnap.data();
+            if (docSnap.exists()) {
+                return docSnap.data();
+            }
+            else return [];
+        }
+        catch (error) {
+
         }
     }
 }

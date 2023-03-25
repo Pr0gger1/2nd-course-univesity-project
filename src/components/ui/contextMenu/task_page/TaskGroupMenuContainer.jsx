@@ -18,15 +18,29 @@ const TaskGroupMenuContainer = () => {
         state => state.mobileStates.isMobile
     );
 
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+
     return (
         <div className={styles.context__container} ref={menuContainerRef}>
             <IconButton
-                onClick={() => setIsMenuOpened(prevState => !prevState)}
+                // onClick={() => setIsMenuOpened(prevState => !prevState)}
+                onClick={handleClick}
             >
                 •••
             </IconButton>
 
-            {
+            <ContextMenu
+                anchorEl={anchorEl}
+                setAnchorEl={setAnchorEl}
+            >
+                <TaskGroupMenuList/>
+            </ContextMenu>
+            {/* {
                 isMobile ?
                     <ModalWindow
                         visible={isMenuOpened}
@@ -53,11 +67,13 @@ const TaskGroupMenuContainer = () => {
                             isMenuOpened={isMenuOpened}
                             setIsMenuOpened={setIsMenuOpened}
                             menuRef={menuContainerRef}
+                            anchorEl={anchorEl}
+                            setAnchorEl={setAnchorEl}
                         >
                             <TaskGroupMenuList />
                         </ContextMenu>
                     </CSSTransition>
-            }
+            } */}
         </div>
     );
 };

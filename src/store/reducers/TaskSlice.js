@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { generateUniqueId } from '../../utils/generateUniqueId';
 import { TaskService } from '../../services/task.service';
 
@@ -9,7 +9,6 @@ export const addTaskAsync = createAsyncThunk(
             const tasks = getState().taskStates.tasks;
             const userId = getState().authStates.userData.uid;
 
-            console.log(tasks);
             const newTasks = TaskService.addTask(tasks, taskData);
 
             await TaskService.updateUserTasks(newTasks, userId);
@@ -29,7 +28,7 @@ export const deleteTaskAsync = createAsyncThunk(
         
         const newTasks = TaskService.deleteTask(tasks, taskId);
         await TaskService.updateUserTasks(newTasks.tasks, userId);
-        
+
         return newTasks;
     }
 )
@@ -99,14 +98,6 @@ const taskSlice = createSlice({
     reducers: {
         setCurrentGroupTasks(state, action) {
             state.currentGroupTasks = action.payload.tasks;
-        },
-
-        getTasks(state, action) {
-            const userId = action.payload.userId;
-
-            // Достаем из сервера данные пользователя
-            const tasks = [];
-            state.tasks = tasks;
         },
 
         setSelectedTask(state, action) {
@@ -202,11 +193,9 @@ const taskSlice = createSlice({
             })
 
             .addCase(deleteSubTaskAsync.rejected, (state, action) => {
-                console.log(action);
             })
 
             .addCase(updateTaskAsync.fulfilled, (state, action) => {
-                console.log(action);
                 state.tasks = action.payload.tasks;
                 state.selectedTask = action.payload.selectedTask;
             })
@@ -224,18 +213,23 @@ const taskSlice = createSlice({
                 console.log(action);
             })
 
-            .addCase(getUserTasks.pending, state => {
-                console.log('loading')
+            .addCase(getUserTasks.pending, (state, action) => {
                 state.status = 'loading';
+
             })
 
             .addCase(getUserTasks.fulfilled, (state, action) => {
-                state.tasks = action.payload.taskData;
-                state.status = 'success';
-                // console.log(action)
+                try {
+                    if (action.payload && action.payload.taskData) {
+                        state.tasks = action.payload.taskData;
+                        state.status = 'success';
+                    }
+                }
+                catch (e) {console.log(e);}
+
             })
             .addCase(getUserTasks.rejected, (state, action) => {
-                // console.log(action)
+                console.log(action)
                 state.status = 'failed';
             })
     }
@@ -244,7 +238,7 @@ const taskSlice = createSlice({
 export const {
     setCurrentGroupTasks, setSelectedTask,
     addTask, updateTaskData, updateSubTaskData,
-    deleteTask, deleteSubTask, getTasks
+    deleteTask, deleteSubTask
 } = taskSlice.actions;
 
 export default taskSlice.reducer;

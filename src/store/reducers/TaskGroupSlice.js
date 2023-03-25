@@ -1,10 +1,32 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { generateUniqueId } from '../../utils/generateUniqueId';
 
 import customGroupDefaultIcon from '../../assets/img/icons/default/custom_group_task_icon.svg';
 
 import { initialGroup } from "../defaultData/baseGroups";
 import defaultGroups from '../defaultData/baseGroups';
+
+
+export const createCustomTaskGroup = createAsyncThunk(
+    'taskGroup/add',
+    async () => {
+
+    }
+);
+
+export const deleteCustomTaskGroupAsync = createAsyncThunk(
+     'taskGroup/delete',
+    async () => {
+
+    }
+);
+
+export const renameCustomTaskGroupAsync = createAsyncThunk(
+     'taskGroup/rename',
+    async () => {
+
+    }
+);
 
 const taskGroupSlice = createSlice({
     name: 'taskGroupsStates',
@@ -57,6 +79,36 @@ const taskGroupSlice = createSlice({
                 state.allTaskGroups.custom[groupIndex].webTitle = `Productify - ${newName}`;
             }
         }
+    },
+
+    extraReducers: builder => {
+        builder
+            .addCase(createCustomTaskGroup.fulfilled, (state, action) => {
+                console.log(action);
+                state.allTaskGroups.custom = action.payload.taskGroup;
+            })
+
+            .addCase(createCustomTaskGroup.rejected, (state, action) => {
+                console.log(action)
+            })
+
+             .addCase(deleteCustomTaskGroupAsync.fulfilled, (state, action) => {
+                console.log(action);
+                state.allTaskGroups.custom = action.payload.taskGroup;
+            })
+
+            .addCase(deleteCustomTaskGroupAsync.rejected, (state, action) => {
+                console.log(action)
+            })
+
+            .addCase(renameCustomTaskGroupAsync.fulfilled, (state, action) => {
+                console.log(action);
+                state.allTaskGroups.custom = action.payload.taskGroup;
+            })
+
+            .addCase(renameCustomTaskGroupAsync.rejected, (state, action) => {
+                console.log(action)
+            })
     }
 });
 
