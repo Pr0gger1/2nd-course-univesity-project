@@ -42,7 +42,9 @@ const AuthPage = ({ register = false }) => {
 
                 <button
                     className={styles.google_auth__button}
-                    onClick={() => dispatch(loginWithGoogle())}>
+                    type='button'
+                    onClick={() => dispatch(loginWithGoogle())}
+                >
                     <img src={google_icon} alt="google authorization"/>
                     <span className={styles.google_auth__text}>
                         Авторизоваться через Google

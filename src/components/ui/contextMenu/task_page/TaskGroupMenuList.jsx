@@ -12,6 +12,7 @@ import Stack from '@mui/material/Stack';
 
 import { setTaskFilter } from '../../../../store/reducers/FilterSlice';
 import { deleteCustomTaskGroupAsync, renameCustomTaskGroupAsync } from '../../../../store/reducers/TaskGroupSlice';
+import ConfirmationButton from "../../button/ConfirmationButton";
 
 import deleteGroupIcon from '../../../../assets/img/icons/delete_icon.svg';
 import filterIcon from '../../../../assets/img/icons/filter_icon.svg';
@@ -143,15 +144,24 @@ const TaskGroupMenuList = () => {
                         />
                         {
                             showEditInput ?
-                                <CustomTextField
-                                    variant='standard'
-                                    value={editInputText}
-                                    onChange={e => setEditInputText(e.target.value)}
-                                    onKeyDown={onEditTitleEnterPressed}
-                                />
+                                <>
+                                    <CustomTextField
+                                        variant='standard'
+                                        value={editInputText}
+                                        onChange={e => setEditInputText(e.target.value)}
+                                        onKeyDown={onEditTitleEnterPressed}
+                                        sx={{width: '100%'}}
+                                    />
+
+                                    <ConfirmationButton
+                                        sx={{padding: 0.5, backgroundColor: 'var(--backgroundSecond)'}}
+                                        variant={editInputText.length ? 'ok' : 'cancel'}
+                                        onClick={(e) => {e.stopPropagation(); setShowEditInput(false)}}
+                                    />
+                                </>
                                 :
                                 <span>
-                                    Переименование списка
+                                    Переименовать список
                                 </span>
 
                         }

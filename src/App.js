@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToast } from './hooks/useToast';
 import { getUserTasks } from "./store/reducers/TaskSlice";
-import { setUser } from "./store/reducers/AuthSlice";
+import {logoutHandler, setUser} from "./store/reducers/AuthSlice";
 import { auth } from "./firebase.config";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -25,9 +25,9 @@ function App() {
     // функция отслеживания изменения состояния авторизации
     useMemo(() => {
         onAuthStateChanged(auth, (user) => {
-            if (user) {
+            if (user)
                 dispatch(setUser({ data: user }));
-            }
+            else dispatch(logoutHandler());
         });
     }, [dispatch]);
 
