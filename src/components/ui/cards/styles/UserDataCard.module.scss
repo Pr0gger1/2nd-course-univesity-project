@@ -11,9 +11,17 @@
   gap: 1rem;
   transition: all 0.5s ease;
 
+  .loading {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__info {
     display: flex;
     flex-direction: column;
+
+    flex-grow: 1;
+    width: 100%;
   }
 
   &__name {
@@ -29,13 +37,6 @@
   &__avatar {
     width: 1rem;
     height: 1rem;
-  }
-
-  &__wrap {
-    // transform-origin: right;
-    // transform: scaleX(0);
-    // animation: shrink 0.3s ease 0.2s;
-    // opacity: 0;
   }
 }
 

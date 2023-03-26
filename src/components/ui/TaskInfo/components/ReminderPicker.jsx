@@ -53,9 +53,6 @@ const ReminderPicker = ({ setShowReminderPicker }) => {
                         },
                         ".css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root": {
                             border: "1px solid var(--borderColor)"
-                        },
-                        ".MuiPickersPopper-container .MuiPaper-root": {
-                            backgroundColor: "red !important",
                         }
                     }}
                 />

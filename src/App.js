@@ -1,17 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { useToast } from './hooks/useToast';
-import { useMediaQuery } from "react-responsive";
+import { getUserTasks } from "./store/reducers/TaskSlice";
+import { setUser } from "./store/reducers/AuthSlice";
+import { auth } from "./firebase.config";
+import { onAuthStateChanged } from "firebase/auth";
 
 import ToastContext from './context/toast.context';
 import AppRouter from "./router/AppRouter";
 import Toast from "./components/ui/toast/Toast";
 
-import { setUser } from "./store/reducers/AuthSlice";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase.config";
-import {getUserTasks} from "./store/reducers/TaskSlice";
 
 function App() {
     const userData = useSelector(state => state.authStates.userData) || localStorage.getItem('userData');

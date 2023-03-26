@@ -97,7 +97,6 @@ const TaskContainer = () => {
         // return () => clearInterval(interval);
     //   }, [tasks]);
 
-
     return (
         <div className={styles.tasks__container}>
             {
@@ -105,7 +104,7 @@ const TaskContainer = () => {
                 <CreateTaskButton/>
             }
             {
-                fetchStatus === 'loading' || fetchStatus === '' ?
+                fetchStatus === 'loading' ?
                     <CircularProgress sx={{margin: '0 auto'}}/>
                 :
                 <>

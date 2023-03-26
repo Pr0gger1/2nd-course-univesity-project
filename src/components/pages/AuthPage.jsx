@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from "react-redux";
+import { loginWithGoogle } from "../../store/reducers/AuthSlice";
+
 import AuthForm from '../forms/AuthForm';
 
-import styles from './styles/AuthPage.module.scss';
 import google_icon from '../../assets/img/icons/google.svg';
 import logo from '../../assets/img/logo/logo_vector_white.svg';
+import styles from './styles/AuthPage.module.scss';
 
 const AuthPage = ({ register = false }) => {
     const [authData, setAuthData] = useState({
@@ -22,6 +25,8 @@ const AuthPage = ({ register = false }) => {
         })
     }, [register]);
 
+    const dispatch = useDispatch();
+
     return (
         <div className={styles.container}>
             <div className={styles.login__form}>
@@ -35,12 +40,14 @@ const AuthPage = ({ register = false }) => {
                     setData={setAuthData}
                 />
 
-                <a href='/' className={styles.google_auth__button}>
+                <button
+                    className={styles.google_auth__button}
+                    onClick={() => dispatch(loginWithGoogle())}>
                     <img src={google_icon} alt="google authorization"/>
                     <span className={styles.google_auth__text}>
                         Авторизоваться через Google
                     </span>
-                </a>
+                </button>
             </div>
 
             <div className={styles.introduce__block}>

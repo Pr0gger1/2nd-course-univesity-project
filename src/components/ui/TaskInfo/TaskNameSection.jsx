@@ -87,7 +87,7 @@ export const TaskNameSection = () => {
                         textDecoration:
                             selectedTask.completed ? 'line-through' : 'none'
                     }}
-                    inputValue={taskName || selectedTask.taskName}
+                    inputValue={taskName || selectedTask.taskName || ''}
                     onChangeInput={onTaskNameChange}
                     onChangeCheckbox={onTaskCompletedChange}
                     checked={selectedTask.completed || false}

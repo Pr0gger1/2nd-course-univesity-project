@@ -1,6 +1,8 @@
-import { initializeApp } from 'firebase/app';
+import firebase from 'firebase/compat/app';
 import { getAuth } from 'firebase/auth';
-import { initializeFirestore, CACHE_SIZE_UNLIMITED, enableIndexedDbPersistence } from "firebase/firestore";
+import { initializeFirestore,
+  CACHE_SIZE_UNLIMITED,
+  enableIndexedDbPersistence } from "firebase/firestore";
 
 const apiKey = process.env.REACT_APP_API_KEY_FIREBASE;
 const authDomain = process.env.REACT_APP_AUTH_DOMAIN_FIREBASE;
@@ -19,7 +21,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+export const app = firebase.initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = initializeFirestore(app, {
   cacheSizeBytes: CACHE_SIZE_UNLIMITED

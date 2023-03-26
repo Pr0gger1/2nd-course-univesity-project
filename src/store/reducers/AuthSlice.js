@@ -10,6 +10,12 @@ export const login = createAsyncThunk(
     }
 );
 
+export const loginWithGoogle = createAsyncThunk(
+    'auth/loginWithGoogle',
+    async () => {
+        await AuthService.loginWithGoogle();
+    }
+)
 export const register = createAsyncThunk(
     'auth/register',
     async data => {
@@ -70,6 +76,22 @@ const authSlice = createSlice({
             .addCase(register.rejected, (state, action) => {
                 state.status = 'failed';
                 state.authError = action.error;
+            })
+
+            .addCase(loginWithGoogle.pending, state => {
+                state.status = 'loading';
+            })
+
+            .addCase(loginWithGoogle.fulfilled, (state, action) => {
+                console.log(action)
+                state.userData = action.payload;
+                state.status = 'success';
+            })
+
+            .addCase(loginWithGoogle.rejected, (state, action) => {
+                state.authError = action.error;
+                state.status = 'failed';
+                console.log(action)
             })
     }
 })

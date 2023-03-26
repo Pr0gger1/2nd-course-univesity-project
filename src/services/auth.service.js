@@ -1,10 +1,25 @@
 import { auth, db } from '../firebase.config';
 import { signInWithEmailAndPassword,
-    createUserWithEmailAndPassword } from 'firebase/auth';
+    createUserWithEmailAndPassword,
+    signInWithPopup, GoogleAuthProvider
+} from 'firebase/auth';
 
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 export class AuthService {
+
+    static async createUserCollection(userId, username, email) {
+         await setDoc(doc(db, 'users', userId), {
+            username: username,
+            email: email,
+            user_id: userId
+        });
+         const userTasks = await getDoc(doc(db, 'tasks', userId));
+         if (!userTasks.exists())
+            await setDoc(doc(db, 'tasks', userId), {
+                taskData: []
+            });
+    }
     static async login(email, password) {
         await signInWithEmailAndPassword(auth, email, password)
             .then(creds => {
@@ -19,16 +34,30 @@ export class AuthService {
                 if (creds.user) {
                     const userId = creds.user.uid;
                     console.log(creds.user);
-                    await setDoc(doc(db, 'users', userId), {
-                        username: username,
-                        email: creds.user.email,
-                        user_id: creds.user.uid
-                    });
 
-                    await setDoc(doc(db, 'tasks', userId), {
-                        taskData: []
-                    });
+                    await AuthService.createUserCollection(
+                        userId, username, creds.user.email
+                    );
                 }
+            })
+            .catch(error => { throw error });
+    }
+
+    static async loginWithGoogle() {
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+            .then(async result => {
+                if (result.user) {
+                    const user = result.user;
+                    await AuthService.createUserCollection(
+                        result.user.uid, user.displayName, user.email);
+
+                    return result.user;
+                }
+
+                // const credential = GoogleAuthProvider.credentialFromResult(result);
+                // const token = credential.accessToken;
+
             })
             .catch(error => { throw error });
     }
