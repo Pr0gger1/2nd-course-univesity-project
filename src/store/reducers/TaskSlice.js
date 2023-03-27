@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { generateUniqueId } from '../../utils/generateUniqueId';
 import { TaskService } from '../../services/task.service';
 
 export const addTaskAsync = createAsyncThunk(
@@ -31,20 +30,25 @@ export const deleteTaskAsync = createAsyncThunk(
 
         return newTasks;
     }
-)
+);
 
 export const deleteSubTaskAsync = createAsyncThunk(
     'subtask/delete',
-    async (taskId, subTaskId, { getState }) => {
-        const tasks = getState().taskStates.tasks;
-        const userId = getState().authStates.userData.uid;
-        
-        const newTasks = TaskService.deleteSubTask(tasks, taskId, subTaskId);
-        await TaskService.updateUserTasks(newTasks.tasks, userId);
+    async ({taskId, subTaskId}, { getState }) => {
+        try {
+            const tasks = getState().taskStates.tasks;
+            const userId = getState().authStates.userData.uid;
 
-        return newTasks;
+            const newTasks = TaskService.deleteSubTask(tasks, taskId, subTaskId);
+            await TaskService.updateUserTasks(newTasks.tasks, userId);
+
+            return newTasks;
+        }
+        catch (error) {
+            throw error;
+        }
     }
-)
+);
 
 export const updateTaskAsync = createAsyncThunk(
     'task/update',
@@ -61,12 +65,18 @@ export const updateTaskAsync = createAsyncThunk(
 
 export const updateSubTaskAsync = createAsyncThunk(
     'subtask/update',
-    async (taskId, subTaskId, subTaskData, { getState }) => {
-        const tasks = getState().taskStates.tasks;
-        
-        const newTasks = TaskService.updateSubTask(tasks, taskId, subTaskId, subTaskData)
-        await TaskService.updateUserTasks(newTasks)
-        return newTasks;
+    async ({taskId, subTaskId, subTaskData}, { getState }) => {
+        try {
+            let tasks = getState().taskStates.tasks;
+
+            const newTasks = TaskService.updateSubTask(tasks, taskId, subTaskId, subTaskData)
+            await TaskService.updateUserTasks(newTasks)
+            return newTasks;
+
+        }
+        catch (error) {
+            throw error;
+        }
     }
 );
 
@@ -93,7 +103,9 @@ const taskSlice = createSlice({
 
         // массив задач активной группы
         currentGroupTasks: [],
-        status: ''
+
+        status: undefined,
+        fetchError: null
     },
     reducers: {
         setCurrentGroupTasks(state, action) {
@@ -102,20 +114,6 @@ const taskSlice = createSlice({
 
         setSelectedTask(state, action) {
             state.selectedTask = action.payload.taskData;
-        },
-
-        addTask(state, action) {
-            const newTask = {...action.payload.taskData}
-            newTask.taskId = generateUniqueId('task', 12, true);
-            state.tasks.push(newTask);
-        },
-
-        deleteTask(state, action) {
-            const taskId = action.payload.taskId;
-            if (state.tasks.length) {
-                state.tasks = state.tasks.filter(task => task.id !== taskId);
-                state.selectedTask = {};
-            }
         },
 
         deleteSubTask(state, action) {
@@ -136,19 +134,6 @@ const taskSlice = createSlice({
             };
 
             state.selectedTask = state.tasks[taskIndex];
-        },
-
-        updateTaskData(state, action) {
-            const taskData = action.payload.taskData;
-            const taskIndex = state.tasks.findIndex(
-                task => task.id === taskData.id
-            );
-
-            if (taskIndex !== -1) {
-                state.tasks[taskIndex] = taskData;
-                state.selectedTask = taskData;
-            }
-
         },
 
         updateSubTaskData(state, action) {
@@ -176,6 +161,7 @@ const taskSlice = createSlice({
 
             .addCase(addTaskAsync.rejected, (state, action) => {
                 console.log(action);
+                state.fetchError = action.error;
             })
 
             .addCase(deleteTaskAsync.fulfilled, (state, action) => {
@@ -185,6 +171,7 @@ const taskSlice = createSlice({
 
             .addCase(deleteTaskAsync.rejected, (state, action) => {
                 console.log(action);
+                state.fetchError = action.error;
             })
 
             .addCase(deleteSubTaskAsync.fulfilled, (state, action) => {
@@ -193,6 +180,8 @@ const taskSlice = createSlice({
             })
 
             .addCase(deleteSubTaskAsync.rejected, (state, action) => {
+                console.log(action);
+                state.fetchError = action.error;
             })
 
             .addCase(updateTaskAsync.fulfilled, (state, action) => {
@@ -202,20 +191,20 @@ const taskSlice = createSlice({
 
             .addCase(updateTaskAsync.rejected, (state, action) => {
                 console.log(action);
-                throw action.error;
+                state.fetchError = action.error;
             })
 
             .addCase(updateSubTaskAsync.fulfilled, (state, action) => {
-                state.tasks = action.payload;
+                state.tasks = action.payload.tasks;
             })
 
             .addCase(updateSubTaskAsync.rejected, (state, action) => {
                 console.log(action);
+                state.fetchError = action.error;
             })
 
             .addCase(getUserTasks.pending, (state, action) => {
                 state.status = 'loading';
-
             })
 
             .addCase(getUserTasks.fulfilled, (state, action) => {
@@ -228,8 +217,10 @@ const taskSlice = createSlice({
                 catch (e) {console.log(e);}
 
             })
+
             .addCase(getUserTasks.rejected, (state, action) => {
                 console.log(action)
+                state.fetchError = action.error;
                 state.status = 'failed';
             })
     }
@@ -237,8 +228,7 @@ const taskSlice = createSlice({
 
 export const {
     setCurrentGroupTasks, setSelectedTask,
-    addTask, updateTaskData, updateSubTaskData,
-    deleteTask, deleteSubTask
+    updateSubTaskData, deleteSubTask
 } = taskSlice.actions;
 
 export default taskSlice.reducer;

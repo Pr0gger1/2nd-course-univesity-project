@@ -1,6 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteSubTask, updateSubTaskData } from "../../../store/reducers/TaskSlice";
+import {
+    deleteSubTaskAsync,
+    updateSubTaskAsync
+} from "../../../store/reducers/TaskSlice";
 
 import CheckboxInputField from '../input/CheckboxInputField';
 import DeleteButton from "../button/DeleteButton";
@@ -14,27 +17,49 @@ const SubTaskContainer = () => {
     );
 
     const onTaskNameChange = (event, subTask) => {
-        dispatch(updateSubTaskData({
-            parentTaskId: selectedTask.id,
+        const subTaskData = {
+            ...subTask,
+            taskName: event.target.value
+        }
+
+        dispatch(updateSubTaskAsync({
+            taskId: selectedTask.id,
             subTaskId: subTask.id,
-            subTaskData: {...subTask, taskName: event.target.value}
+            subTaskData
         }));
+        // dispatch(updateSubTaskData({
+        //     parentTaskId: selectedTask.id,
+        //     subTaskId: subTask.id,
+        //     subTaskData: {...subTask, taskName: event.target.value}
+        // }));
     }
 
     const onCheckboxChange = subTask => {
         const completed = !subTask.completed;
-        dispatch(updateSubTaskData({
-            parentTaskId: selectedTask.id,
+        const subTaskData = {
+            ...subTask, completed
+        };
+        dispatch(updateSubTaskAsync({
+            taskId: selectedTask.id,
             subTaskId: subTask.id,
-            subTaskData: {...subTask, completed}
+            subTaskData
         }));
+        // dispatch(updateSubTaskData({
+        //     parentTaskId: selectedTask.id,
+        //     subTaskId: subTask.id,
+        //     subTaskData: {...subTask, completed}
+        // }));
     }
 
     const deleteSubTaskHandler = (subTask) => {
-        dispatch(deleteSubTask({
+        dispatch(deleteSubTaskAsync({
             taskId: selectedTask.id,
             subTaskId: subTask.id
         }))
+        // dispatch(deleteSubTask({
+        //     taskId: selectedTask.id,
+        //     subTaskId: subTask.id
+        // }))
     }
 
     return (

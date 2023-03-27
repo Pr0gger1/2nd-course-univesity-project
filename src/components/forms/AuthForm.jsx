@@ -1,23 +1,24 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {useMediaQuery} from "react-responsive";
+import { useMediaQuery } from 'react-responsive';
+import { useAuthError } from '../../hooks/useAuthError';
+import { SnackbarContext, snackbarTypes } from '../../context/SnackbarContext';
 
 import { login, register as registerHandler } from '../../store/reducers/AuthSlice';
-import ToastContext from "../../context/toast.context";
 
 import { Link } from 'react-router-dom';
 
 import Button from '../ui/button/Button';
-import { FormControl, IconButton, InputAdornment, TextField } from "@mui/material";
+import { FormControl, IconButton, InputAdornment, TextField } from '@mui/material';
 import KeyTwoToneIcon from '@mui/icons-material/KeyTwoTone';
 import EmailTwoToneIcon from '@mui/icons-material/EmailTwoTone';
 import BadgeTwoToneIcon from '@mui/icons-material/BadgeTwoTone';
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import styles from './AuthForm.module.scss';
 
 const AuthForm = ({ register = false, data, setData}) => {
-    const { setPosition, toastElement } = useContext(ToastContext);
+    const { setMessage, setType, setOpen, setHideDuration } = useContext(SnackbarContext);
 
     const emailValidation = !/\S+@\S+\.\S+/.test(data.email)
         && data.email.length !== 0;
@@ -32,11 +33,13 @@ const AuthForm = ({ register = false, data, setData}) => {
         state => state.authStates.authError
     );
 
+    useAuthError(authError);
+
     const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
-        setPosition('top_center');
-    }, [setPosition]);
+        setHideDuration(3000);
+    }, [setHideDuration]);
 
     // обработчики
     const handleClickShowPassword = () => setShowPassword(show => !show);
@@ -44,26 +47,31 @@ const AuthForm = ({ register = false, data, setData}) => {
         event.preventDefault();
     };
 
+
     const onChangeHandler = event => {
         setData({...data, [event.target.id]: event.target.value})
     }
 
     const onSubmitHandler = async event => {
         event.preventDefault();
-        if (!data.email || !data.password || (register && !data.repeatPassword))
-            return new toastElement("Остались пустые поля", "Ошибка!").error;
-        console.log(data);
-        if (register) {
-            if (data.password === data.repeatPassword)
-                dispatch(registerHandler(data));
-            else return new toastElement("Пароли не совпадают", "Ошибка регистрации").error;
+        if (!data.email || !data.password || (register && !data.repeatPassword)) {
+            setMessage('Остались пустые поля!');
+            setType(snackbarTypes.error);
+            setOpen(true);
         }
-        else dispatch(login(data));
+        else {
+            if (register) {
+                if (data.password === data.repeatPassword)
+                    dispatch(registerHandler(data));
+                else {
+                    setMessage('Пароли не совпадают');
+                    setType(snackbarTypes.error);
+                    setOpen(true);
+                }
+            }
+            else dispatch(login(data));
+        }
     }
-
-    useEffect(() => {
-        console.log(authError);
-    }, [authError])
 
     return (
         <form className={styles.auth__form}>

@@ -1,22 +1,17 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useToast } from './hooks/useToast';
 import { getUserTasks } from "./store/reducers/TaskSlice";
-import {logoutHandler, setUser} from "./store/reducers/AuthSlice";
+import {setUser} from "./store/reducers/AuthSlice";
 import { auth } from "./firebase.config";
 import { onAuthStateChanged } from "firebase/auth";
 
-import ToastContext from './context/toast.context';
 import AppRouter from "./router/AppRouter";
-import Toast from "./components/ui/toast/Toast";
+import SnackbarProvider from "./providers/SnackbarProvider";
 
 
 function App() {
     const userData = useSelector(state => state.authStates.userData) || localStorage.getItem('userData');
     const isAuth = !!userData;
-
-    const { toastList, setToastList, toastElement } = useToast();
-    const [toastPosition, setToastPosition] = useState("top_right");
 
     const dispatch = useDispatch();
     const currentTheme = useSelector(state => state.themeState.theme);
@@ -25,9 +20,9 @@ function App() {
     // функция отслеживания изменения состояния авторизации
     useMemo(() => {
         onAuthStateChanged(auth, (user) => {
-            if (user)
+            if (user) {
                 dispatch(setUser({ data: user }));
-            else dispatch(logoutHandler());
+            }
         });
     }, [dispatch]);
 
@@ -53,18 +48,9 @@ function App() {
     }, [currentTheme]);
 
     return (
-        <ToastContext.Provider
-            value={{
-                toastList,
-                setToastList,
-                toastElement,
-                position: toastPosition,
-                setPosition: setToastPosition,
-            }}
-        >
-            <Toast position={toastPosition} />
+        <SnackbarProvider>
             <AppRouter isAuth={isAuth} />
-        </ToastContext.Provider>
+        </SnackbarProvider>
     );
 }
 

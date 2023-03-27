@@ -28,7 +28,7 @@ const authSlice = createSlice({
     initialState: {
         userData: localStorage.getItem('userData') || null,
         authError: null,
-        status: ''
+        status: undefined
     },
     
     reducers: {
@@ -83,7 +83,6 @@ const authSlice = createSlice({
             })
 
             .addCase(loginWithGoogle.fulfilled, (state, action) => {
-                console.log(action)
                 state.userData = action.payload;
                 state.status = 'success';
             })
@@ -91,7 +90,6 @@ const authSlice = createSlice({
             .addCase(loginWithGoogle.rejected, (state, action) => {
                 state.authError = action.error;
                 state.status = 'failed';
-                console.log(action)
             })
     }
 })

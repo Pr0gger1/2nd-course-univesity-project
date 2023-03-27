@@ -1,6 +1,6 @@
 import { db } from '../firebase.config';
 
-import { doc, getDoc, getDocFromCache, setDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { generateUniqueId } from '../utils/generateUniqueId';
 
 export class TaskService {
@@ -11,11 +11,10 @@ export class TaskService {
     }
 
     static addTask(tasks, taskData) {
-        console.log(tasks);
         const newTask = {...taskData}
         newTask.id = generateUniqueId('task', 12, true);
 
-        const newTasks = [...tasks];
+        let newTasks = [...tasks];
         newTasks.push(newTask);
         
         return newTasks;
@@ -27,7 +26,7 @@ export class TaskService {
     }
 
     static deleteSubTask(tasks, taskId, subTaskId) {
-        const newTasks = [...tasks];
+        let newTasks = [...tasks];
         const taskIndex = newTasks.findIndex(
             task => task.id === taskId
         );
@@ -45,7 +44,7 @@ export class TaskService {
     }
 
     static updateTask(tasks, taskData) {
-        const newTasks = [...tasks];
+        let newTasks = [...tasks];
 
         const taskIndex = newTasks.findIndex(
             task => task.id === taskData.id
@@ -61,16 +60,18 @@ export class TaskService {
     }
 
     static updateSubTask(tasks, taskId, subTaskId, subTaskData) {
-        const parentTaskIndex = tasks
+        let newTasks = [...tasks];
+
+        let parentTaskIndex = newTasks
             .findIndex(task => task.id === taskId);
 
-        const subTaskIndex = tasks[parentTaskIndex].subTasks
+        let subTaskIndex = newTasks[parentTaskIndex].subTasks
             .findIndex(subTask => subTask.id === subTaskId);
 
-        tasks[parentTaskIndex].subTasks[subTaskIndex] = subTaskData;
+        newTasks[parentTaskIndex].subTasks[subTaskIndex] = subTaskData;
 
         return {
-            tasks, selectedTask: tasks[parentTaskIndex].subTasks[subTaskIndex]
+            tasks: newTasks, selectedTask: newTasks[parentTaskIndex].subTasks[subTaskIndex]
         };
     }
 
