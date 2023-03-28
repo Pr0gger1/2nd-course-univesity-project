@@ -67,7 +67,11 @@ export class TaskService {
         let subTaskIndex = newTasks[parentTaskIndex].subTasks
             .findIndex(subTask => subTask.id === subTaskId);
 
-        newTasks[parentTaskIndex].subTasks[subTaskIndex] = subTaskData;
+        // обходим readonly ограничение для subTasks
+        const newSub = [...newTasks[parentTaskIndex].subTasks]
+        newSub[subTaskIndex] = {...subTaskData}
+        const newCurrentTask = {...newTasks[parentTaskIndex], subTasks:newSub }
+        newTasks[parentTaskIndex] = {...newCurrentTask}
 
         return {
             tasks: newTasks, selectedTask: newTasks[parentTaskIndex].subTasks[subTaskIndex]
