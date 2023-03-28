@@ -68,9 +68,10 @@ export const updateSubTaskAsync = createAsyncThunk(
     async ({taskId, subTaskId, subTaskData}, { getState }) => {
         try {
             let tasks = getState().taskStates.tasks;
+            const userId = getState().authStates.userData.uid;
 
             const newTasks = TaskService.updateSubTask(tasks, taskId, subTaskId, subTaskData)
-            await TaskService.updateUserTasks(newTasks)
+            await TaskService.updateUserTasks(newTasks.tasks,userId)
             return newTasks;
 
         }
