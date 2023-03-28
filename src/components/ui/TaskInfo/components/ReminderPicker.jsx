@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateTaskAsync } from "../../../../store/reducers/TaskSlice";
 
@@ -9,8 +9,10 @@ import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import { ruRU } from '@mui/x-date-pickers';
 
-import styles from "../styles/TaskDatesSection.module.scss";
 import dayjs from "dayjs";
+import styles from "../styles/TaskDatesSection.module.scss";
+import {rejects} from "assert";
+import {sendRequestWithDelay} from "../../../../utils/requests";
 
 const ReminderPicker = ({ setShowReminderPicker }) => {
     const dispatch = useDispatch();
@@ -19,13 +21,35 @@ const ReminderPicker = ({ setShowReminderPicker }) => {
     );
 
 
-    const onReminderChange = value => {
+    const [reminderDate, setReminderDate] = useState(selectedTask.reminder);
+
+    const sendRequestAsync = async (taskData) => {
+        await new Promise((resolve, reject) => {
+            try {
+                setTimeout(() => {
+                    dispatch(updateTaskAsync(taskData));
+                    resolve('success');
+                }, 2000)
+            }
+            catch (error) {
+                reject(error)
+            }
+        })
+    }
+
+
+    const onReminderChange = async value => {
+        setReminderDate(value.toDate().getTime());
+
         const taskData = {
             ...selectedTask,
-            reminder: new Date(value['$d']).getTime()
+            reminder: value.toDate().getTime(),
+            isRemindNotified: false
         };
 
-        dispatch(updateTaskAsync(taskData));
+        await sendRequestWithDelay(() => {
+            dispatch(updateTaskAsync(taskData));
+        }, 2000)
     }
 
     const deleteReminderHandler = () => {
@@ -33,6 +57,8 @@ const ReminderPicker = ({ setShowReminderPicker }) => {
             ...selectedTask,
             reminder: null
         };
+
+        delete taskData.isRemindNotified;
 
         dispatch(updateTaskAsync(taskData));
         setShowReminderPicker(false);
@@ -45,9 +71,13 @@ const ReminderPicker = ({ setShowReminderPicker }) => {
                 localeText={ruRU.components.MuiLocalizationProvider.defaultProps.localeText}
             >
                 <MobileDateTimePicker
-                    value={dayjs(new Date(selectedTask.reminder))}
-                    onChange={val => onReminderChange(val)}
+                    label={'Напоминание'}
+                    value={dayjs(reminderDate)}
+                    onChange={async val => await onReminderChange(val)}
                     sx = {{
+                        label: {
+                          color: 'var(--fontColor)'
+                        },
                         ".css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input": {
                             color: "var(--fontColor)",
                         },

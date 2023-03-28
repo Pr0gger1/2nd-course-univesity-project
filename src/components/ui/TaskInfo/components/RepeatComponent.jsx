@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateTaskAsync } from "../../../../store/reducers/TaskSlice";
 
 import { FormControl, InputLabel, MenuItem } from "@mui/material";
 import { TaskCategorySelect } from "../../customComponents/TaskCategorySelect";
 import CalendarMonthTwoToneIcon from "@mui/icons-material/CalendarMonthTwoTone";
-import dayjs from "dayjs";
 
 const repeatItems = [
     {
@@ -46,13 +45,6 @@ const RepeatComponent = () => {
                 }
                 dispatch(updateTaskAsync(taskData));
             }
-                // dispatch(updateTaskData({
-                //     taskData: {
-                //         ...selectedTask,
-                //         repeat: value,
-                //         deadline: dayjs(new Date(date.setDate(date.getDate() + 1)))
-                //     }
-                // }));
                 break;
             case 'every_week':
             {
@@ -63,35 +55,26 @@ const RepeatComponent = () => {
                 }
                 dispatch(updateTaskAsync(taskData));
             }
-                // dispatch(updateTaskData({
-                //     taskData: {
-                //         ...selectedTask,
-                //         repeat: value,
-                //         deadline: dayjs(new Date(date.setDate(date.getDate() + 7)))
-                //     }
-                // }));
                 break;
             case 'every_month':
             {
                 const taskData = {
-                        ...selectedTask,
-                        repeat: value,
-                        deadline: new Date(date.setMonth(date.getMonth() + 1))
+                    ...selectedTask,
+                    repeat: value,
+                    deadline: new Date(date.setMonth(date.getMonth() + 1))
                 }
                 dispatch(updateTaskAsync(taskData));
             }
-                // dispatch(updateTaskData({
-                //     taskData: {
-                //         ...selectedTask,
-                //         repeat: value,
-                //         deadline: dayjs(new Date(date.setMonth(date.getMonth() + 1)))
-                //     }
-                // }));
                 break;
             default:
                 break;
         }
     }
+
+    useEffect(() => {
+        if (!selectedTask.repeat)
+            setRepeat('');
+    }, [selectedTask.repeat])
 
     return (
         <FormControl fullWidth>

@@ -1,5 +1,6 @@
 import firebase from 'firebase/compat/app';
 import { getAuth } from 'firebase/auth';
+import { getMessaging } from 'firebase/messaging';
 import { initializeFirestore,
   CACHE_SIZE_UNLIMITED,
   enableIndexedDbPersistence } from "firebase/firestore";
@@ -28,3 +29,5 @@ export const db = initializeFirestore(app, {
 });
 
 enableIndexedDbPersistence(db)
+
+export const messaging = getMessaging(app);

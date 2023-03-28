@@ -18,23 +18,31 @@ const DeadlinePicker = ({ setShowDeadlinePicker }) => {
         state => state.taskStates.selectedTask
     );
 
-    const onDeadlineChange = value => {
+    const onDeadlineChange = async value => {
         const taskData = {
             ...selectedTask,
-            deadline: new Date(value['$d']).getTime()
+            deadline: value.toDate().getTime(),
+            isDeadlineNotified: false
         }
 
         if (selectedTask.repeat)
             taskData.repeat = null;
 
+
+
         dispatch(updateTaskAsync(taskData));
     }
 
     const deleteDeadlineHandler = () => {
-        const taskData = {
+        let taskData = {
             ...selectedTask,
             deadline: null
         };
+
+        delete taskData.isDeadlineNotified;
+
+        if (selectedTask.repeat)
+            taskData.repeat = null;
 
         dispatch(updateTaskAsync(taskData));
         setShowDeadlinePicker(false);
@@ -48,12 +56,15 @@ const DeadlinePicker = ({ setShowDeadlinePicker }) => {
                 localeText={ruRU.components.MuiLocalizationProvider.defaultProps.localeText}
             >
                 <MobileDateTimePicker
+                    label={'Дата выполнения'}
                     value={dayjs(selectedTask.deadline)}
-                    onChange={val => onDeadlineChange(val)}
+                    onChange={async val => await onDeadlineChange(val)}
                     sx = {{
+                        label: {
+                          color: 'var(--fontColor)'
+                        },
                         ".css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input": {
                             color: "var(--fontColor)",
-                            // border: "1px solid var(--fontColor)",
                         },
                         ".css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root": {
                             border: "1px solid var(--borderColor)"

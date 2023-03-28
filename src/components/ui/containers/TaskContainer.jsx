@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useTask } from '../../../hooks/useTask';
+import { useNotification } from "../../../hooks/useNotification";
 import { setCurrentGroupTasks } from '../../../store/reducers/TaskSlice';
 
 import { baseGroupIds } from '../../../store/defaultData/baseGroups';
@@ -15,11 +16,10 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import CircularProgress from '@mui/material/CircularProgress';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-import styles from './styles/TaskContainer.module.scss';
 import '../animations/Task/TaskAnimation.css';
+import styles from './styles/TaskContainer.module.scss';
 
 const NoTasksMessage = () => {
     return (
@@ -29,16 +29,6 @@ const NoTasksMessage = () => {
     );
 }
 
-function checkDeadlines(tasks) {
-    tasks.forEach((task) => {
-        if (task.deadline && new Date(task.deadline) < new Date()) {
-        const notification = new Notification('Task deadline exceeded!', {
-            body: `The deadline for task "${task.taskName}" has passed.`,
-        });
-        setTimeout(notification.close.bind(notification), 5000);
-        }
-    });
-}
 
 const TaskContainer = () => {
     const dispatch = useDispatch();
@@ -58,6 +48,8 @@ const TaskContainer = () => {
     const fetchStatus = useSelector(
         state => state.taskStates.status
     );
+
+    useNotification();
 
     // Конечный массив с отсортированными задачами
     const sortedTasks = useTask(currentGroupTasks, taskFilter);
@@ -85,17 +77,6 @@ const TaskContainer = () => {
         }
 
     }, [dispatch, selectedGroup, taskFilter.type, tasks]);
-
-    // useEffect(() => {
-        // const interval = setInterval(() => {
-        //     if ('Notification' in window && Notification.permission === 'granted') {
-        //       checkDeadlines(tasks);
-        //     }
-
-        // }, 5000);
-
-        // return () => clearInterval(interval);
-    //   }, [tasks]);
 
     return (
         <div className={styles.tasks__container}>

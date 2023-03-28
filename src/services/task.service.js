@@ -1,5 +1,4 @@
 import { db } from '../firebase.config';
-
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { generateUniqueId } from '../utils/generateUniqueId';
 

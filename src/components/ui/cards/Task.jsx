@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,8 +17,11 @@ import { repeatTaskData } from "../../../store/defaultData/repeatTaskData";
 
 import { themes } from "../../../store/reducers/ThemeSlice";
 import styles from './styles/Task.module.scss';
+import {SnackbarContext, snackbarTypes} from "../../../context/SnackbarContext";
 
 const Task = ({ taskDataProps }) => {
+    const { setMessage, setType, setOpen, setHideDuration } = useContext(SnackbarContext);
+
     const [isTaskSelected, setIsTaskSelected] = useState(false);
     const [isFavorite, setIsFavorite] = useState(taskDataProps.favorite);
     const [isTaskCompleted, setIsTaskCompleted] = useState(taskDataProps.completed);
@@ -93,6 +96,10 @@ const Task = ({ taskDataProps }) => {
             if (event.key === 'Delete') {
                 dispatch(deleteTaskAsync(taskDataProps.id));
                 dispatch(setRSidebarOpen());
+                setMessage('Задача удалена');
+                setType(snackbarTypes.success);
+                setHideDuration(2000)
+                setOpen(true);
             }
         }
 
