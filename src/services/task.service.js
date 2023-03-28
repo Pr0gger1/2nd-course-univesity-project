@@ -70,11 +70,12 @@ export class TaskService {
         // обходим readonly ограничение для subTasks
         const newSub = [...newTasks[parentTaskIndex].subTasks]
         newSub[subTaskIndex] = {...subTaskData}
-        const newCurrentTask = {...newTasks[parentTaskIndex], subTasks:newSub }
+        const newCurrentTask = {...newTasks[parentTaskIndex], subTasks: newSub}
         newTasks[parentTaskIndex] = {...newCurrentTask}
 
         return {
-            tasks: newTasks, selectedTask: newTasks[parentTaskIndex].subTasks[subTaskIndex]
+            tasks: newTasks,
+            selectedTask: newTasks[parentTaskIndex]
         };
     }
 

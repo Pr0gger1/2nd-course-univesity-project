@@ -5,15 +5,4 @@
   border-radius: 0.5rem;
   background-color: var(--bgColorFirst);
   transition: none;
-
-  .subtask {
-    display: flex;
-    align-items: center;
-
-
-    // растягивание поля ввода
-    div {
-      flex-grow: 1;
-    }
-  }
 }

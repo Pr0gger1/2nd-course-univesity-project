@@ -71,7 +71,7 @@ export const updateSubTaskAsync = createAsyncThunk(
             const userId = getState().authStates.userData.uid;
 
             const newTasks = TaskService.updateSubTask(tasks, taskId, subTaskId, subTaskData)
-            await TaskService.updateUserTasks(newTasks.tasks,userId)
+            await TaskService.updateUserTasks(newTasks.tasks, userId)
             return newTasks;
 
         }
@@ -116,41 +116,6 @@ const taskSlice = createSlice({
         setSelectedTask(state, action) {
             state.selectedTask = action.payload.taskData;
         },
-
-        deleteSubTask(state, action) {
-            const taskId = action.payload.taskId;
-            const subTaskId = action.payload.subTaskId;
-
-            const taskIndex = state.tasks.findIndex(
-                task => task.id === taskId
-            );
-
-            const filteredTasks = state.tasks[taskIndex].subTasks.filter(
-                    task => task.id !== subTaskId
-            );
-
-            state.tasks[taskIndex] = {
-                ...state.tasks[taskIndex],
-                subTasks: filteredTasks
-            };
-
-            state.selectedTask = state.tasks[taskIndex];
-        },
-
-        updateSubTaskData(state, action) {
-            const parentTaskId = action.payload.parentTaskId;
-            const subTaskId = action.payload.subTaskId;
-            const subTaskData = action.payload.subTaskData;
-
-            const parentTaskIndex = state.tasks
-                .findIndex(task => task.id === parentTaskId);
-
-            const subTaskIndex = state.tasks[parentTaskIndex].subTasks
-                .findIndex(subTask => subTask.id === subTaskId);
-
-            state.tasks[parentTaskIndex].subTasks[subTaskIndex] = subTaskData;
-            state.selectedTask.subTasks[subTaskIndex] = subTaskData;
-        }
     },
 
     extraReducers: (builder) => {
@@ -197,6 +162,7 @@ const taskSlice = createSlice({
 
             .addCase(updateSubTaskAsync.fulfilled, (state, action) => {
                 state.tasks = action.payload.tasks;
+                state.selectedTask = action.payload.selectedTask;
             })
 
             .addCase(updateSubTaskAsync.rejected, (state, action) => {
@@ -216,7 +182,6 @@ const taskSlice = createSlice({
                     }
                 }
                 catch (e) {console.log(e);}
-
             })
 
             .addCase(getUserTasks.rejected, (state, action) => {
@@ -227,9 +192,6 @@ const taskSlice = createSlice({
     }
 });
 
-export const {
-    setCurrentGroupTasks, setSelectedTask,
-    updateSubTaskData, deleteSubTask
-} = taskSlice.actions;
+export const { setCurrentGroupTasks, setSelectedTask } = taskSlice.actions;
 
 export default taskSlice.reducer;

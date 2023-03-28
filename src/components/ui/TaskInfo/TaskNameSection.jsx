@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { updateTaskAsync } from "../../../store/reducers/TaskSlice";
 
 import CheckboxInputField from "../input/CheckboxInputField";
 import SubTaskContainer from "../containers/SubTaskContainer";
@@ -13,7 +14,6 @@ import AddIcon from "@mui/icons-material/Add";
 
 import { CSSTransition } from "react-transition-group";
 import styles from "./styles/TaskNameSelection.module.scss";
-import { updateTaskAsync } from "../../../store/reducers/TaskSlice";
 
 export const TaskNameSection = () => {
     const dispatch = useDispatch();
@@ -58,14 +58,16 @@ export const TaskNameSection = () => {
     }
 
     const saveSubTaskHandler = () => {
+        const subTaskData = {
+            id: generateUniqueId('task', 12, true),
+            taskName: subTaskNameInput,
+            completed: false,
+            createdAt: new Date().getTime()
+        };
+
         const taskData = {
              ...selectedTask,
-            subTasks: selectedTask.subTasks.concat({
-                id: generateUniqueId('task', 12, true),
-                taskName: subTaskNameInput,
-                completed: false,
-                createdAt: new Date().getTime()
-            })
+            subTasks: selectedTask.subTasks.concat(subTaskData)
         };
 
         dispatch(updateTaskAsync(taskData));
@@ -103,17 +105,11 @@ export const TaskNameSection = () => {
                 />
             </div>
 
-            {
-                selectedTask.subTasks &&
-                selectedTask.subTasks.length !== 0 &&
-                    <SubTaskContainer/>
-            }
+            <SubTaskContainer/>
 
             <div className={styles.add_subtask__btn}>
-            
                 {showButton && (
-                    <Button
-                        onClick={() => setShowInput(true)}
+                    <Button onClick={() => setShowInput(true)}
                     >
                         <AddIcon
                             className={styles.add_subtask__icon}
@@ -122,7 +118,9 @@ export const TaskNameSection = () => {
                                 color: 'var(--addSubtaskIconColor)'
                             }}
                         />
-                        <span>Добавить подзадачу</span>
+                        <span>
+                            Добавить подзадачу
+                        </span>
                     </Button>
                 )}
 
@@ -136,6 +134,7 @@ export const TaskNameSection = () => {
                 >
                     <>
                         <CheckboxInputField
+                            checkboxDisabled
                             inputValue={subTaskNameInput}
                             onChangeInput={e => setSubTaskNameInput(e.target.value)}
                             onInputKeyDown={onSubTaskInputEnterPressed}

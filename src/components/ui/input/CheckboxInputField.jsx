@@ -8,12 +8,14 @@ const CheckboxInputField = ({
     placeholder, inputValue, onChangeInput,
     checked, onChangeCheckbox,
     onInputKeyDown, inputStyle,
+    checkboxDisabled = false
 }) => {
     return (
         <div className={styles.checkbox_input__container}>
             <Checkbox
                 checked={checked}
                 onChange={onChangeCheckbox}
+                disabled={checkboxDisabled}
                 sx={{
                     color: "var(--checkboxColor)",
                     '& .MuiSvgIcon-root': {
