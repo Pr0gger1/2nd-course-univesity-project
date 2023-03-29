@@ -1,10 +1,15 @@
 import { useMemo } from "react";
+import { useSelector } from "react-redux";
 import { themes } from "../store/reducers/ThemeSlice";
 
-const useToggleIconTheme = (lightIcon, darkIcon, theme) => {
+const useToggleIconTheme = (lightIcon, darkIcon) => {
+    const currentTheme = useSelector(
+        state => state.themeState.theme
+    );
+
     return useMemo(()=> {
-         if (theme === themes.light) return lightIcon;
+         if (currentTheme === themes.light) return lightIcon;
         else return darkIcon;
-    }, [darkIcon, lightIcon, theme]);
+    }, [darkIcon, lightIcon, currentTheme]);
 }
 export default useToggleIconTheme;

@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from "../../header/Header";
-import TaskGroupsContainer from "../../ui/containers/TaskGroupsContainer";
+import TaskGroupContainer from "../../ui/containers/TaskGroup/TaskGroupContainer";
 
 import styles from './styles/MobileHomePage.module.scss';
 
@@ -10,7 +10,7 @@ const MobileHomePage = () => {
              <Header/>
              
              <div className={styles.content__wrapper_mobile}>
-                <TaskGroupsContainer/>
+                <TaskGroupContainer/>
              </div>
         </main>
     );

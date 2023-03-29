@@ -1,39 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Popover } from '@mui/material'
 import { useSelector } from 'react-redux';
 
-const ContextMenu = ({children,anchorEl, setAnchorEl}) => {
+const ContextMenu = ({children, anchorEl, setAnchorEl}) => {
     const isMobile = useSelector(
         state => state.mobileStates.isMobile
     );
-        
-    // useEffect(() => {
-    //     const handleClickOutside = event => {
-    //         if (menuRef.current) {
-    //             const body = document.body;
-    //             const selectListDiv = document.getElementById('menu-');
-    //             const isTargetContains = menuRef.current.contains(event.target);
-    //             const isTargetList = selectListDiv && selectListDiv.contains(event.target);
-
-    //             if (event.target !== body && !isTargetContains && !isTargetList)
-    //                 setIsMenuOpened(false);
-    //         }
-    //     };
-
-    //     document.addEventListener('click', handleClickOutside);
-
-    //     return () => document.removeEventListener('click', handleClickOutside);
-    // }, [menuRef, setIsMenuOpened]);
 
     const closeMenuHandler = () => {
         setAnchorEl(null);
     }
 
     return (
-        // isMenuOpened &&
-        // <div className={styles.context__menu}>
-        //     { children }
-        // </div>
         <Popover
             sx={{
                 "& .MuiPaper-root": {

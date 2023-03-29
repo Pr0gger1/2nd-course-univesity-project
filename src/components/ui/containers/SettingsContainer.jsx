@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { logoutHandler } from '../../../../store/reducers/AuthSlice';
+import { logoutHandler } from '../../../store/reducers/AuthSlice';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import styles from './styles/SettingsContainer.module.scss';
 

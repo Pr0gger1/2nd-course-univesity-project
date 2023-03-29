@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useMediaQuery } from "react-responsive";
 
 
 import TaskContainer from '../ui/containers/TaskContainer';
-import ContentTopPanel from './parts/ContentTopPanel';
-import FilteredContent from './parts/FilteredContent';
+import ContentTopPanel from './components/ContentTopPanel';
+import FilteredContent from './components/FilteredContent';
 
 import styles from './styles/Content.module.scss';
 

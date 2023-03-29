@@ -4,7 +4,7 @@ import { setLSidebarOpen } from "../../store/reducers/SidebarSlice";
 
 import UserDataCard from "../ui/cards/UserDataCard";
 import SearchInput from "../ui/input/SearchInput";
-import TaskGroupsContainer from "../ui/containers/TaskGroupsContainer";
+import TaskGroupContainer from "../ui/containers/TaskGroup/TaskGroupContainer";
 
 import styles from "./styles/LeftSidebar.module.scss";
 
@@ -24,14 +24,12 @@ const LeftSidebar = () => {
             + `${!isLSidebarOpened ? ' ' + styles.closed : ''}`
             }
         >
-            <UserDataCard
-            />
-
+            <UserDataCard/>
             <SearchInput
                 onClick={searchClickHandler}
                 placeholder="Поиск..."
             />
-            <TaskGroupsContainer/>
+            <TaskGroupContainer/>
         </aside>
     );
 }

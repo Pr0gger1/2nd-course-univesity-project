@@ -36,17 +36,12 @@ const TaskGroupMenuList = () => {
     const taskFilter = useSelector(
         state => state.filterStates.taskFilter
     );
-    const currentTheme = useSelector(
-        state => state.themeState.theme
-    );
 
     const filterModeIconUp = useToggleIconTheme(
-        upArrowFilterLight, upArrowFilterDark,
-        currentTheme
+        upArrowFilterLight, upArrowFilterDark
     );
     const filterModeIconDown = useToggleIconTheme(
-        downArrowFilterLight, downArrowFilterDark,
-        currentTheme
+        downArrowFilterLight, downArrowFilterDark
     );
 
     const onFilterChange = event => {

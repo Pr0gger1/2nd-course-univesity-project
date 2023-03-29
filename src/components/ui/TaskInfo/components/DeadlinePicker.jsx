@@ -70,6 +70,8 @@ const DeadlinePicker = ({ setShowDeadlinePicker }) => {
                             border: "1px solid var(--borderColor)"
                         }
                     }}
+                    ampm={false}
+                    
                 />
             </LocalizationProvider>
             <DeleteButton

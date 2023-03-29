@@ -3,6 +3,9 @@
     flex-direction: row;
     justify-content: center;
     align-items: flex-end;
+    border-radius: 0.25rem;
+
+    background-color: var(--bgColorSecond);
 
     @media (max-width: 1180px) {
         bottom: 1rem;
@@ -15,14 +18,15 @@
         align-items: center;
         gap: 0.5rem;
 
-        border: 1px solid #676767;
-        border-radius: 5px;
+        border: 1px solid transparent;
+
+        color: #ffffff;
 
         @media (max-width: 1180px) {
             justify-content: center;
         }
 
-        padding: 10px;
+        padding: 0.625rem;
 
         width: 100%;
         max-width: 100%;
@@ -33,7 +37,7 @@
 
         cursor: pointer;
 
-        color: var(--fontColor);
+        //color: var(--fontColor);
         max-height: 40px;
 
         position: relative;

@@ -1,6 +1,6 @@
 import React from 'react';
 import Popover from '@mui/material/Popover';
-import SettingsContainer from './SettingsContainer';
+import SettingsContainer from '../../../ui/containers/SettingsContainer';
 
 
 const SettingsWindow = ({ anchor, setAnchor }) => {

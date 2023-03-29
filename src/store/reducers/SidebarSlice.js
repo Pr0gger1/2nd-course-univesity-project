@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const sidebarsSlice = createSlice({
     name: 'sidebarStates',
     initialState: {
-        isLeftSidebarOpen: true,
+        isLeftSidebarOpen: JSON.parse(localStorage.getItem('LSidebarOpened')) && true,
         isRightSidebarOpen: false,
     },
     reducers: {

@@ -12,10 +12,10 @@
     color: #fd5649;
   }
 
-  transition: background-color .5s ease;
+  transition: background-color .5s ease-in;
 
   &:hover {
       background-color: var(--bgButtonColorHover);
-      transition: background-color .5s ease;
+      transition: background-color .5s ease-out;
     }
 }

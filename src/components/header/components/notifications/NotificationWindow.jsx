@@ -1,9 +1,14 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import Popover from '@mui/material/Popover';
-import NotificationContainer from './NotificationContainer';
+import NotificationContainer from '../../../ui/containers/NotificationContainer';
 
 const NotificationWindow = ({ anchor, setAnchor }) => {
+    const isMobile = useSelector(
+        state => state.mobileStates.isMobile
+    );
+
     const handleClose = () => {
         setAnchor(null);
     };
@@ -16,7 +21,7 @@ const NotificationWindow = ({ anchor, setAnchor }) => {
                     color: "var(--fontColor)",
                     borderRadius: "8px",
                     padding: "1rem",
-                    width: "12rem",
+                    width: isMobile ? "90%" : "35%",
                 },
                 "& .MuiTypography-root": {
                     fontSize: "18px",

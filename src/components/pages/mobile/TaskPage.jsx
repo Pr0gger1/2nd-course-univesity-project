@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from "react-redux";
 
-import FilteredContent from "../../content/parts/FilteredContent";
-import ContentTopPanel from "../../content/parts/ContentTopPanel";
+import FilteredContent from "../../content/components/FilteredContent";
+import ContentTopPanel from "../../content/components/ContentTopPanel";
 import TaskContainer from "../../ui/containers/TaskContainer";
 import Header from "../../header/Header";
 

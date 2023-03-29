@@ -13,22 +13,23 @@ export const addTaskAsync = createAsyncThunk(
             await TaskService.updateUserTasks(newTasks, userId);
             return newTasks;
         }
-        catch (error) {
-            throw error;
-        }
+        catch (error) { throw error }
     }
 );
 
 export const deleteTaskAsync = createAsyncThunk(
     'task/delete',
     async (taskId, { getState }) => {
-        const tasks = getState().taskStates.tasks;
-        const userId = getState().authStates.userData.uid
-        
-        const newTasks = TaskService.deleteTask(tasks, taskId);
-        await TaskService.updateUserTasks(newTasks.tasks, userId);
+        try {
+            const tasks = getState().taskStates.tasks;
+            const userId = getState().authStates.userData.uid
 
-        return newTasks;
+            const newTasks = TaskService.deleteTask(tasks, taskId);
+            await TaskService.updateUserTasks(newTasks.tasks, userId);
+
+            return newTasks;
+        }
+        catch (error) { throw error }
     }
 );
 
@@ -44,22 +45,23 @@ export const deleteSubTaskAsync = createAsyncThunk(
 
             return newTasks;
         }
-        catch (error) {
-            throw error;
-        }
+        catch (error) { throw error }
     }
 );
 
 export const updateTaskAsync = createAsyncThunk(
     'task/update',
     async (taskData, { getState }) => {
-        const tasks = getState().taskStates.tasks;
-        const userId = getState().authStates.userData.uid;
-        
-        const newTasks = TaskService.updateTask(tasks, taskData);
-        await TaskService.updateUserTasks(newTasks.tasks, userId);
+        try {
+            const tasks = getState().taskStates.tasks;
+            const userId = getState().authStates.userData.uid;
 
-        return newTasks;
+            const newTasks = TaskService.updateTask(tasks, taskData);
+            await TaskService.updateUserTasks(newTasks.tasks, userId);
+
+            return newTasks;
+        }
+        catch (error) { throw error }
     }
 )
 
@@ -73,11 +75,8 @@ export const updateSubTaskAsync = createAsyncThunk(
             const newTasks = TaskService.updateSubTask(tasks, taskId, subTaskId, subTaskData)
             await TaskService.updateUserTasks(newTasks.tasks, userId)
             return newTasks;
-
         }
-        catch (error) {
-            throw error;
-        }
+        catch (error) { throw error }
     }
 );
 
@@ -87,9 +86,7 @@ export const getUserTasks = createAsyncThunk(
         try {
             return await TaskService.getUserTasks(userId);
         }
-        catch (error) {
-            throw error;
-        }
+        catch (error) { throw error }
     }
 )
 
@@ -170,18 +167,15 @@ const taskSlice = createSlice({
                 state.fetchError = action.error;
             })
 
-            .addCase(getUserTasks.pending, (state, action) => {
+            .addCase(getUserTasks.pending, state => {
                 state.status = 'loading';
             })
 
             .addCase(getUserTasks.fulfilled, (state, action) => {
-                try {
-                    if (action.payload && action.payload.taskData) {
-                        state.tasks = action.payload.taskData;
-                        state.status = 'success';
-                    }
+                if (action.payload && action.payload.taskData) {
+                    state.tasks = action.payload.taskData;
+                    state.status = 'success';
                 }
-                catch (e) {console.log(e);}
             })
 
             .addCase(getUserTasks.rejected, (state, action) => {

@@ -11,18 +11,16 @@ import ConfirmationButton from "./ConfirmationButton";
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { CustomTextField } from '../customComponents/CustomInputs';
 
-import styles from './styles/CreateListButton.module.scss';
 import '../animations/Button/createListBtnAnimation.css';
+import styles from './styles/CreateListButton.module.scss';
 
 const CreateListButton = () => {
     const [showInput, setShowInput] = useState(false);
     const [showButton, setShowButton] = useState(true);
-
     const [inputValue, setInputValue] = useState('');
 
-    const nodeRef = useRef(null);
-
     const dispatch = useDispatch();
+    const nodeRef = useRef(null);
 
     const isLSidebarOpened = useSelector(
         state => state.sidebarStates.isLeftSidebarOpen
@@ -36,7 +34,7 @@ const CreateListButton = () => {
         padding: '0.25rem'
         } : {}
 
-
+    
     useEffect(() => {
         if (!isLSidebarOpened) setShowInput(false);
     }, [isLSidebarOpened, showInput])
@@ -65,11 +63,14 @@ const CreateListButton = () => {
     }
 
   return (
-    <div className={styles.create__list}>
+    <div className={styles.create__list}
+        style={showInput ? {backgroundColor: 'transparent'} : {}}
+    >
         {showButton &&
-            <Button className={styles.create__list_input_btn}
-                    onClick={onCreateListBtnClick}
-                    style={adaptiveBtn}
+            <Button
+                className={styles.create__list_input_btn}
+                onClick={onCreateListBtnClick}
+                style={adaptiveBtn}
             >
                 <AddBoxIcon/>
                 <span style={adaptiveSpan}>
@@ -90,6 +91,7 @@ const CreateListButton = () => {
             <>
                 <CustomTextField
                     ref={nodeRef}
+                    className={styles.create__list_input}
                     sx={{width: '100%'}}
                     id="standard-basic"
                     label="Введите название списка"
@@ -102,7 +104,7 @@ const CreateListButton = () => {
                 />
 
                 <ConfirmationButton
-                    sx={{padding: 0.5}}
+                    sx={{padding: 1}}
                     variant={inputValue.length ? 'ok' : 'cancel'}
                     onClick={onClickCloseInput}
                 />

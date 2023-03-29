@@ -4,13 +4,13 @@ import styled from 'styled-components';
 export const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
       minWidth: 5,
-      right: 7,
-      top: 7,
+      right: 12,
+      top: 12,
       color: '#fff',
-      height: '10px',
-      width: '10px',
+      height: '0.75rem',
+      width: '0.75rem',
       backgroundColor: 'var(--notificationBgColor)',
-      fontSize: '0.5rem',
+      fontSize: '0.625rem',
       padding: '0',
     },
   }));

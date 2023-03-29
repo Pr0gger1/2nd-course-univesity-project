@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserTasks } from "./store/reducers/TaskSlice";
-import {setUser} from "./store/reducers/AuthSlice";
+import { setUser } from "./store/reducers/AuthSlice";
 import { auth } from "./firebase.config";
 import { onAuthStateChanged } from "firebase/auth";
 

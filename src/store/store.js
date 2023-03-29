@@ -8,6 +8,7 @@ import routeReducer from './reducers/RouteSlice';
 import filterReducer from './reducers/FilterSlice';
 import taskGroupReducer from './reducers/TaskGroupSlice';
 import taskReducer from './reducers/TaskSlice';
+import notificationReducer from './reducers/NotificationSlice';
 
 export default configureStore({
     reducer: {
@@ -21,7 +22,9 @@ export default configureStore({
         taskGroupStates: taskGroupReducer,
 
         filterStates: filterReducer,
-        taskStates: taskReducer
+        taskStates: taskReducer,
+
+        notificationState: notificationReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

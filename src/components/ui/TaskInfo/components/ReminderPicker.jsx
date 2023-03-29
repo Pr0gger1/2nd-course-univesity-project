@@ -4,6 +4,8 @@ import { updateTaskAsync } from "../../../../store/reducers/TaskSlice";
 
 import DeleteButton from "../../button/DeleteButton";
 
+import { sendRequestWithDelay } from "../../../../utils/requests";
+
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
@@ -11,8 +13,6 @@ import { ruRU } from '@mui/x-date-pickers';
 
 import dayjs from "dayjs";
 import styles from "../styles/TaskDatesSection.module.scss";
-import {rejects} from "assert";
-import {sendRequestWithDelay} from "../../../../utils/requests";
 
 const ReminderPicker = ({ setShowReminderPicker }) => {
     const dispatch = useDispatch();
@@ -22,21 +22,6 @@ const ReminderPicker = ({ setShowReminderPicker }) => {
 
 
     const [reminderDate, setReminderDate] = useState(selectedTask.reminder);
-
-    const sendRequestAsync = async (taskData) => {
-        await new Promise((resolve, reject) => {
-            try {
-                setTimeout(() => {
-                    dispatch(updateTaskAsync(taskData));
-                    resolve('success');
-                }, 2000)
-            }
-            catch (error) {
-                reject(error)
-            }
-        })
-    }
-
 
     const onReminderChange = async value => {
         setReminderDate(value.toDate().getTime());
@@ -85,6 +70,7 @@ const ReminderPicker = ({ setShowReminderPicker }) => {
                             border: "1px solid var(--borderColor)"
                         }
                     }}
+                    ampm={false}
                 />
              </LocalizationProvider>
 
