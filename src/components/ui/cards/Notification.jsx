@@ -1,8 +1,9 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import { deleteNotification } from '../../../store/reducers/NotificationSlice';
 
+import { updateTaskAsync } from "../../../store/reducers/TaskSlice";
 import Button from '@mui/material/Button';
 
 import styles from './styles/Notification.module.scss';
@@ -10,9 +11,15 @@ import styles from './styles/Notification.module.scss';
 
 const Notification = ({ data }) => {
     const dispatch = useDispatch();
+    let tasks = useSelector(
+        state => state.taskStates.tasks
+    );
 
     const onDoneClick = () => {
         dispatch(deleteNotification({id: data.id}));
+
+        let notifiedTask = tasks.find(task => task.id === data.taskId);
+        dispatch(updateTaskAsync({...notifiedTask, completed: !notifiedTask.completed}))
     }
 
     const onReadClick = () => {

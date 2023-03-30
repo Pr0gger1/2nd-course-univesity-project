@@ -90,9 +90,9 @@ const TaskGroupMenuList = () => {
                         <span onClick={toggleFilterModeHandler}>
                             {
                                 taskFilter.desc ?
-                                    <img src={filterModeIconUp} alt="сортировка" />
+                                    <img src={filterModeIconUp} alt="по возрастанию" />
                                     :
-                                    <img src={filterModeIconDown} alt="сортировка" />
+                                    <img src={filterModeIconDown} alt="по убыванию" />
                             }
                         </span>
                     </Tooltip>

@@ -6,18 +6,24 @@ import { FormControl, InputLabel, MenuItem } from "@mui/material";
 import { TaskCategorySelect } from "../../customComponents/TaskCategorySelect";
 import CalendarMonthTwoToneIcon from "@mui/icons-material/CalendarMonthTwoTone";
 
+export const repeatType = {
+    everyDay: 'daily',
+    everyWeek: 'weekly',
+    everyMonth: 'monthly'
+}
+
 const repeatItems = [
     {
         title: 'Каждый день',
-        value: 'every_day'
+        value: repeatType.everyDay
     },
     {
         title: 'Каждую неделю',
-        value: 'every_week'
+        value: repeatType.everyWeek
     },
     {
         title: 'Каждый месяц',
-        value: 'every_month'
+        value: repeatType.everyMonth
     }
 ];
 
@@ -36,7 +42,7 @@ const RepeatComponent = () => {
 
         setRepeat(value);
         switch (value) {
-            case 'every_day':
+            case repeatType.everyDay:
             {
                 const taskData = {
                         ...selectedTask,
@@ -46,7 +52,7 @@ const RepeatComponent = () => {
                 dispatch(updateTaskAsync(taskData));
             }
                 break;
-            case 'every_week':
+            case repeatType.everyWeek:
             {
                 const taskData =  {
                         ...selectedTask,
@@ -56,7 +62,7 @@ const RepeatComponent = () => {
                 dispatch(updateTaskAsync(taskData));
             }
                 break;
-            case 'every_month':
+            case repeatType.everyMonth:
             {
                 const taskData = {
                     ...selectedTask,

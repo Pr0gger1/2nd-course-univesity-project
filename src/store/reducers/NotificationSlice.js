@@ -18,6 +18,8 @@ const notificationSlice = createSlice({
             state.notifications = state.notifications.filter(
                 notice => notice.id !== notificationId
             );
+
+            localStorage.setItem('notifications', JSON.stringify(state.notifications))
         }
     }
 });

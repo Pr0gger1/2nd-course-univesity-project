@@ -5,6 +5,8 @@ import { initializeFirestore,
   CACHE_SIZE_UNLIMITED,
   enableIndexedDbPersistence } from "firebase/firestore";
 
+import { getToken, onMessage } from 'firebase/messaging';
+
 const apiKey = process.env.REACT_APP_API_KEY_FIREBASE;
 const authDomain = process.env.REACT_APP_AUTH_DOMAIN_FIREBASE;
 const databaseURL = process.env.REACT_APP_DATABASE_URL_FIREBASE;
@@ -13,6 +15,7 @@ const storageBucket = process.env.REACT_APP_STORAGE_BUCKET_FIREBASE;
 const messagingSenderId = process.env.REACT_APP_MESSAGING_SENDER_ID_FIREBASE;
 const appId = process.env.REACT_APP_APP_ID_FIREBASE;
 const measurementId = process.env.REACT_APP_MEASUREMENT_ID_FIREBASE;
+const vapidKey = process.env.REACT_APP_VAPID_KEY;
 
 const firebaseConfig = {
   apiKey, authDomain,
@@ -24,10 +27,29 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = firebase.initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const messaging = getMessaging(app);
 export const db = initializeFirestore(app, {
   cacheSizeBytes: CACHE_SIZE_UNLIMITED
 });
 
-enableIndexedDbPersistence(db)
+enableIndexedDbPersistence(db);
 
-export const messaging = getMessaging(app);
+export const getMessagingToken = (setMessagingToken) => {
+  return getToken(messaging, {vapidKey}).then(currentToken => {
+    if (currentToken) {
+      setMessagingToken(true);
+      console.log(currentToken)
+    }
+    else {
+      setMessagingToken(false);
+      console.log("No registration token");
+    }
+  })
+}
+
+export const onMessageListener = () =>
+    new Promise(resolve => {
+      onMessage(messaging,  payload => {
+        resolve(payload);
+      })
+    })

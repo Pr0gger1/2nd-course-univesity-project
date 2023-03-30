@@ -49,4 +49,23 @@ export class DateFormatter {
 
         return `${day} ${month} ${year}`;
     }
+
+    static setDate (options) {
+        if (options.date)
+        {
+            const { date, days, months } = options;
+            if (days && months) {
+                date.setDate(date.getDate() + days);
+                date.setMonth(date.getMonth() + months);
+            }
+            else if (days)
+                return date.setDate(date.getDate() + days);
+
+            else if (months)
+                return date.setMonth(date.getMonth() + months);
+
+            else return null;
+        }
+        return null;
+    }
 }

@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo } from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserTasks } from "./store/reducers/TaskSlice";
 import { setUser } from "./store/reducers/AuthSlice";
-import { auth } from "./firebase.config";
+import {auth, getMessagingToken, onMessageListener} from "./firebase.config";
 import { onAuthStateChanged } from "firebase/auth";
 
 import AppRouter from "./router/AppRouter";
@@ -10,12 +10,29 @@ import SnackbarProvider from "./providers/SnackbarProvider";
 
 
 function App() {
+    const dispatch = useDispatch();
     const userData = useSelector(state => state.authStates.userData) || localStorage.getItem('userData');
     const isAuth = !!userData;
 
-    const dispatch = useDispatch();
     const currentTheme = useSelector(state => state.themeState.theme);
 
+    const [messagingToken, setMessagingToken] = useState(false);
+    getMessagingToken(setMessagingToken);
+
+    useEffect(() => {
+        console.log(messagingToken)
+    }, [messagingToken]);
+
+    onMessageListener()
+        .then(payload => {
+            const options = {
+                title: payload.notification.title,
+                body: payload.notification.body
+            }
+            new Notification(options.title, {
+                body: options.body
+            }
+        )})
 
     // функция отслеживания изменения состояния авторизации
     useMemo(() => {
