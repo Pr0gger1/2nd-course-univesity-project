@@ -7,7 +7,7 @@ import { onAuthStateChanged } from "firebase/auth";
 
 import AppRouter from "./router/AppRouter";
 import SnackbarProvider from "./providers/SnackbarProvider";
-
+import {getCustomTaskGroups} from "./store/reducers/TaskGroupSlice";
 
 function App() {
     const dispatch = useDispatch();
@@ -19,9 +19,9 @@ function App() {
     const [messagingToken, setMessagingToken] = useState(false);
     getMessagingToken(setMessagingToken);
 
-    useEffect(() => {
-        console.log(messagingToken)
-    }, [messagingToken]);
+    // useEffect(() => {
+    //     console.log(messagingToken)
+    // }, [messagingToken]);
 
     onMessageListener()
         .then(payload => {
@@ -46,7 +46,8 @@ function App() {
     // подгрузка существующих задач
     useEffect(() => {
         if (isAuth) {
-            dispatch(getUserTasks(userData.uid))
+            dispatch(getUserTasks(userData.uid));
+            dispatch(getCustomTaskGroups(userData.uid));
         }
     }, [dispatch, isAuth, userData])
 

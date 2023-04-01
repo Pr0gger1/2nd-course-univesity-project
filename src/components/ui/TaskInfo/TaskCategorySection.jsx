@@ -19,7 +19,7 @@ const TaskCategorySection = () => {
     const isBaseTaskGroup = Object.values(baseGroupIds)
         .includes(selectedTask.groupId);
 
-    const taskGroupList = taskGroups.custom.length &&
+    const taskGroupList = taskGroups.custom && taskGroups.custom.length &&
     !isBaseTaskGroup ?
         taskGroups.custom :
         taskGroups.custom.concat(

@@ -1,12 +1,12 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { TaskService } from '../../services/task.service';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {TaskService} from '../../services/task.service';
 
 export const addTaskAsync = createAsyncThunk(
     'task/add',
     async (taskData, { getState }) => {
         try {
-            const tasks = getState().taskStates.tasks;
-            const userId = getState().authStates.userData.uid;
+            const { tasks } = getState().taskStates;
+            const { uid: userId } = getState().authStates.userData;
 
             const newTasks = TaskService.addTask(tasks, taskData);
 
@@ -37,8 +37,8 @@ export const deleteSubTaskAsync = createAsyncThunk(
     'subtask/delete',
     async ({taskId, subTaskId}, { getState }) => {
         try {
-            const tasks = getState().taskStates.tasks;
-            const userId = getState().authStates.userData.uid;
+            const { tasks } = getState().taskStates;
+            const { uid: userId } = getState().authStates.userData;
 
             const newTasks = TaskService.deleteSubTask(tasks, taskId, subTaskId);
             await TaskService.updateUserTasks(newTasks.tasks, userId);
@@ -53,8 +53,8 @@ export const updateTaskAsync = createAsyncThunk(
     'task/update',
     async (taskData, { getState }) => {
         try {
-            const tasks = getState().taskStates.tasks;
-            const userId = getState().authStates.userData.uid;
+            const { tasks } = getState().taskStates;
+            const { uid: userId } = getState().authStates.userData;
 
             const newTasks = TaskService.updateTask(tasks, taskData);
             await TaskService.updateUserTasks(newTasks.tasks, userId);
@@ -69,8 +69,8 @@ export const updateSubTaskAsync = createAsyncThunk(
     'subtask/update',
     async ({taskId, subTaskId, subTaskData}, { getState }) => {
         try {
-            let tasks = getState().taskStates.tasks;
-            const userId = getState().authStates.userData.uid;
+            let { tasks } = getState().taskStates;
+            const { uid: userId } = getState().authStates.userData;
 
             const newTasks = TaskService.updateSubTask(tasks, taskId, subTaskId, subTaskData)
             await TaskService.updateUserTasks(newTasks.tasks, userId)
@@ -118,12 +118,12 @@ const taskSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(addTaskAsync.fulfilled, (state, action) => {
-                console.log(action);
+                // console.log(action);
                 state.tasks = action.payload;
             })
 
             .addCase(addTaskAsync.rejected, (state, action) => {
-                console.log(action);
+                // console.log(action);
                 state.fetchError = action.error;
             })
 
@@ -143,7 +143,7 @@ const taskSlice = createSlice({
             })
 
             .addCase(deleteSubTaskAsync.rejected, (state, action) => {
-                console.log(action);
+                // console.log(action);
                 state.fetchError = action.error;
             })
 
@@ -153,7 +153,7 @@ const taskSlice = createSlice({
             })
 
             .addCase(updateTaskAsync.rejected, (state, action) => {
-                console.log(action);
+                // console.log(action);
                 state.fetchError = action.error;
             })
 
@@ -163,7 +163,7 @@ const taskSlice = createSlice({
             })
 
             .addCase(updateSubTaskAsync.rejected, (state, action) => {
-                console.log(action);
+                // console.log(action);
                 state.fetchError = action.error;
             })
 
@@ -179,7 +179,7 @@ const taskSlice = createSlice({
             })
 
             .addCase(getUserTasks.rejected, (state, action) => {
-                console.log(action)
+                // console.log(action)
                 state.fetchError = action.error;
                 state.status = 'failed';
             })

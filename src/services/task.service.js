@@ -1,12 +1,22 @@
 import { db } from '../firebase.config';
-import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import { generateUniqueId } from '../utils/generateUniqueId';
 
 export class TaskService {
     static async updateUserTasks(tasks, userId) {
-        await setDoc(doc(db, 'tasks', userId), {
+        await updateDoc(doc(db, 'tasks', userId), {
             taskData: tasks
         });
+    }
+
+    static async getUserTasks(userId) {
+        const taskDoc = doc(db, "tasks", userId);
+        const docSnap = await getDoc(taskDoc);
+
+        if (docSnap.exists()) {
+            return docSnap.data();
+        }
+        return {taskData: []};
     }
 
     static addTask(tasks, taskData) {
@@ -77,20 +87,5 @@ export class TaskService {
             tasks: newTasks,
             selectedTask: newTasks[parentTaskIndex]
         };
-    }
-
-    static async getUserTasks(userId) {
-        try {
-            const taskDoc = doc(db, "tasks", userId);
-            const docSnap = await getDoc(taskDoc);
-
-            if (docSnap.exists()) {
-                return docSnap.data();
-            }
-            else return [];
-        }
-        catch (error) {
-
-        }
     }
 }

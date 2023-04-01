@@ -14,10 +14,12 @@ export class AuthService {
             email: email,
             user_id: userId
         });
+
          const userTasks = await getDoc(doc(db, 'tasks', userId));
          if (!userTasks.exists())
             await setDoc(doc(db, 'tasks', userId), {
-                taskData: []
+                taskData: [],
+                taskGroups: []
             });
     }
     static async login(email, password) {

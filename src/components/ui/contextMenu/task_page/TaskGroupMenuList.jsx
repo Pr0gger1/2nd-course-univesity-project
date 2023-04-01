@@ -30,7 +30,7 @@ const TaskGroupMenuList = () => {
     const [showEditInput, setShowEditInput] = useState(false);
     const [editInputText, setEditInputText] = useState('');
 
-    const selectedGroup = useSelector(
+    const selectedTaskGroup = useSelector(
         state => state.taskGroupStates.selectedTaskGroup
     );
     const taskFilter = useSelector(
@@ -54,8 +54,10 @@ const TaskGroupMenuList = () => {
     const onEditGroupTitleClick = () => {
         if (showEditInput) {
             dispatch(renameCustomTaskGroupAsync({
-                groupId: selectedGroup.id,
-                newName: editInputText
+                ...selectedTaskGroup,
+                title: editInputText,
+                pageTitle: editInputText,
+                webTitle: `Productify - ${editInputText}`
             }));
             setShowEditInput(false);
         }
@@ -67,9 +69,7 @@ const TaskGroupMenuList = () => {
     }
 
     const deleteCustomTaskGroupHandler = () => {
-        dispatch(deleteCustomTaskGroupAsync({
-            groupId: selectedGroup.id
-        }));
+        dispatch(deleteCustomTaskGroupAsync(selectedTaskGroup.id));
     }
 
     const toggleFilterModeHandler = () => {
@@ -127,7 +127,7 @@ const TaskGroupMenuList = () => {
             </div>
 
             {
-                !baseGroupIds[selectedGroup.id] &&
+                !baseGroupIds[selectedTaskGroup.id] &&
                 <>
                     <div className={styles.menu__item}
                         onClick={() => setShowEditInput(true)}

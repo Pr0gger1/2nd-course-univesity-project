@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLSidebarOpen } from '../../../store/reducers/SidebarSlice';
-import { addCustomTaskGroup } from '../../../store/reducers/TaskGroupSlice';
+import { createCustomTaskGroup } from '../../../store/reducers/TaskGroupSlice';
 
 import { CSSTransition } from "react-transition-group";
 
@@ -42,7 +42,7 @@ const CreateListButton = () => {
     const handleInputSubmit = () => {
         setInputValue('');
         setShowInput(false);
-        dispatch(addCustomTaskGroup({groupName: inputValue}));
+        dispatch(createCustomTaskGroup(inputValue));
     }
 
     const onInputEnterPressed = event => {

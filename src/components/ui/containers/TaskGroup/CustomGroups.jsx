@@ -28,6 +28,7 @@ const CustomGroups = ({ taskGroups, onClick }) => {
             style={hideOverflow}
          >
             {
+            taskGroups &&
             taskGroups.map(group =>
                 <TaskGroup
                     key={group.id}
