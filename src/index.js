@@ -18,12 +18,20 @@ if (!currentTheme) localStorage.setItem('theme', themes.light);
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/firebase-messaging-sw.js')
-    .then(function(registration) {
-      console.log('Registration successful, scope is:', registration.scope);
-    }).catch(function(err) {
-      console.log('Service worker registration failed, error:', err);
-    });
+    try {
+      navigator.serviceWorker.register('/sw.js').then(() => {
+        console.log('sw.js loaded');
+      })
+      navigator.serviceWorker.register('/firebase-messaging-sw.js')
+      .then(function(registration) {
+        console.log('Registration successful, scope is:', registration.scope);
+      }).catch(function(err) {
+        console.log('Service worker registration failed, error:', err);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
   })
 }
 
