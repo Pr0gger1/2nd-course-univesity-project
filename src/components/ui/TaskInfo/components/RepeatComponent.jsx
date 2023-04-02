@@ -5,6 +5,7 @@ import { updateTaskAsync } from "../../../../store/reducers/TaskSlice";
 import { FormControl, InputLabel, MenuItem } from "@mui/material";
 import { TaskCategorySelect } from "../../customComponents/TaskCategorySelect";
 import CalendarMonthTwoToneIcon from "@mui/icons-material/CalendarMonthTwoTone";
+import {selectedTaskSelector} from "../../../../store";
 
 export const repeatType = {
     everyDay: 'daily',
@@ -29,15 +30,12 @@ const repeatItems = [
 
 const RepeatComponent = () => {
     const dispatch = useDispatch();
-    const selectedTask = useSelector(
-        state => state.taskStates.selectedTask
-    );
+    const selectedTask = useSelector(selectedTaskSelector);
 
     const [repeat, setRepeat] = useState(selectedTask.repeat || '');
 
     const onRepeatChange = event => {
         const value = event.target.value;
-
         const date = new Date();
 
         setRepeat(value);

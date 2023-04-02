@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { useTask } from '../../../hooks/useTask';
+import { useFilteredTasks } from '../../../hooks/useFilteredTasks';
+import useGroupTasks from "../../../hooks/useGroupTasks";
 import { useNotification } from "../../../hooks/useNotification";
 import { setCurrentGroupTasks } from '../../../store/reducers/TaskSlice';
 
@@ -17,6 +18,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import * as selectors from "../../../store";
 
 import '../animations/Task/TaskAnimation.css';
 import styles from './styles/TaskContainer.module.scss';
@@ -29,66 +31,69 @@ const NoTasksMessage = () => {
     );
 }
 
-
 const TaskContainer = () => {
     const dispatch = useDispatch();
 
-    const tasks = useSelector(
-        state => state.taskStates.tasks
-    );
-    const currentGroupTasks = useSelector(
-        state => state.taskStates.currentGroupTasks
-    );
-    const taskFilter = useSelector(
-        state => state.filterStates.taskFilter
-    );
-    const selectedGroup = useSelector(
-        state => state.taskGroupStates.selectedTaskGroup
-    );
-    const fetchStatus = useSelector(
-        state => state.taskStates.status
+    const tasks = useSelector(selectors.tasksSelector);
+    const filter = useSelector(selectors.filterSelector);
+
+    const currentGroupTasks = useSelector(selectors.currentGroupTasksSelector);
+    const selectedTaskGroup = useSelector(selectors.selectedTaskGroupSelector);
+
+    // функция, которая фильтрует массив задач в соответствии с выбранной группой
+    const setCurrentTasks = useGroupTasks(tasks, selectedTaskGroup);
+
+    // Конечный массив с отсортированными задачами
+    const sortedTasks = useFilteredTasks(currentGroupTasks, filter.taskFilter);
+    const completedTasks = sortedTasks.filter(task => task.completed);
+
+    const taskLoading = useSelector(
+        state => state.taskStates.loading
     );
 
     useNotification();
-
-    // Конечный массив с отсортированными задачами
-    const sortedTasks = useTask(currentGroupTasks, taskFilter);
-    const completedTasks = sortedTasks.filter(task => task.completed);
-
     useEffect(() => {
-        if (tasks) {
-            let currentTasks = [...tasks].filter(
-                task => task.groupId === selectedGroup.id
-            );
-
-            if (selectedGroup.id === baseGroupIds.all)
-                currentTasks = tasks;
-
-            if (selectedGroup.id === baseGroupIds.plan)
-                currentTasks = tasks.filter(task => task.deadline);
-
-            if (selectedGroup.id === baseGroupIds.favorite)
-                currentTasks = tasks.filter(task => task.favorite);
-
-            if (selectedGroup.id === baseGroupIds.completed)
-                currentTasks = tasks.filter(task => task.completed);
-
-            dispatch(setCurrentGroupTasks({tasks: currentTasks}));
-        }
-
-    }, [dispatch, selectedGroup, taskFilter.type, tasks]);
+        dispatch(setCurrentGroupTasks({tasks: setCurrentTasks()}));
+    }, [dispatch, selectedTaskGroup, setCurrentTasks, tasks]);
 
     return (
         <div className={styles.tasks__container}>
             {
-                selectedGroup.id !== baseGroupIds.completed &&
+                selectedTaskGroup.id !== baseGroupIds.completed &&
                 <CreateTaskButton/>
             }
             {
-                fetchStatus === 'loading' ?
+                taskLoading ?
                     <CircularProgress sx={{margin: '0 auto'}}/>
                 :
                 <>
+                {
+                    completedTasks.length !== 0 &&
+                    <Accordion sx={{
+                            backgroundColor: 'var(--bgColorFirst)',
+                            color: 'var(--fontColor)',
+                        }}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon sx={{color: 'var(--fontColor)'}}/>}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography>
+                                Завершенные
+                            </Typography>
+                        </AccordionSummary>
+                        {
+                            completedTasks.map((task) =>
+                                <AccordionDetails key={task.id}>
+                                    <Task
+                                        key={task.id}
+                                        taskDataProps={task}
+                                    />
+                                </AccordionDetails>
+                                )
+                        }
+                    </Accordion>
+                }
                 {
                     !sortedTasks.length &&
                     <NoTasksMessage/>
@@ -119,34 +124,6 @@ const TaskContainer = () => {
                         ))
                     }
                 </TransitionGroup>
-
-                {
-                    completedTasks.length !== 0 &&
-                    <Accordion sx={{
-                            backgroundColor: 'var(--bgColorFirst)',
-                            color: 'var(--fontColor)',
-                        }}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon sx={{color: 'var(--fontColor)'}}/>}
-                            aria-controls="panel1a-content"
-                            id="panel1a-header"
-                        >
-                            <Typography>
-                                Завершенные
-                            </Typography>
-                        </AccordionSummary>
-                        {
-                            completedTasks.map((task) =>
-                                <AccordionDetails key={task.id}>
-                                    <Task
-                                        key={task.id}
-                                        taskDataProps={task}
-                                    />
-                                </AccordionDetails>
-                                )
-                        }
-                    </Accordion>
-                }
                 </>
             }
         </div>

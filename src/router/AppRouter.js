@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { useMediaQuery } from "react-responsive";
 import { Navigate, useRoutes } from 'react-router-dom';
 
+import { mobileSelector } from "../store";
+
 import AuthPage from '../components/pages/AuthPage';
 import ErrorPage from '../components/pages/ErrorPage';
 import HomePage from '../components/pages/HomePage';
@@ -14,9 +16,7 @@ import TaskInfoPage from "../components/pages/mobile/TaskInfoPage";
 
 const AppRouter = ({ isAuth = false }) => {
     const mobileScreen =  useMediaQuery({maxWidth: 768});
-    const isMobile = useSelector(
-        state => state.mobileStates.isMobile
-    ) || mobileScreen;
+    const isMobile = useSelector(mobileSelector) || mobileScreen;
 
     const UnauthorizedRoutes = [
         { path: "/login", element: <AuthPage/> },

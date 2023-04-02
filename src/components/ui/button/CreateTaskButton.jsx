@@ -9,6 +9,8 @@ import ConfirmationButton from "./ConfirmationButton";
 import { baseGroupIds } from '../../../store/defaultData/baseGroups';
 import { CSSTransition } from 'react-transition-group';
 
+import * as selectors from '../../../store';
+
 import styles from './styles/CreateTaskButton.module.scss';
 import '../animations/Button/createTaskBtnAnimation.css';
 import '../animations/Input/InputAnimation.css';
@@ -19,13 +21,8 @@ const CreateTaskButton = () => {
     const [taskName, setTaskName] = useState('');
 
     const dispatch = useDispatch();
-    const selectedGroup = useSelector(
-        state => state.taskGroupStates.selectedTaskGroup
-    );
-
-    const userCreds = useSelector(
-        state => state.authStates.userData
-    );
+    const selectedTaskGroup = useSelector(selectors.selectedTaskGroupSelector);
+    const userData = useSelector(selectors.userDataSelector);
 
     const addTaskHandler = () => {
         let taskData = {
@@ -35,15 +32,15 @@ const CreateTaskButton = () => {
             createdAt: new Date().getTime(),
             subTasks: [],
             notes: '',
-            groupId: selectedGroup.id,
-            userId: userCreds.uid,
-            category: selectedGroup.title,
+            groupId: selectedTaskGroup.id,
+            userId: userData.uid,
+            category: selectedTaskGroup.title,
             deadline: null,
             reminder: null,
             repeat: null
             };
 
-        if (selectedGroup.id === baseGroupIds.favorite)
+        if (selectedTaskGroup.id === baseGroupIds.favorite)
             taskData.favorite = true;
 
         dispatch(addTaskAsync(taskData));

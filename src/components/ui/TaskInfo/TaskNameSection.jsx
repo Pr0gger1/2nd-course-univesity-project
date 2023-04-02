@@ -11,15 +11,14 @@ import StarButton from "../button/StarButton";
 import { generateUniqueId } from "../../../utils/generateUniqueId";
 
 import AddIcon from "@mui/icons-material/Add";
+import { selectedTaskSelector } from "../../../store";
 
 import { CSSTransition } from "react-transition-group";
 import styles from "./styles/TaskNameSelection.module.scss";
 
 export const TaskNameSection = () => {
     const dispatch = useDispatch();
-    const selectedTask = useSelector(
-        state => state.taskStates.selectedTask
-    );
+    const selectedTask = useSelector(selectedTaskSelector);
 
     const [taskName, setTaskName] = useState(selectedTask.taskName || '')
 

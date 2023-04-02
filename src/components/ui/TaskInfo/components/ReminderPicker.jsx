@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateTaskAsync } from "../../../../store/reducers/TaskSlice";
 
@@ -11,15 +11,13 @@ import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import { ruRU } from '@mui/x-date-pickers';
 
+import { selectedTaskSelector } from "../../../../store";
 import dayjs from "dayjs";
 import styles from "../styles/TaskDatesSection.module.scss";
 
 const ReminderPicker = ({ setShowReminderPicker }) => {
     const dispatch = useDispatch();
-    const selectedTask = useSelector(
-        state => state.taskStates.selectedTask
-    );
-
+    const selectedTask = useSelector(selectedTaskSelector);
 
     const [reminderDate, setReminderDate] = useState(selectedTask.reminder);
 

@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Notification from '../cards/Notification';
 import { CSSTransition } from 'react-transition-group';
 import styles from './styles/NotificationContainer.module.scss';
 import { TransitionGroup } from 'react-transition-group';
 import '../animations/Notifications/notificationAnimation.css';
+import {notificationSelector} from "../../../store";
 
 const NotificationContainer = () => {
-    const dispatch = useDispatch();
-    const notifications = useSelector(
-        state => state.notificationState.notifications
-    );
-
+    const notifications = useSelector(notificationSelector);
     const [show, setShow] = useState(true);
 
     return (

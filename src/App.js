@@ -1,27 +1,30 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserTasks } from "./store/reducers/TaskSlice";
 import { setUser } from "./store/reducers/AuthSlice";
-import {auth, getMessagingToken, onMessageListener} from "./firebase.config";
+import { auth, getMessagingToken, onMessageListener } from "./firebase.config";
 import { onAuthStateChanged } from "firebase/auth";
 
 import AppRouter from "./router/AppRouter";
 import SnackbarProvider from "./providers/SnackbarProvider";
-import {getCustomTaskGroups} from "./store/reducers/TaskGroupSlice";
+import { getCustomTaskGroups } from "./store/reducers/TaskGroupSlice";
 
+import { userDataSelector, themeSelector } from "./store";
 function App() {
     const dispatch = useDispatch();
-    const userData = useSelector(state => state.authStates.userData) || localStorage.getItem('userData');
+    const userData = useSelector(userDataSelector)
+        || localStorage.getItem('userData');
+
+    const currentTheme = useSelector(themeSelector);
     const isAuth = !!userData;
 
-    const currentTheme = useSelector(state => state.themeState.theme);
 
     const [messagingToken, setMessagingToken] = useState(false);
     getMessagingToken(setMessagingToken);
 
-    // useEffect(() => {
-    //     console.log(messagingToken)
-    // }, [messagingToken]);
+    useEffect(() => {
+        console.log(messagingToken)
+    }, [messagingToken]);
 
     onMessageListener()
         .then(payload => {

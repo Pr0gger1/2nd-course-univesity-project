@@ -5,6 +5,8 @@ import { deleteSubTaskAsync, updateSubTaskAsync } from "../../../store/reducers/
 import CheckboxInputField from "../input/CheckboxInputField";
 import DeleteButton from "../button/DeleteButton";
 
+import { selectedTaskSelector } from "../../../store";
+
 import styles from "./styles/SubTask.module.scss";
 
 const SubTask = ({ subTaskData }) => {
@@ -17,9 +19,7 @@ const SubTask = ({ subTaskData }) => {
         subTaskData.completed
     );
 
-    const selectedTask = useSelector(
-        state => state.taskStates.selectedTask
-    );
+    const selectedTask = useSelector(selectedTaskSelector);
 
     const onTaskNameChange = event => {
         const newSubTaskData = {

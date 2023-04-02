@@ -9,18 +9,15 @@ import TaskCategorySection from "../../ui/TaskInfo/TaskCategorySection";
 import BackButton from "../../ui/button/BackButton";
 import Header from '../../header/Header';
 
+import * as selectors from '../../../store';
+
 import styles from './styles/TaskInfoPage.module.scss';
 
 
 const TaskInfoPage = () => {
     const navigate = useNavigate();
-
-    const selectedTask = useSelector(
-        state => state.taskStates.selectedTask
-    );
-    const selectedTaskGroup = useSelector(
-        state => state.taskGroupStates.selectedTaskGroup
-    );
+    const selectedTask = useSelector(selectors.selectedTaskSelector);
+    const selectedTaskGroup = useSelector(selectors.selectedTaskGroupSelector);
 
     useEffect(() => {
         if (!Object.keys(selectedTask).length)

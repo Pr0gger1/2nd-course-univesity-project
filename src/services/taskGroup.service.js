@@ -6,15 +6,13 @@ import { initialGroup } from "../store/defaultData/baseGroups";
 import customGroupDefaultIcon from "../assets/img/icons/default/custom_group_task_icon.svg";
 
 
-export class CustomTaskGroupService {
+export class TaskGroupService {
     static async getTaskGroups(userId) {
         const groupDoc = doc(db, 'tasks', userId);
         const groupData = await getDoc(groupDoc);
 
-        if (groupData.exists()) {
-            // console.log(groupData.data());
+        if (groupData.exists())
             return groupData.data();
-        }
         return {taskGroups: []};
     }
 

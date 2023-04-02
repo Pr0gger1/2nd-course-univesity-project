@@ -3,11 +3,10 @@ import { useSelector } from 'react-redux';
 
 import Popover from '@mui/material/Popover';
 import NotificationContainer from '../../../ui/containers/NotificationContainer';
+import { mobileSelector } from "../../../../store";
 
 const NotificationWindow = ({ anchor, setAnchor }) => {
-    const isMobile = useSelector(
-        state => state.mobileStates.isMobile
-    );
+    const isMobile = useSelector(mobileSelector);
 
     const handleClose = () => {
         setAnchor(null);

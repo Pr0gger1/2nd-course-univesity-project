@@ -18,6 +18,13 @@ import { repeatTaskData } from "../../../store/defaultData/repeatTaskData";
 import { themes } from "../../../store/reducers/ThemeSlice";
 import styles from './styles/Task.module.scss';
 import {SnackbarContext, snackbarTypes} from "../../../context/SnackbarContext";
+import {
+    mobileSelector,
+    rightSidebarSelector,
+    selectedTaskGroupSelector,
+    selectedTaskSelector,
+    themeSelector
+} from "../../../store";
 
 const Task = ({ taskDataProps }) => {
     const { setMessage, setType, setOpen, setHideDuration } = useContext(SnackbarContext);
@@ -29,20 +36,12 @@ const Task = ({ taskDataProps }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const currentTheme = useSelector(state => state.themeState.theme);
-    const isMobile = useSelector(
-        state => state.mobileStates.isMobile
-    );
+    const currentTheme = useSelector(themeSelector);
+    const isMobile = useSelector(mobileSelector);
 
-    const isRSidebarOpened = useSelector(
-        state => state.sidebarStates.isRightSidebarOpen
-    );
-    const selectedGroup = useSelector(
-        state => state.taskGroupStates.selectedTaskGroup
-    );
-    const selectedTask = useSelector(
-        state => state.taskStates.selectedTask
-    );
+    const isRSidebarOpen = useSelector(rightSidebarSelector);
+    const selectedGroup = useSelector(selectedTaskGroupSelector);
+    const selectedTask = useSelector(selectedTaskSelector);
 
     const taskStyle = {
         textDecoration: taskDataProps.completed ? 'line-through' : 'none',
@@ -59,7 +58,7 @@ const Task = ({ taskDataProps }) => {
             dispatch(setSelectedTask({taskData: taskDataProps}));
 
             // если сайдбар был закрыт, то открываем его
-            if (!isRSidebarOpened) dispatch(setRSidebarOpen());
+            if (!isRSidebarOpen) dispatch(setRSidebarOpen());
         }
         else {
             dispatch(setRSidebarOpen());

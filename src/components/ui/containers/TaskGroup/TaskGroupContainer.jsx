@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { setSelectedGroup } from "../../../../store/reducers/TaskGroupSlice";
-import { setCurrentRoute } from "../../../../store/reducers/RouteSlice";
+import { taskGroupsSelector } from "../../../../store";
 
 import CreateListButton from "../../button/CreateListButton";
 import BaseGroups from "./BaseGroups";
@@ -15,14 +15,10 @@ const TaskGroupContainer = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const taskGroups = useSelector(
-        state => state.taskGroupStates.allTaskGroups
-    );
+    const taskGroups = useSelector(taskGroupsSelector);
 
     const clickHandler = (group) => {
         dispatch(setSelectedGroup({ group }));
-
-        dispatch(setCurrentRoute(`/tasks/${group.id}`));
         navigate(`/tasks/${group.id}`);
     }
 

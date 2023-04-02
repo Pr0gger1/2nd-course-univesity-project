@@ -1,11 +1,11 @@
 import React from 'react';
-import { Popover } from '@mui/material'
 import { useSelector } from 'react-redux';
 
+import { Popover } from '@mui/material'
+import { mobileSelector } from "../../../store";
+
 const ContextMenu = ({children, anchorEl, setAnchorEl}) => {
-    const isMobile = useSelector(
-        state => state.mobileStates.isMobile
-    );
+    const isMobile = useSelector(mobileSelector);
 
     const closeMenuHandler = () => {
         setAnchorEl(null);

@@ -4,13 +4,12 @@ import { useSelector } from "react-redux";
 import DeadlinePicker from "./components/DeadlinePicker";
 import ReminderPicker from "./components/ReminderPicker";
 import RepeatComponent from "./components/RepeatComponent";
+import { selectedTaskSelector } from "../../../store";
 
 import styles from "./styles/TaskDatesSection.module.scss";
 
 const TaskDatesSection = () => {
-    const selectedTask = useSelector(
-        state => state.taskStates.selectedTask
-    );
+    const selectedTask = useSelector(selectedTaskSelector);
 
     const [showDeadlinePicker,
         setShowDeadlinePicker] = useState(false);

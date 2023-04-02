@@ -8,16 +8,14 @@ import Content from "../content/Content";
 import RightSidebar from "../sidebars/RightSidebar";
 import MobileHomePage from "./mobile/MobileHomePage";
 import styles from './styles/HomePage.module.scss';
+import {mobileSelector} from "../../store";
 
 const HomePage = () => {
     const mobileScreen = useMediaQuery({maxWidth: 768});
-    const isMobile = useSelector(
-        state => state.mobileStates.isMobile
-    ) || mobileScreen;
+    const isMobile = useSelector(mobileSelector) || mobileScreen;
 
     if (isMobile)
         return <MobileHomePage/>
-
 
     return (
         <main className={styles.main__container}>

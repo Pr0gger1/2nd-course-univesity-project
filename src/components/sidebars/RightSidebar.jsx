@@ -10,20 +10,17 @@ import TaskCategorySection from "../ui/TaskInfo/TaskCategorySection";
 import TaskNotesSection from "../ui/TaskInfo/TaskNotesSection";
 import TaskDatesSection from "../ui/TaskInfo/TaskDatesSection";
 
-import '../ui/animations/Button/createListBtnAnimation.css'
+import * as selectors from '../../store';
 
+import '../ui/animations/Button/createListBtnAnimation.css'
 import styles from './styles/RightSidebar.module.scss';
 
 const RightSidebar = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const isRSidebarOpened = useSelector(
-        state => state.sidebarStates.isRightSidebarOpen
-    );
-    const selectedTaskGroup = useSelector(
-        state => state.taskGroupStates.selectedTaskGroup
-    );
+    const isRSidebarOpened = useSelector(selectors.rightSidebarSelector);
+    const selectedTaskGroup = useSelector(selectors.selectedTaskGroupSelector);
 
     const sidebarStyles = `${styles.sidebar__right}${!isRSidebarOpened ? ' ' + styles['closed'] : ''}`;
 

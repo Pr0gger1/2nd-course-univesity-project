@@ -1,4 +1,4 @@
-import {useMemo} from "react";
+import { useMemo } from "react";
 
 function sortTasks(a, b, desc = true) {
     if (!desc) {
@@ -12,7 +12,7 @@ function sortTasks(a, b, desc = true) {
     return 0;
 }
 
-export const useTask = (groupTasks, filter) => {
+export const useFilteredTasks = (groupTasks, filter) => {
     return useMemo(() => {
         if (filter.type === 'alphabet')
             return [...groupTasks].sort(

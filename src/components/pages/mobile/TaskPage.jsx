@@ -6,18 +6,19 @@ import ContentTopPanel from "../../content/components/ContentTopPanel";
 import TaskContainer from "../../ui/containers/TaskContainer";
 import Header from "../../header/Header";
 
+import { filterSelector } from "../../../store";
+
 import styles from "./styles/TaskPage.module.scss";
+
 const TaskPage = () => {
-    const filter = useSelector(
-        state => state.filterStates.searchFilter
-    );
+    const searchFilter = useSelector(filterSelector).searchFilter;
 
     return (
         <main className={styles.main__container}>
             <Header/>
             <div className={styles.content}>
                 {
-                    filter.length
+                    searchFilter.length
                     ? <FilteredContent/>
                     :
                     <>

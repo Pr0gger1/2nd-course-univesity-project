@@ -5,15 +5,13 @@ import { deleteNotification } from '../../../store/reducers/NotificationSlice';
 
 import { updateTaskAsync } from "../../../store/reducers/TaskSlice";
 import Button from '@mui/material/Button';
+import { tasksSelector } from "../../../store";
 
 import styles from './styles/Notification.module.scss';
 
-
 const Notification = ({ data }) => {
     const dispatch = useDispatch();
-    let tasks = useSelector(
-        state => state.taskStates.tasks
-    );
+    const tasks = useSelector(tasksSelector);
 
     const onDoneClick = () => {
         dispatch(deleteNotification({id: data.id}));
@@ -26,7 +24,7 @@ const Notification = ({ data }) => {
         dispatch(deleteNotification({id: data.id}));
     }
 
-    const borderLeft = data.type === 'reminder' ? 'blue' : '#f9266c';
+    const borderLeft = data.type === 'reminder' ? '#3354FF' : '#f9266c';
 
     return (
         <div className={styles.notification}

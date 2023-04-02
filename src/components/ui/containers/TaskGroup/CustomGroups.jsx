@@ -2,22 +2,21 @@ import React from 'react';
 import { useMediaQuery } from "react-responsive";
 import { useSelector } from "react-redux";
 
+import Skeleton from "@mui/material/Skeleton";
 import TaskGroup from "../../cards/TaskGroup";
+
+import * as selectors from '../../../../store';
+
 import styles from "../styles/TaskGroupContainer.module.scss";
 
 const CustomGroups = ({ taskGroups, onClick }) => {
     const mobileScreen =  useMediaQuery({maxWidth: 768});
-    const isMobile = useSelector(
-        state => state.mobileStates.isMobile
-    ) || mobileScreen;
+    const isMobile = useSelector(selectors.mobileSelector) || mobileScreen;
 
-    const selectedTaskGroup = useSelector(
-        state => state.taskGroupStates.selectedTaskGroup
-    );
+    const selectedTaskGroup = useSelector(selectors.selectedTaskGroupSelector);
+    const isLSidebarOpened = useSelector(selectors.leftSidebarSelector);
 
-    const isLSidebarOpened = useSelector(
-    state => state.sidebarStates.isLeftSidebarOpen
-    );
+    const taskGroupLoading = useSelector(state => state.taskGroupStates.loading);
 
     const hideOverflow = !isLSidebarOpened ? {
     overflow: 'hidden'
@@ -28,7 +27,12 @@ const CustomGroups = ({ taskGroups, onClick }) => {
             style={hideOverflow}
          >
             {
-            taskGroups &&
+            taskGroupLoading ?
+                <>
+                    <Skeleton animation='wave' width={"100%"}/>
+                    <Skeleton animation='wave' width={"100%"}/>
+                </>
+            :
             taskGroups.map(group =>
                 <TaskGroup
                     key={group.id}

@@ -1,5 +1,5 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {TaskService} from '../../services/task.service';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { TaskService } from '../../services/task.service';
 
 export const addTaskAsync = createAsyncThunk(
     'task/add',
@@ -102,7 +102,7 @@ const taskSlice = createSlice({
         // массив задач активной группы
         currentGroupTasks: [],
 
-        status: undefined,
+        loading: false,
         fetchError: null
     },
     reducers: {
@@ -168,20 +168,18 @@ const taskSlice = createSlice({
             })
 
             .addCase(getUserTasks.pending, state => {
-                state.status = 'loading';
+                state.loading = true;
             })
 
             .addCase(getUserTasks.fulfilled, (state, action) => {
                 if (action.payload && action.payload.taskData) {
                     state.tasks = action.payload.taskData;
-                    state.status = 'success';
+                    state.loading = false;
                 }
             })
 
             .addCase(getUserTasks.rejected, (state, action) => {
-                // console.log(action)
                 state.fetchError = action.error;
-                state.status = 'failed';
             })
     }
 });

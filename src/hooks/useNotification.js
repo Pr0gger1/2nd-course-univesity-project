@@ -6,6 +6,7 @@ import { updateTaskAsync } from "../store/reducers/TaskSlice";
 import { useEffect } from "react";
 import { updateNotifications } from "../store/reducers/NotificationSlice";
 import { generateUniqueId } from "../utils/generateUniqueId";
+import {tasksSelector} from "../store";
 
 const reminderObserver = async (tasks, dispatch) => {
     tasks.forEach((task) => {
@@ -89,9 +90,7 @@ const deadlineObserver = async (tasks, dispatch) => {
 
 export const useNotification = () => {
     const dispatch = useDispatch();
-    const tasks = useSelector(
-        state => state.taskStates.tasks
-    );
+    const tasks = useSelector(tasksSelector);
 
     useEffect(() => {
         const observeTasks = setInterval( async () => {

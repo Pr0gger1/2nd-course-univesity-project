@@ -21,24 +21,20 @@ import settingsIconDark from "../../assets/img/icons/settings_dark.svg";
 import settingsIconLight from "../../assets/img/icons/settings_light.svg";
 
 import styles from "./styles/Header.module.scss";
+import {mobileSelector, notificationSelector} from "../../store";
 
 
 const Header = () => {
-    const dispatch = useDispatch();
+    const mobileScreen =  useMediaQuery({maxWidth: 768});
 
-    const notifications = useSelector(
-        state => state.notificationState.notifications
-    );
+    const dispatch = useDispatch();
+    const notifications = useSelector(notificationSelector);
+    const isMobile = useSelector(mobileSelector) || mobileScreen;
 
     // иконки кнопок
     const themeIcon = useToggleIconTheme(themeIconLight, themeIconDark);
     const notificationIcon = useToggleIconTheme(notificationIconDark, notificationIconLight);
     const settingsIcon = useToggleIconTheme(settingsIconDark, settingsIconLight);
-
-    const mobileScreen =  useMediaQuery({maxWidth: 768});
-    const isMobile = useSelector(
-        state => state.mobileStates.isMobile
-    ) || mobileScreen;
 
 
     const [settingsAnchor, setSettingsAnchor] = useState(null);

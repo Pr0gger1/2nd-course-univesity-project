@@ -22,6 +22,8 @@ import upArrowFilterDark from '../../../../assets/img/icons/filter/up_arrow_ligh
 import downArrowFilterDark from '../../../../assets/img/icons/filter/down_arrow_light.svg';
 import editIcon from '../../../../assets/img/icons/edit_icon.svg';
 
+import * as selectors from '../../../../store';
+
 import styles from "./styles/TaskGroupMenuContainer.module.scss";
 
 const TaskGroupMenuList = () => {
@@ -30,12 +32,8 @@ const TaskGroupMenuList = () => {
     const [showEditInput, setShowEditInput] = useState(false);
     const [editInputText, setEditInputText] = useState('');
 
-    const selectedTaskGroup = useSelector(
-        state => state.taskGroupStates.selectedTaskGroup
-    );
-    const taskFilter = useSelector(
-        state => state.filterStates.taskFilter
-    );
+    const selectedTaskGroup = useSelector(selectors.selectedTaskGroupSelector);
+    const taskFilter = useSelector(selectors.filterSelector).taskFilter;
 
     const filterModeIconUp = useToggleIconTheme(
         upArrowFilterLight, upArrowFilterDark

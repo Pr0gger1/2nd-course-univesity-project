@@ -6,21 +6,16 @@ import TaskGroupMenuContainer from '../../ui/contextMenu/task_page/TaskGroupMenu
 import BackButton from "../../ui/button/BackButton";
 
 import { DateFormatter } from '../../../utils/DateFormatter';
+import * as selectors from "../../../store";
 
-import styles from '../styles/ContentTopPanel.module.scss';
 import '../../ui/animations/ContextMenu/ContextMenuPageAnimation.scss';
+import styles from '../styles/ContentTopPanel.module.scss';
 
 const ContentTopPanel = () => {
-    // const contextMenuMedia = useMediaQuery({minWidth: });
-
     const mobileScreen =  useMediaQuery({maxWidth: 768});
-    const isMobile = useSelector(
-        state => state.mobileStates.isMobile
-    ) || mobileScreen;
+    const isMobile = useSelector(selectors.mobileSelector) || mobileScreen;
 
-    const selectedGroup = useSelector(
-        state => state.taskGroupStates.selectedTaskGroup
-    );
+    const selectedTaskGroup = useSelector(selectors.selectedTaskGroupSelector);
 
 
     return (
@@ -33,7 +28,7 @@ const ContentTopPanel = () => {
             <div className={styles.top_panel__left}>
                 <div className={styles.task_list__title}>
                     <span>
-                        { selectedGroup.pageTitle }
+                        { selectedTaskGroup.pageTitle }
                         <span className={styles.day_of_week__title}>
                             { new DateFormatter().getDayOfWeek() }
                         </span>

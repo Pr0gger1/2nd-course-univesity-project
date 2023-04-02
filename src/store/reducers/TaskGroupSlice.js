@@ -1,79 +1,85 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { generateUniqueId } from '../../utils/generateUniqueId';
+import { TaskGroupService } from "../../services/taskGroup.service";
 
-import { CustomTaskGroupService } from "../../services/customTaskGroup.service";
-import customGroupDefaultIcon from '../../assets/img/icons/default/custom_group_task_icon.svg';
-
+import { deleteTaskAsync } from "./TaskSlice";
 import { initialGroup } from "../defaultData/baseGroups";
 import defaultGroups from '../defaultData/baseGroups';
-import { deleteTaskAsync } from "./TaskSlice";
 
 
 export const createCustomTaskGroup = createAsyncThunk(
     'taskGroup/add',
     async (groupName, { getState }) => {
-        const { custom: customGroups } = getState()
-            .taskGroupStates.allTaskGroups;
-        const { uid: userId } = getState().authStates.userData;
+        try {
+            const { custom: customGroups } = getState()
+                .taskGroupStates.allTaskGroups;
 
-        const newGroups = CustomTaskGroupService.createCustomGroup(
-            customGroups, groupName
-        );
+            const { uid: userId } = getState().authStates.userData;
+            const newGroups = TaskGroupService.createCustomGroup(
+                customGroups, groupName
+            );
 
-        await CustomTaskGroupService.updateTaskGroups(newGroups, userId);
-
-        return newGroups;
+            await TaskGroupService.updateTaskGroups(newGroups, userId);
+            return newGroups;
+        }
+        catch (error) { throw error }
     }
 );
 
 export const getCustomTaskGroups = createAsyncThunk(
     'taskGroup/get',
     async (userId) => {
-        return await CustomTaskGroupService.getTaskGroups(userId);
+        try {
+            return await TaskGroupService.getTaskGroups(userId);
+        }
+        catch (error) { throw error }
     }
 )
 export const deleteCustomTaskGroupAsync = createAsyncThunk(
      'taskGroup/delete',
     async (groupId, { getState, dispatch }) => {
-        const { uid: userId } = getState()
-            .authStates.userData;
+         try {
+            const { uid: userId } = getState()
+                .authStates.userData;
 
-        const { tasks } = getState().taskStates;
+            const { tasks } = getState().taskStates;
 
-        const { custom: taskGroups }  = getState()
-            .taskGroupStates.allTaskGroups;
+            const { custom: taskGroups }  = getState()
+                .taskGroupStates.allTaskGroups;
 
-        const newTaskGroups = CustomTaskGroupService
-            .deleteTaskGroup(taskGroups, groupId);
+            const newTaskGroups = TaskGroupService
+                .deleteTaskGroup(taskGroups, groupId);
 
-        await CustomTaskGroupService
-            .updateTaskGroups(newTaskGroups.taskGroups, userId);
+            await TaskGroupService
+                .updateTaskGroups(newTaskGroups.taskGroups, userId);
 
-        tasks.forEach(task => {
-            if (task.groupId === groupId)
-                dispatch(deleteTaskAsync(task.id));
-        })
-        return newTaskGroups;
+            tasks.forEach(task => {
+                if (task.groupId === groupId)
+                    dispatch(deleteTaskAsync(task.id));
+            })
+            return newTaskGroups;
+         }
+         catch (error) { throw error }
     }
 );
 
 export const renameCustomTaskGroupAsync = createAsyncThunk(
      'taskGroup/rename',
     async (groupData, { getState }) => {
-        const { uid: userId } = getState().authStates.userData;
-        const { custom: taskGroups } = getState()
-            .taskGroupStates.allTaskGroups;
+         try {
+            const { uid: userId } = getState().authStates.userData;
+            const { custom: taskGroups } = getState()
+                .taskGroupStates.allTaskGroups;
 
-        const newTaskGroups = CustomTaskGroupService.editTaskGroup(
-            taskGroups,
-            groupData
-        );
+            const newTaskGroups = TaskGroupService.editTaskGroup(
+                taskGroups,
+                groupData
+            );
 
-        console.log(newTaskGroups)
-        await CustomTaskGroupService
-            .updateTaskGroups(newTaskGroups.taskGroups, userId);
-
-        return newTaskGroups;
+            await TaskGroupService
+                .updateTaskGroups(newTaskGroups.taskGroups, userId);
+            return newTaskGroups;
+         }
+         catch (error) { throw error }
     }
 );
 
@@ -87,53 +93,20 @@ const taskGroupSlice = createSlice({
         allTaskGroups: {
             base: defaultGroups,
             custom: []
-        }
+        },
+
+        loading: false
     },
     reducers: {
         setSelectedGroup(state, action) {
             state.selectedTaskGroup = action.payload.group;
             localStorage.setItem('selectedTaskGroup', JSON.stringify(action.payload.group));
-        },
-
-        addCustomTaskGroup(state, action) {
-            const name = action.payload.groupName;
-            state.allTaskGroups.custom.push({
-                title: name,
-                icon: customGroupDefaultIcon,
-                id: generateUniqueId('task_group', 12, true),
-                pageTitle: name,
-                webTitle: `Productify - ${name}`
-            });
-        },
-        
-        deleteCustomTaskGroup(state, action) {
-            if (state.allTaskGroups.custom.length) {
-                state.allTaskGroups.custom = state.allTaskGroups.custom.filter(
-                    group => group.id !== action.payload.groupId
-                );
-                window.location.pathname = `/tasks/${initialGroup.id}`;
-            }
-        },
-
-        renameCustomTaskGroup(state, action) {
-            const groupId = action.payload.groupId;
-            const newName = action.payload.newName;
-
-            if (state.allTaskGroups.custom.length) {
-                let groupIndex = state.allTaskGroups.custom.findIndex(
-                    group => group.id === groupId
-                );
-                state.allTaskGroups.custom[groupIndex].title = newName;
-                state.allTaskGroups.custom[groupIndex].pageTitle = newName;
-                state.allTaskGroups.custom[groupIndex].webTitle = `Productify - ${newName}`;
-            }
         }
     },
 
     extraReducers: builder => {
         builder
             .addCase(createCustomTaskGroup.fulfilled, (state, action) => {
-                console.log(action);
                 state.allTaskGroups.custom = action.payload;
             })
 
@@ -141,9 +114,13 @@ const taskGroupSlice = createSlice({
                 console.log(action)
             })
 
+            .addCase(getCustomTaskGroups.pending, state => {
+                state.loading = true;
+            })
+
             .addCase(getCustomTaskGroups.fulfilled, (state, action) => {
                 state.allTaskGroups.custom = action.payload.taskGroups;
-                console.log(action);
+                state.loading = false;
             })
 
             .addCase(getCustomTaskGroups.rejected, (state, action) => {
@@ -151,9 +128,9 @@ const taskGroupSlice = createSlice({
             })
 
              .addCase(deleteCustomTaskGroupAsync.fulfilled, (state, action) => {
-                console.log(action);
                 state.allTaskGroups.custom = action.payload.taskGroups;
                 state.selectedTaskGroup = action.payload.selectedTaskGroup;
+                window.location.pathname = `/tasks/${initialGroup.id}`;
             })
 
             .addCase(deleteCustomTaskGroupAsync.rejected, (state, action) => {
@@ -172,9 +149,5 @@ const taskGroupSlice = createSlice({
     }
 });
 
-export const {
-    setSelectedGroup, addCustomTaskGroup,
-    deleteCustomTaskGroup, renameCustomTaskGroup
-} = taskGroupSlice.actions;
-
+export const { setSelectedGroup } = taskGroupSlice.actions;
 export default taskGroupSlice.reducer;

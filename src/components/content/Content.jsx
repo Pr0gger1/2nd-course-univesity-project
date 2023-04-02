@@ -6,21 +6,15 @@ import { useMediaQuery } from "react-responsive";
 import TaskContainer from '../ui/containers/TaskContainer';
 import ContentTopPanel from './components/ContentTopPanel';
 import FilteredContent from './components/FilteredContent';
+import * as selectors from '../../store';
 
 import styles from './styles/Content.module.scss';
 
 const Content = () => {
     const mobileScreen =  useMediaQuery({maxWidth: 768});
-    const isMobile = useSelector(
-        state => state.mobileStates.isMobile
-    ) || mobileScreen;
-
-    const selectedGroup = useSelector(
-        state => state.taskGroupStates.selectedTaskGroup
-    );
-    const filter = useSelector(
-        state => state.filterStates.searchFilter
-    );
+    const isMobile = useSelector(selectors.mobileSelector) || mobileScreen;
+    const selectedGroup = useSelector(selectors.selectedTaskGroupSelector);
+    const searchFilter = useSelector(selectors.filterSelector).searchFilter;
 
     useEffect(() => {
          document.title = selectedGroup.webTitle || 'Productify'
@@ -31,7 +25,7 @@ const Content = () => {
             style={!isMobile && {width: '100vw'}}
         >
             {
-                filter.length
+                searchFilter.length
                 ? <FilteredContent/>
                 :
                 <>

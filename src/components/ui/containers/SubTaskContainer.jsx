@@ -1,14 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import SubTask from "../cards/SubTask";
+import { selectedTaskSelector } from "../../../store";
 
 import styles from './styles/SubTaskContainer.module.scss';
 
 const SubTaskContainer = () => {
-    const selectedTask = useSelector(
-        state => state.taskStates.selectedTask
-    );
-
+    const selectedTask = useSelector(selectedTaskSelector);
     return (
         <>
             {

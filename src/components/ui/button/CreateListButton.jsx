@@ -10,6 +10,7 @@ import ConfirmationButton from "./ConfirmationButton";
 
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { CustomTextField } from '../customComponents/CustomInputs';
+import { leftSidebarSelector } from "../../../store";
 
 import '../animations/Button/createListBtnAnimation.css';
 import styles from './styles/CreateListButton.module.scss';
@@ -22,9 +23,7 @@ const CreateListButton = () => {
     const dispatch = useDispatch();
     const nodeRef = useRef(null);
 
-    const isLSidebarOpened = useSelector(
-        state => state.sidebarStates.isLeftSidebarOpen
-    );
+    const isLSidebarOpened = useSelector(leftSidebarSelector);
 
     const adaptiveSpan = !isLSidebarOpened ? {
         display: 'none',

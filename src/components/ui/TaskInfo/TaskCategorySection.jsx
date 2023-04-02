@@ -6,18 +6,17 @@ import { FormControl, InputLabel, MenuItem } from "@mui/material";
 import { TaskCategorySelect } from "../customComponents/TaskCategorySelect";
 import { baseGroupIds } from "../../../store/defaultData/baseGroups";
 
+import * as selectors from '../../../store';
+
 
 const TaskCategorySection = () => {
     const dispatch = useDispatch();
-    const selectedTask = useSelector(
-        state => state.taskStates.selectedTask
-    );
+    const selectedTask = useSelector(selectors.selectedTaskSelector);
     const taskGroups = useSelector(
         state => state.taskGroupStates.allTaskGroups
     );
 
-    const isBaseTaskGroup = Object.values(baseGroupIds)
-        .includes(selectedTask.groupId);
+    const isBaseTaskGroup = Object.values(baseGroupIds).includes(selectedTask.groupId);
 
     const taskGroupList = taskGroups.custom && taskGroups.custom.length &&
     !isBaseTaskGroup ?

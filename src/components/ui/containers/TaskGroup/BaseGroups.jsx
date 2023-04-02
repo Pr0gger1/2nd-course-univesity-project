@@ -3,18 +3,14 @@ import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 
 import TaskGroup from "../../cards/TaskGroup";
+import * as selectors from '../../../../store';
 
 import styles from "../styles/TaskGroupContainer.module.scss";
 
 const BaseGroups = ({ taskGroups, onClick }) => {
     const mobileScreen =  useMediaQuery({maxWidth: 768});
-    const isMobile = useSelector(
-        state => state.mobileStates.isMobile
-    ) || mobileScreen;
-
-    const selectedTaskGroup = useSelector(
-        state => state.taskGroupStates.selectedTaskGroup
-    );
+    const isMobile = useSelector(selectors.mobileSelector) || mobileScreen;
+    const selectedTaskGroup = useSelector(selectors.selectedTaskGroupSelector);
 
     return (
         <div className={styles.base_group__container}>

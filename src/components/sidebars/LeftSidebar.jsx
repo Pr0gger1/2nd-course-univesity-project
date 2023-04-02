@@ -6,13 +6,13 @@ import UserDataCard from "../ui/cards/UserDataCard";
 import SearchInput from "../ui/input/SearchInput";
 import TaskGroupContainer from "../ui/containers/TaskGroup/TaskGroupContainer";
 
+import { leftSidebarSelector } from "../../store";
+
 import styles from "./styles/LeftSidebar.module.scss";
 
 const LeftSidebar = () => {
     const dispatch = useDispatch();
-    const isLSidebarOpened = useSelector(
-        state => state.sidebarStates.isLeftSidebarOpen
-    );
+    const isLSidebarOpened = useSelector(leftSidebarSelector);
     
     const searchClickHandler = () => {
         if (!isLSidebarOpened) dispatch(setLSidebarOpen());

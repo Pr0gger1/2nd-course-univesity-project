@@ -3,12 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSearchFilter } from '../../../store/reducers/FilterSlice';
 
 import styles from './styles/SearchInput.module.scss';
+import {leftSidebarSelector} from "../../../store";
 
 const SearchInput = ({ placeholder = '', ...props}) => {
     const dispatch = useDispatch();
-    const isLSidebarOpened = useSelector(
-        state => state.sidebarStates.isLeftSidebarOpen
-    );
+    const isLSidebarOpened = useSelector(leftSidebarSelector);
 
     const [searchText, setSearchText] = useState('');
 

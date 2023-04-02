@@ -10,13 +10,13 @@ import { LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import { ruRU } from '@mui/x-date-pickers';
 import dayjs from "dayjs";
 
+import { selectedTaskSelector } from "../../../../store";
+
 import styles from "../styles/TaskDatesSection.module.scss";
 
 const DeadlinePicker = ({ setShowDeadlinePicker }) => {
     const dispatch = useDispatch();
-    const selectedTask = useSelector(
-        state => state.taskStates.selectedTask
-    );
+    const selectedTask = useSelector(selectedTaskSelector);
 
     const onDeadlineChange = async value => {
         const taskData = {

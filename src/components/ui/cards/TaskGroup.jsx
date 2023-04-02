@@ -1,36 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-
 import styles from './styles/TaskGroup.module.scss';
-import {baseGroupIds} from "../../../store/defaultData/baseGroups";
+import * as selectors from "../../../store";
+import useGroupTasks from "../../../hooks/useGroupTasks";
 
 const TaskGroup = ({ taskGroupData, onClick }) => {
     const [tasksCount, setTasksCount] = useState(0);
 
-    const isLSidebarOpened = useSelector(
-        state => state.sidebarStates.isLeftSidebarOpen
-    );
+    const isLSidebarOpened = useSelector(selectors.leftSidebarSelector);
+    const tasks = useSelector(selectors.tasksSelector);
+    
+    const setCurrentTasks = useGroupTasks(tasks, taskGroupData);
 
-    const tasks = useSelector(
-    state => state.taskStates.tasks
-    );
-
-    useEffect(() => {
-        if (tasks)  {
-            // console.log(tasks);
-            let count = tasks.filter(
-                task => task.groupId === taskGroupData.id
-            ).length;
-
-            if (taskGroupData.id === baseGroupIds.all)
-                count = tasks.length;
-
-            else if (taskGroupData.id === baseGroupIds.favorite)
-                count = tasks.filter(task => task.favorite).length;
-
-            setTasksCount(count);
-        }
-    }, [taskGroupData.id, tasks]);
+    useMemo(() => {
+        const count = setCurrentTasks().length;
+        setTasksCount(count);
+    }, [setCurrentTasks]);
 
     let groupStyle = `${styles.group}${taskGroupData.isActive ? ` ${styles['active']}`: ''}${!isLSidebarOpened ? ` ${styles['closed']}` : ''}`;
 
