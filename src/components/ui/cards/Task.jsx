@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,17 +14,12 @@ import Checkbox from '@mui/material/Checkbox';
 
 import { DateFormatter } from "../../../utils/DateFormatter";
 import { repeatTaskData } from "../../../store/defaultData/repeatTaskData";
+import { SnackbarContext, snackbarTypes } from "../../../context/SnackbarContext";
 
+import * as selectors from "../../../store";
 import { themes } from "../../../store/reducers/ThemeSlice";
+
 import styles from './styles/Task.module.scss';
-import {SnackbarContext, snackbarTypes} from "../../../context/SnackbarContext";
-import {
-    mobileSelector,
-    rightSidebarSelector,
-    selectedTaskGroupSelector,
-    selectedTaskSelector,
-    themeSelector
-} from "../../../store";
 
 const Task = ({ taskDataProps }) => {
     const { setMessage, setType, setOpen, setHideDuration } = useContext(SnackbarContext);
@@ -36,12 +31,12 @@ const Task = ({ taskDataProps }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const currentTheme = useSelector(themeSelector);
-    const isMobile = useSelector(mobileSelector);
+    const currentTheme = useSelector(selectors.themeSelector);
+    const isMobile = useSelector(selectors.mobileSelector);
 
-    const isRSidebarOpen = useSelector(rightSidebarSelector);
-    const selectedGroup = useSelector(selectedTaskGroupSelector);
-    const selectedTask = useSelector(selectedTaskSelector);
+    const isRSidebarOpen = useSelector(selectors.rightSidebarSelector);
+    const selectedGroup = useSelector(selectors.selectedTaskGroupSelector);
+    const selectedTask = useSelector(selectors.selectedTaskSelector);
 
     const taskStyle = {
         textDecoration: taskDataProps.completed ? 'line-through' : 'none',
@@ -69,7 +64,6 @@ const Task = ({ taskDataProps }) => {
 
     const favoriteToggleHandler = event => {
         event.stopPropagation();
-
         const favorite = !isFavorite;
 
         dispatch(updateTaskAsync({
@@ -95,6 +89,7 @@ const Task = ({ taskDataProps }) => {
             if (event.key === 'Delete') {
                 dispatch(deleteTaskAsync(taskDataProps.id));
                 dispatch(setRSidebarOpen());
+                
                 setMessage('Задача удалена');
                 setType(snackbarTypes.success);
                 setHideDuration(2000)
@@ -106,7 +101,7 @@ const Task = ({ taskDataProps }) => {
             window.addEventListener('keydown', onTaskPressed);
 
         return () => window.removeEventListener('keydown', onTaskPressed)
-    }, [dispatch, isTaskSelected, taskDataProps.id]);
+    }, [dispatch, isTaskSelected, setHideDuration, setMessage, setOpen, setType, taskDataProps.id]);
 
 
     return (

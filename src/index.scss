@@ -1,3 +1,5 @@
+@import "fonts";
+
 :root {
   --notificationBgColor: rgb(226, 64, 64);
   --scrollbarWidth: 0.6rem;
@@ -58,6 +60,10 @@
   --borderBottomSidebar: 1px solid #444;
 }
 
+#root {
+  height: 100%;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -68,8 +74,8 @@
   -webkit-transition: background-color .5s ease-in-out;
   -moz-transition: background-color .5s ease-in-out;
   transition: background-color .5s ease-in-out;
-
 }
+
 body, html {
   height: 100%;
 }

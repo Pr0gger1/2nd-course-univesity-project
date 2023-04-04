@@ -25,26 +25,28 @@ const CreateTaskButton = () => {
     const userData = useSelector(selectors.userDataSelector);
 
     const addTaskHandler = () => {
-        let taskData = {
-            taskName,
-            completed: false,
-            favorite: false,
-            createdAt: new Date().getTime(),
-            subTasks: [],
-            notes: '',
-            groupId: selectedTaskGroup.id,
-            userId: userData.uid,
-            category: selectedTaskGroup.title,
-            deadline: null,
-            reminder: null,
-            repeat: null
-            };
+        if (userData && userData.uid) {
+            let taskData = {
+                taskName,
+                completed: false,
+                favorite: false,
+                createdAt: new Date().getTime(),
+                subTasks: [],
+                notes: '',
+                groupId: selectedTaskGroup.id,
+                userId: userData.uid,
+                category: selectedTaskGroup.title,
+                deadline: null,
+                reminder: null,
+                repeat: null
+                };
 
-        if (selectedTaskGroup.id === baseGroupIds.favorite)
-            taskData.favorite = true;
+            if (selectedTaskGroup.id === baseGroupIds.favorite)
+                taskData.favorite = true;
 
-        dispatch(addTaskAsync(taskData));
-        setTaskName('');
+            dispatch(addTaskAsync(taskData));
+            setTaskName('');
+        }
     }
 
     const onInputKeyDown = (event) => {

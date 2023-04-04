@@ -9,9 +9,9 @@ import AuthPage from '../components/pages/AuthPage';
 import ErrorPage from '../components/pages/ErrorPage';
 import HomePage from '../components/pages/HomePage';
 
-import ConditionalRoute from './ConditionalRoute';
 import TaskPage from "../components/pages/mobile/TaskPage";
 import TaskInfoPage from "../components/pages/mobile/TaskInfoPage";
+import FilteredContent from "../components/content/components/FilteredContent";
 
 
 const AppRouter = ({ isAuth = false }) => {
@@ -31,19 +31,11 @@ const AppRouter = ({ isAuth = false }) => {
         },
         {
             path: '/tasks/:task_group_id',
-            element: <ConditionalRoute
-                conditionVar={isMobile}
-                onTrueRoute={<TaskPage/>}
-                onFalseRoute={<HomePage/>}
-            />
+            element: isMobile ? <TaskPage/> : <HomePage/>
         },
         {
             path: '/tasks/:task_group_id/:task_id',
-            element: <ConditionalRoute
-                conditionVar={isMobile}
-                onTrueRoute={<TaskInfoPage/>}
-                onFalseRoute={<HomePage/>}
-            />
+            element: isMobile ? <TaskInfoPage/> : <HomePage/>
         },
         {
             path: "/login",
@@ -52,6 +44,12 @@ const AppRouter = ({ isAuth = false }) => {
         {
             path: "/register",
             element: <Navigate to='/'/>
+        },
+        {
+            path: '/search',
+            element: isMobile ?
+                <FilteredContent/> :
+                <Navigate to='/error'/>
         },
         {
             path: "/error",

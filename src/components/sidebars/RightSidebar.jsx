@@ -9,6 +9,7 @@ import TaskNameSection from "../ui/TaskInfo/TaskNameSection";
 import TaskCategorySection from "../ui/TaskInfo/TaskCategorySection";
 import TaskNotesSection from "../ui/TaskInfo/TaskNotesSection";
 import TaskDatesSection from "../ui/TaskInfo/TaskDatesSection";
+import DeleteTaskButton from "../ui/button/DeleteTaskButton";
 
 import * as selectors from '../../store';
 
@@ -21,6 +22,7 @@ const RightSidebar = () => {
 
     const isRSidebarOpened = useSelector(selectors.rightSidebarSelector);
     const selectedTaskGroup = useSelector(selectors.selectedTaskGroupSelector);
+    const selectedTask = useSelector(selectors.selectedTaskSelector);
 
     const sidebarStyles = `${styles.sidebar__right}${!isRSidebarOpened ? ' ' + styles['closed'] : ''}`;
 
@@ -32,11 +34,20 @@ const RightSidebar = () => {
         }
     }, [dispatch, isRSidebarOpened, navigate, selectedTaskGroup.id]);
 
+    useEffect(() => {
+        if (!Object.keys(selectedTask).length && isRSidebarOpened)
+            dispatch(setRSidebarOpen());
+    }, [selectedTask, isRSidebarOpened, dispatch]);
+
+
     return (
         <aside className={sidebarStyles}>
             <div className={styles.sidebar_container}>
                 <div className={styles.sidebar_close__btn}>
-                    <CloseIcon 
+                    <DeleteTaskButton
+                        selectedTask={selectedTask}
+                    />
+                    <CloseIcon
                         onClick={() => dispatch(setRSidebarOpen())}
                     />
                 </div>

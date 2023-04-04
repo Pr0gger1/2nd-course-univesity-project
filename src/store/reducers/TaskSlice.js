@@ -118,12 +118,10 @@ const taskSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(addTaskAsync.fulfilled, (state, action) => {
-                // console.log(action);
                 state.tasks = action.payload;
             })
 
             .addCase(addTaskAsync.rejected, (state, action) => {
-                // console.log(action);
                 state.fetchError = action.error;
             })
 
@@ -143,7 +141,6 @@ const taskSlice = createSlice({
             })
 
             .addCase(deleteSubTaskAsync.rejected, (state, action) => {
-                // console.log(action);
                 state.fetchError = action.error;
             })
 
@@ -163,7 +160,6 @@ const taskSlice = createSlice({
             })
 
             .addCase(updateSubTaskAsync.rejected, (state, action) => {
-                // console.log(action);
                 state.fetchError = action.error;
             })
 
@@ -180,6 +176,7 @@ const taskSlice = createSlice({
 
             .addCase(getUserTasks.rejected, (state, action) => {
                 state.fetchError = action.error;
+                state.loading = false;
             })
     }
 });

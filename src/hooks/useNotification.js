@@ -88,7 +88,7 @@ const deadlineObserver = async (tasks, dispatch) => {
     });
 }
 
-export const useNotification = () => {
+const useNotification = () => {
     const dispatch = useDispatch();
     const tasks = useSelector(tasksSelector);
 
@@ -109,3 +109,5 @@ export const useNotification = () => {
         return () => clearInterval(observeTasks)
     }, [dispatch, tasks])
 }
+
+export default useNotification;

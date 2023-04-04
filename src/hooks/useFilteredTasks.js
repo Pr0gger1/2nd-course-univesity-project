@@ -12,7 +12,7 @@ function sortTasks(a, b, desc = true) {
     return 0;
 }
 
-export const useFilteredTasks = (groupTasks, filter) => {
+const useFilteredTasks = (groupTasks, filter) => {
     return useMemo(() => {
         if (filter.type === 'alphabet')
             return [...groupTasks].sort(
@@ -34,3 +34,5 @@ export const useFilteredTasks = (groupTasks, filter) => {
 
     }, [groupTasks, filter]);
 }
+
+export default useFilteredTasks;

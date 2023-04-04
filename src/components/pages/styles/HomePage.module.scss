@@ -1,6 +1,6 @@
 .main__container {
-    height: 100vh;
-    //overflow-y: hidden;
+    //height: 100vh;
+    height: 100%;
 
     display: flex;
     flex-direction: column;
@@ -8,7 +8,6 @@
     .content__wrapper {
         height: 100%;
         overflow-y: hidden;
-        //max-height: 100vh;
         display: flex;
         flex-direction: row;
     }

@@ -130,7 +130,7 @@ const taskGroupSlice = createSlice({
              .addCase(deleteCustomTaskGroupAsync.fulfilled, (state, action) => {
                 state.allTaskGroups.custom = action.payload.taskGroups;
                 state.selectedTaskGroup = action.payload.selectedTaskGroup;
-                window.location.pathname = `/tasks/${initialGroup.id}`;
+
             })
 
             .addCase(deleteCustomTaskGroupAsync.rejected, (state, action) => {

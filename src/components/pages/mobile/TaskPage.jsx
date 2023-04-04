@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import FilteredContent from "../../content/components/FilteredContent";
 import ContentTopPanel from "../../content/components/ContentTopPanel";
-import TaskContainer from "../../ui/containers/TaskContainer";
+import TaskContainer from "../../ui/containers/TaskContainer/TaskContainer";
 import Header from "../../header/Header";
 
 import { filterSelector } from "../../../store";

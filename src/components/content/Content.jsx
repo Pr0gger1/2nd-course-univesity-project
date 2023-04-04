@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useMediaQuery } from "react-responsive";
 
 
-import TaskContainer from '../ui/containers/TaskContainer';
+import TaskContainer from '../ui/containers/TaskContainer/TaskContainer';
 import ContentTopPanel from './components/ContentTopPanel';
 import FilteredContent from './components/FilteredContent';
 import * as selectors from '../../store';

@@ -10,7 +10,7 @@ import ConfirmationButton from "./ConfirmationButton";
 
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { CustomTextField } from '../customComponents/CustomInputs';
-import { leftSidebarSelector } from "../../../store";
+import * as selectors from "../../../store";
 
 import '../animations/Button/createListBtnAnimation.css';
 import styles from './styles/CreateListButton.module.scss';
@@ -23,13 +23,14 @@ const CreateListButton = () => {
     const dispatch = useDispatch();
     const nodeRef = useRef(null);
 
-    const isLSidebarOpened = useSelector(leftSidebarSelector);
+    const isLSidebarOpened = useSelector(selectors.leftSidebarSelector);
+    const isMobile = useSelector(selectors.mobileSelector);
 
-    const adaptiveSpan = !isLSidebarOpened ? {
+    const adaptiveSpan = !isLSidebarOpened && !isMobile ? {
         display: 'none',
         } : {};
 
-    const adaptiveBtn = !isLSidebarOpened ? {
+    const adaptiveBtn = !isLSidebarOpened && !isMobile ? {
         padding: '0.25rem'
         } : {}
 
@@ -90,7 +91,6 @@ const CreateListButton = () => {
             <>
                 <CustomTextField
                     ref={nodeRef}
-                    className={styles.create__list_input}
                     sx={{width: '100%'}}
                     id="standard-basic"
                     label="Введите название списка"

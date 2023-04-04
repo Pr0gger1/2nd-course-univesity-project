@@ -10,6 +10,7 @@ import { themes } from "./store/reducers/ThemeSlice";
 
 import './index.scss';
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 document.title = 'Productify ToDo App';
 
@@ -31,7 +32,6 @@ if ('serviceWorker' in navigator) {
     } catch (error) {
       console.log(error);
     }
-
   })
 }
 

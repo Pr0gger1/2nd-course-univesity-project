@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchFilter } from '../../../store/reducers/FilterSlice';
 
@@ -11,9 +11,10 @@ const SearchInput = ({ placeholder = '', ...props}) => {
 
     const [searchText, setSearchText] = useState('');
 
-    useEffect(() => {
-        dispatch(setSearchFilter({searchFilter: searchText}));
-    }, [dispatch, searchText]);
+    const onSearchChange = event => {
+        setSearchText(event.target.value);
+        dispatch(setSearchFilter({searchFilter: event.target.value}));
+    }
 
     const searchStyles = !isLSidebarOpened ? {
         cursor: 'pointer'
@@ -25,7 +26,7 @@ const SearchInput = ({ placeholder = '', ...props}) => {
             style={searchStyles}
             type='search'
             placeholder={placeholder}
-            onChange={e => setSearchText(e.target.value)}
+            onChange={onSearchChange}
             value={searchText}
             {...props}
         />

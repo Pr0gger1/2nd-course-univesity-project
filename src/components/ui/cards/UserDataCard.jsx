@@ -7,8 +7,7 @@ import { userDataSelector } from "../../../store";
 import { Avatar } from "@mui/material";
 import Skeleton from "@mui/material/Skeleton";
 
-import testAvatar from '../../../assets/test/testAvatar.jpg';
-
+import defaultAvatar from '../../../assets/img/avatar/avatar.png';
 import styles from "./styles/UserDataCard.module.scss";
 
 const UserDataCard = () => {
@@ -42,7 +41,7 @@ const UserDataCard = () => {
       <Avatar
         sx={{width: 40, height: 40,}}
         alt="avatar"
-        src={testAvatar}
+        src={defaultAvatar}
       />
         {
           username.length !== 0 && email.length !== 0 ?

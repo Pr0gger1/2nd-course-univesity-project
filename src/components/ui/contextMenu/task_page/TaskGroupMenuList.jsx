@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import useToggleIconTheme from '../../../../hooks/useToggleIconTheme';
-
 
 import { ContextMenuSelect } from '../../customComponents/ContextMenuSelect';
 import { CustomTextField } from "../../customComponents/CustomInputs";
@@ -28,12 +28,14 @@ import styles from "./styles/TaskGroupMenuContainer.module.scss";
 
 const TaskGroupMenuList = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [showEditInput, setShowEditInput] = useState(false);
     const [editInputText, setEditInputText] = useState('');
 
     const selectedTaskGroup = useSelector(selectors.selectedTaskGroupSelector);
-    const taskFilter = useSelector(selectors.filterSelector).taskFilter;
+    const taskFilter = useSelector(state => state.filterStates.taskFilter);
+    const isMobile = useSelector(selectors.mobileSelector);
 
     const filterModeIconUp = useToggleIconTheme(
         upArrowFilterLight, upArrowFilterDark
@@ -68,6 +70,9 @@ const TaskGroupMenuList = () => {
 
     const deleteCustomTaskGroupHandler = () => {
         dispatch(deleteCustomTaskGroupAsync(selectedTaskGroup.id));
+        if (isMobile)
+            navigate(`/`);
+
     }
 
     const toggleFilterModeHandler = () => {

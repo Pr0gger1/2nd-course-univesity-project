@@ -13,6 +13,11 @@ import SettingsWindow from "./components/settings/SettingsWindow";
 import IconButton from "../ui/button/IconButton";
 import { StyledBadge } from "../ui/customComponents/CustomBadge";
 
+import { mobileSelector, notificationSelector } from "../../store";
+import {useNavigate, useParams} from "react-router-dom";
+
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+
 import themeIconLight from "../../assets/img/icons/theme_icon_light.svg";
 import themeIconDark from "../../assets/img/icons/theme_icon_dark.svg";
 import notificationIconDark from "../../assets/img/icons/bell_dark.svg";
@@ -21,11 +26,11 @@ import settingsIconDark from "../../assets/img/icons/settings_dark.svg";
 import settingsIconLight from "../../assets/img/icons/settings_light.svg";
 
 import styles from "./styles/Header.module.scss";
-import {mobileSelector, notificationSelector} from "../../store";
-
 
 const Header = () => {
     const mobileScreen =  useMediaQuery({maxWidth: 768});
+    const navigate = useNavigate();
+    const params = useParams();
 
     const dispatch = useDispatch();
     const notifications = useSelector(notificationSelector);
@@ -51,8 +56,14 @@ const Header = () => {
     return (
         <header className={styles.header__app}>
             {
-                isMobile ?
-                <TaskGroupMenuContainer />
+                isMobile ? (
+                    Object.keys(params).length !== 0 ?
+                    <TaskGroupMenuContainer />
+                    :
+                    <SearchRoundedIcon
+                        onClick={() => navigate('/search')}
+                    />
+                )
                     :
                 <HamburgerMenu/>
             }
