@@ -4,7 +4,6 @@ import { useMediaQuery } from "react-responsive";
 import { Navigate, useRoutes } from 'react-router-dom';
 
 import { mobileSelector } from "../store";
-
 import AuthPage from '../components/pages/AuthPage';
 import ErrorPage from '../components/pages/ErrorPage';
 import HomePage from '../components/pages/HomePage';
@@ -18,13 +17,13 @@ const AppRouter = ({ isAuth = false }) => {
     const mobileScreen =  useMediaQuery({maxWidth: 768});
     const isMobile = useSelector(mobileSelector) || mobileScreen;
 
-    const UnauthorizedRoutes = [
+    const unAuthorizedRoutes = [
         { path: "/login", element: <AuthPage/> },
         { path: "/register", element: <AuthPage register/> },
         { path: "*", element: <Navigate to="/login"/> }
     ];
 
-    const AuthorizedRoutes = [
+    const authorizedRoutes = [
         {
             path: "/",
             element: <HomePage/>
@@ -61,7 +60,7 @@ const AppRouter = ({ isAuth = false }) => {
         }
     ];
 
-    return useRoutes(isAuth ? AuthorizedRoutes : UnauthorizedRoutes);
+    return useRoutes(isAuth ? authorizedRoutes : unAuthorizedRoutes);
 }
 
 export default AppRouter;

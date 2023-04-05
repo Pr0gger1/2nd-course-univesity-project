@@ -61,8 +61,13 @@ const AuthForm = ({ register = false, data, setData}) => {
         }
         else {
             if (register) {
-                if (data.password === data.repeatPassword)
+                if (data.password === data.repeatPassword) {
                     dispatch(registerHandler(data));
+                    setMessage("На вашу электронную почту было отправлено письмо с подтверждением");
+                    setType(snackbarTypes.info);
+                    setHideDuration(8000);
+                    setOpen(true);
+                }
                 else {
                     setMessage('Пароли не совпадают');
                     setType(snackbarTypes.error);

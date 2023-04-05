@@ -7,11 +7,11 @@ import { userDataSelector } from "../../../store";
 import { Avatar } from "@mui/material";
 import Skeleton from "@mui/material/Skeleton";
 
-import defaultAvatar from '../../../assets/img/avatar/avatar.png';
 import styles from "./styles/UserDataCard.module.scss";
 
 const UserDataCard = () => {
     const { setOpen, setType, setMessage } = useContext(SnackbarContext);
+    const [userAvatar, setUserAvatar] = useState(null);
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
 
@@ -20,6 +20,9 @@ const UserDataCard = () => {
     useEffect(() => {
       const fetchData = async () => {
           return await UserService.getUserData(userData.uid);
+      }
+      if (userData && userData.photoURL) {
+          setUserAvatar(userData.photoURL);
       }
 
       if (userData && userData.uid) {
@@ -38,11 +41,20 @@ const UserDataCard = () => {
 
   return (
     <section className={styles.user__card}>
-      <Avatar
-        sx={{width: 40, height: 40,}}
-        alt="avatar"
-        src={defaultAvatar}
-      />
+        {
+            userData ?
+            <Avatar
+                sx={{width: 40, height: 40,}}
+                alt="avatar"
+                src={userAvatar}
+            />
+            :
+            <Skeleton
+                variant='circular'
+                width={40}
+                height={40}
+            />
+        }
         {
           username.length !== 0 && email.length !== 0 ?
           <div className={styles.user__card__info}>

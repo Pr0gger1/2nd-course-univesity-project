@@ -1,5 +1,5 @@
 import { db } from '../firebase.config';
-import { doc, getDoc, updateDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore'
 import { generateUniqueId } from '../utils/generateUniqueId';
 
 export class TaskService {
@@ -16,7 +16,13 @@ export class TaskService {
         if (docSnap.exists()) {
             return docSnap.data();
         }
-        return {taskData: []};
+        else {
+            await setDoc(doc(db, 'tasks', userId), {
+                taskData: [],
+                taskGroups: []
+            });
+            return {taskData: []};
+        }
     }
 
     static addTask(tasks, taskData) {

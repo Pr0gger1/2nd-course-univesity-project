@@ -1,7 +1,8 @@
 import { auth, db } from '../firebase.config';
 import { signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
-    signInWithPopup, GoogleAuthProvider
+    signInWithPopup, GoogleAuthProvider,
+    sendEmailVerification, deleteUser, getAuth
 } from 'firebase/auth';
 
 import { doc, setDoc, getDoc } from 'firebase/firestore';
@@ -36,6 +37,9 @@ export class AuthService {
                 if (creds.user) {
                     const userId = creds.user.uid;
                     console.log(creds.user);
+                    sendEmailVerification(creds.user)
+                        .then(() => console.log("Email verification sent!"))
+                        .catch(error => console.log(error))
 
                     await AuthService.createUserCollection(
                         userId, username, creds.user.email
@@ -56,11 +60,15 @@ export class AuthService {
 
                     return result.user;
                 }
-
                 // const credential = GoogleAuthProvider.credentialFromResult(result);
                 // const token = credential.accessToken;
-
             })
             .catch(error => { throw error });
+    }
+
+    static async deleteUser() {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        await deleteUser(user);
     }
 }

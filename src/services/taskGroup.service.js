@@ -1,4 +1,4 @@
-import { getDoc, doc, updateDoc } from 'firebase/firestore';
+import { getDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase.config';
 
 import { generateUniqueId } from "../utils/generateUniqueId";
@@ -13,7 +13,13 @@ export class TaskGroupService {
 
         if (groupData.exists())
             return groupData.data();
-        return {taskGroups: []};
+        else {
+            await setDoc(doc(db, 'tasks', userId), {
+                taskData: [],
+                taskGroups: []
+            })
+            return {taskGroups: []};
+        }
     }
 
     static async updateTaskGroups(groups, userId) {

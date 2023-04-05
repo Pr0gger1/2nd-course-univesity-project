@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { notificationSelector } from "../../../store";
+
 import Notification from '../cards/Notification';
+
 import { CSSTransition } from 'react-transition-group';
-import styles from './styles/NotificationContainer.module.scss';
 import { TransitionGroup } from 'react-transition-group';
 import '../animations/Notifications/notificationAnimation.css';
-import {notificationSelector} from "../../../store";
+import styles from './styles/NotificationContainer.module.scss';
 
 const NotificationContainer = () => {
     const notifications = useSelector(notificationSelector);

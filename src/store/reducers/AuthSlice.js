@@ -23,6 +23,13 @@ export const register = createAsyncThunk(
     }
 );
 
+export const deleteUser = createAsyncThunk(
+    'auth/delete',
+    async () => {
+        await AuthService.deleteUser();
+    }
+)
+
 const authSlice = createSlice({
     name: 'authStates',
     initialState: {
@@ -45,7 +52,7 @@ const authSlice = createSlice({
                     localStorage.removeItem("userData");
                     window.location.pathname = '/login';
             })
-                .catch( error => state.authError = error);
+                .catch(error => state.authError = error);
         }
     },
     extraReducers: (builder) => {
@@ -90,6 +97,14 @@ const authSlice = createSlice({
             .addCase(loginWithGoogle.rejected, (state, action) => {
                 state.authError = action.error;
                 state.status = 'failed';
+            })
+
+            .addCase(deleteUser.fulfilled, (state, action) => {
+                console.log(action)
+            })
+
+            .addCase(deleteUser.rejected, action => {
+                console.log(action)
             })
     }
 })

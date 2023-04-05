@@ -1,19 +1,39 @@
-.logout_btn {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
+.settings__container {
+    .settings__btn {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        background-color: var(--bgColorFirst);
 
-    svg {
-        color: #FD5649;
+        color: var(--fontColor);
+        border: 1px solid transparent;
+        border-radius: 5px;
+
+        width: 100%;
+        padding: 0.5rem;
+
+        &:hover {
+            background-color: var(--bgButtonColorHover);
+        }
+
+        &.logout {
+            svg {
+                color: #FD5649;
+            }
+        }
+
+        &.delete_account {
+
+        }
     }
 
-    background-color: var(--bgColorFirst);
-
-    color: var(--font);
-    border: 1px solid rgb(66, 66, 66);
-    border-radius: 5px;
-
-    width: 100%;
-    padding: 0.5rem;
-    
+    .dangerous__zone {
+        //display: flex;
+        //flex-direction: column;
+        //gap: 0.5rem;
+        padding: 0.5rem;
+        margin-top: 1rem;
+        //border: 1px solid gray;
+    }
 }
+

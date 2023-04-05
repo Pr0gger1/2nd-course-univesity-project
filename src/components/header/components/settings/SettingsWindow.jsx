@@ -13,11 +13,9 @@ const SettingsWindow = ({ anchor, setAnchor }) => {
         <Popover
             sx={{
                 "& .MuiPaper-root": {
-                    
                     color: "var(--fontColor)",
                     borderRadius: "0.5rem",
                     padding: "1rem",
-                    width: "12rem",
                 },
                 "& .MuiTypography-root": {
                     fontSize: "18px",

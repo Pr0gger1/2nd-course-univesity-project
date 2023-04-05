@@ -171,12 +171,14 @@ const taskSlice = createSlice({
                 if (action.payload && action.payload.taskData) {
                     state.tasks = action.payload.taskData;
                     state.loading = false;
+                    console.log(action);
                 }
             })
 
             .addCase(getUserTasks.rejected, (state, action) => {
                 state.fetchError = action.error;
                 state.loading = false;
+                console.log(action)
             })
     }
 });

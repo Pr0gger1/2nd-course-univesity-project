@@ -42,6 +42,7 @@ function App() {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 dispatch(setUser({ data: user }));
+                console.log(user)
             }
         });
     }, [dispatch]);
