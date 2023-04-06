@@ -65,7 +65,7 @@ const AuthForm = ({ register = false, data, setData}) => {
                     dispatch(registerHandler(data));
                     setMessage("На вашу электронную почту было отправлено письмо с подтверждением");
                     setType(snackbarTypes.info);
-                    setHideDuration(8000);
+                    setHideDuration(5000);
                     setOpen(true);
                 }
                 else {

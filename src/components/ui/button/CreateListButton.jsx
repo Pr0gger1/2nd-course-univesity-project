@@ -9,7 +9,7 @@ import Button from './Button';
 import ConfirmationButton from "./ConfirmationButton";
 
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import { CustomTextField } from '../customComponents/CustomInputs';
+import { ThemedTextField } from '../customComponents/CustomInputs';
 import * as selectors from "../../../store";
 
 import '../animations/Button/createListBtnAnimation.css';
@@ -89,7 +89,7 @@ const CreateListButton = () => {
             onExited={() => setShowButton(true)}
         >
             <>
-                <CustomTextField
+                <ThemedTextField
                     ref={nodeRef}
                     sx={{width: '100%'}}
                     id="standard-basic"

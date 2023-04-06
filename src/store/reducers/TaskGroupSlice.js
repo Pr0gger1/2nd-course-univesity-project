@@ -119,8 +119,10 @@ const taskGroupSlice = createSlice({
             })
 
             .addCase(getCustomTaskGroups.fulfilled, (state, action) => {
-                state.allTaskGroups.custom = action.payload.taskGroups;
-                state.loading = false;
+                if (action.payload && action.payload.taskGroups) {
+                    state.allTaskGroups.custom = action.payload.taskGroups;
+                    state.loading = false;
+                }
             })
 
             .addCase(getCustomTaskGroups.rejected, (state, action) => {

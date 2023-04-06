@@ -22,9 +22,9 @@ function App() {
     const [messagingToken, setMessagingToken] = useState(false);
     getMessagingToken(setMessagingToken);
 
-    useEffect(() => {
-        console.log(messagingToken)
-    }, [messagingToken]);
+    // useEffect(() => {
+    //     console.log(messagingToken)
+    // }, [messagingToken]);
 
     onMessageListener()
         .then(payload => {
@@ -38,22 +38,18 @@ function App() {
         )})
 
     // функция отслеживания изменения состояния авторизации
-    useMemo(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                dispatch(setUser({ data: user }));
-                console.log(user)
-            }
-        });
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, user => {
+        if (user) {
+            dispatch(setUser({ data: user }));
+            dispatch(getUserTasks(user.uid));
+            dispatch(getCustomTaskGroups(user.uid));
+        }
+      });
+
+        return unsubscribe;
     }, [dispatch]);
 
-    // подгрузка существующих задач
-    useEffect(() => {
-        if (isAuth) {
-            dispatch(getUserTasks(userData.uid));
-            dispatch(getCustomTaskGroups(userData.uid));
-        }
-    }, [dispatch, isAuth, userData])
 
     useMemo(() => {
         // изменение значения атрибута data-theme при изменении темы в приложении

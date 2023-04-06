@@ -22,7 +22,13 @@ const ContentTopPanel = () => {
         <section className={styles.content__top_panel}>
             {
                 isMobile &&
-                <BackButton to='/'/>
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                }}>
+                    <BackButton to='/'/>
+                    <TaskGroupMenuContainer />
+                </div>
             }
 
             <div className={styles.top_panel__left}>

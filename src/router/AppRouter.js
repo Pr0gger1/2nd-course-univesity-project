@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useMediaQuery } from "react-responsive";
 import { Navigate, useRoutes } from 'react-router-dom';
 
-import { mobileSelector } from "../store";
+import { mobileSelector, userDataSelector } from "../store";
 import AuthPage from '../components/pages/AuthPage';
 import ErrorPage from '../components/pages/ErrorPage';
 import HomePage from '../components/pages/HomePage';
@@ -16,6 +16,7 @@ import FilteredContent from "../components/content/components/FilteredContent";
 const AppRouter = ({ isAuth = false }) => {
     const mobileScreen =  useMediaQuery({maxWidth: 768});
     const isMobile = useSelector(mobileSelector) || mobileScreen;
+    const userData = useSelector(userDataSelector);
 
     const unAuthorizedRoutes = [
         { path: "/login", element: <AuthPage/> },
@@ -60,7 +61,7 @@ const AppRouter = ({ isAuth = false }) => {
         }
     ];
 
-    return useRoutes(isAuth ? authorizedRoutes : unAuthorizedRoutes);
+    return useRoutes(isAuth && userData ? authorizedRoutes : unAuthorizedRoutes);
 }
 
 export default AppRouter;

@@ -1,7 +1,16 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { auth } from '../../firebase.config';
-import { signOut } from "firebase/auth";
-import { AuthService } from "../../services/auth.service";
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {auth} from '../../firebase.config';
+import {signOut} from "firebase/auth";
+import {AuthService} from "../../services/auth.service";
+import {UserService} from "../../services/user.service";
+
+export const updateUserProfile = createAsyncThunk(
+    'user/update',
+    async ({username, avatar}, {getState}) => {
+        const user = getState().authStates.userData;
+        return UserService.updateUser(user, username, avatar);
+    }
+)
 
 export const login = createAsyncThunk(
     'auth/login',
@@ -19,14 +28,21 @@ export const loginWithGoogle = createAsyncThunk(
 export const register = createAsyncThunk(
     'auth/register',
     async data => {
-        await AuthService.register(data.email, data.password, data.username);
+        return await AuthService.register(
+            data.email, data.password, data.username
+        );
     }
 );
 
 export const deleteUser = createAsyncThunk(
     'auth/delete',
-    async () => {
-        await AuthService.deleteUser();
+    async password => {
+        const response =  await AuthService.deleteUser(password);
+        signOut(auth).then(() => {
+            localStorage.removeItem("userData");
+            window.location.pathname = '/login';
+        })
+        return response;
     }
 )
 
@@ -41,12 +57,14 @@ const authSlice = createSlice({
     reducers: {
         setUser(state, action) {
             state.userData = action.payload.data;
-            localStorage.setItem("userData",
-                JSON.stringify(state.userData));
+            localStorage.setItem(
+                "userData",
+                JSON.stringify(state.userData)
+            );
         },
 
         async logoutHandler(state) {
-            await signOut(auth)
+             await signOut(auth)
                 .then(() => {
                     state.userData = null;
                     localStorage.removeItem("userData");
@@ -78,7 +96,8 @@ const authSlice = createSlice({
 
             .addCase(register.fulfilled, (state, action) => {
                 state.status = 'success';
-                state.userData = action.payload;
+                if (action.payload && action.payload.userData)
+                    state.userData = action.payload.userData;
             })
             .addCase(register.rejected, (state, action) => {
                 state.status = 'failed';
@@ -99,11 +118,32 @@ const authSlice = createSlice({
                 state.status = 'failed';
             })
 
-            .addCase(deleteUser.fulfilled, (state, action) => {
-                console.log(action)
+            .addCase(deleteUser.pending, state => {
+                state.status = 'loading';
             })
 
-            .addCase(deleteUser.rejected, action => {
+            .addCase(deleteUser.fulfilled, (state, action) => {
+                console.log(action)
+                if (action.payload && action.payload.userData) {
+                    state.userData = action.payload.userData;
+                    state.status = 'success';
+
+                }
+            })
+
+            .addCase(deleteUser.rejected, (state, action) => {
+                console.log(action)
+                state.authError = action.error
+                state.status = 'failed'
+            })
+
+            .addCase(updateUserProfile.fulfilled, (state, action) => {
+                console.log(action)
+                localStorage.setItem('userData', JSON.stringify(action.payload))
+                state.userData = action.payload;
+            })
+
+            .addCase(updateUserProfile.rejected, (state, action) => {
                 console.log(action)
             })
     }

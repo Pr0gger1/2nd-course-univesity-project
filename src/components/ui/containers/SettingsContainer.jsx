@@ -1,19 +1,35 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {deleteUser, logoutHandler} from '../../../store/reducers/AuthSlice';
+import { logoutHandler } from '../../../store/reducers/AuthSlice';
+
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import VpnKeyTwoToneIcon from '@mui/icons-material/VpnKeyTwoTone';
 import ManageAccountsTwoToneIcon from '@mui/icons-material/ManageAccountsTwoTone';
 import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
+import FaceRoundedIcon from '@mui/icons-material/FaceRounded';
+import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
+
 import TabPanel from "../Tab/TabPanel/TabPanel";
+import DeleteUserDialog from "../Dialogs/DeleteUserDialog/DeleteUserDialog";
+import EditAvatarDialog from "../Dialogs/EditAvatarDialog";
+import EditUsernameDialog from "../Dialogs/EditUsernameDialog";
+
+import { StyledTab, StyledTabs } from "../Tab/Tab";
 
 import styles from './styles/SettingsContainer.module.scss';
-import {StyledTab, StyledTabs} from "../Tab/Tab";
-import {Chip} from "@mui/material";
+
+
+const settingsTabValues = {
+    accountActions: 'account_actions',
+    accountPersonalization: 'account_personalization'
+}
 
 const SettingsContainer = () => {
     const dispatch = useDispatch();
     const [tabValue, setTabValue] = useState(0);
+    const [delUserDialogOpen, setDelUserDialogOpen] = useState(false);
+    const [editNameDialogOpen, setEditNameDialogOpen] = useState(false);
+    const [editAvatarDialogOpen, setEditAvatarDialogOpen] = useState(false);
 
     const onTabChange = (event, newValue) => {
         setTabValue(newValue)
@@ -33,18 +49,21 @@ const SettingsContainer = () => {
             >
                 <StyledTab
                     label='Действия с аккаунтом'
-                    icon={<VpnKeyTwoToneIcon/>}
-                    id={0}
+                    icon={<VpnKeyTwoToneIcon sx={{color: '#D1C343'}}/>}
+                    id={settingsTabValues.accountActions}
                 />
 
                 <StyledTab
                     label='Настройки аккаунта'
-                    icon={<ManageAccountsTwoToneIcon/>}
-                    id={1}
+                    icon={<ManageAccountsTwoToneIcon sx={{color: '#2C7ECB'}}/>}
+                    id={settingsTabValues.accountPersonalization}
                 >
                 </StyledTab>
             </StyledTabs>
-            <TabPanel value={tabValue} index={0}>
+            <TabPanel
+                index={0}
+                value={tabValue}
+            >
                 <button
                     className={[styles.settings__btn, styles.logout].join(' ')}
                     onClick={() => dispatch(logoutHandler())}
@@ -53,26 +72,49 @@ const SettingsContainer = () => {
                     <span>Выйти</span>
                 </button>
 
-                <div className={styles.dangerous__zone}>
-                    <Chip
-                        color='error'
-                        label='Опасная зона'
-                        size='small'
-                    />
-                    <button
-                        className={[styles.settings__btn, styles.delete_account].join('')}
-                        onClick={() => dispatch(deleteUser())}
-                    >
-                        <PersonOffOutlinedIcon/>
-                        Удалить аккаунт
-                    </button>
-                </div>
+                <button
+                    className={[styles.settings__btn, styles.delete_account].join(' ')}
+                    onClick={() => setDelUserDialogOpen(true)}
+                >
+                    <PersonOffOutlinedIcon sx={{color: '#9C50EE'}}/>
+                    Удалить аккаунт
+                </button>
             </TabPanel>
 
-            <TabPanel index={1} value={tabValue}>
-                <button>Изменить аватар</button>
-                <button>Изменить никнейм</button>
+            <TabPanel
+                index={1}
+                value={tabValue}
+            >
+                <button
+                    className={styles.settings__btn}
+                    onClick={() => setEditAvatarDialogOpen(true)}
+                >
+                    <FaceRoundedIcon sx={{color: '#15B77E'}}/>
+                    Изменить аватар
+                </button>
+
+                <button
+                    className={styles.settings__btn}
+                    onClick={() => setEditNameDialogOpen(true)}
+                >
+                    <BadgeRoundedIcon sx={{color: '#FF825E'}}/>
+                    Изменить никнейм
+                </button>
             </TabPanel>
+            
+            <DeleteUserDialog
+                open={delUserDialogOpen}
+                setOpen={setDelUserDialogOpen}
+            />
+
+            <EditUsernameDialog
+                open={editNameDialogOpen}
+                setOpen={setEditNameDialogOpen}
+            />
+            <EditAvatarDialog
+                open={editAvatarDialogOpen}
+                setOpen={setEditAvatarDialogOpen}
+            />
         </div>
     );
 };

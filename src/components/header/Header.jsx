@@ -13,7 +13,7 @@ import SettingsWindow from "./components/settings/SettingsWindow";
 import IconButton from "../ui/button/IconButton";
 import { StyledBadge } from "../ui/customComponents/CustomBadge";
 
-import { mobileSelector, notificationSelector } from "../../store";
+import {mobileSelector, notificationSelector, userDataSelector} from "../../store";
 import {useNavigate, useParams} from "react-router-dom";
 
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
@@ -26,6 +26,7 @@ import settingsIconDark from "../../assets/img/icons/settings_dark.svg";
 import settingsIconLight from "../../assets/img/icons/settings_light.svg";
 
 import styles from "./styles/Header.module.scss";
+import {Avatar} from "@mui/material";
 
 const Header = () => {
     const mobileScreen =  useMediaQuery({maxWidth: 768});
@@ -34,6 +35,7 @@ const Header = () => {
 
     const dispatch = useDispatch();
     const notifications = useSelector(notificationSelector);
+    const userData = useSelector(userDataSelector);
     const isMobile = useSelector(mobileSelector) || mobileScreen;
 
     // иконки кнопок
@@ -54,15 +56,51 @@ const Header = () => {
     }
 
     return (
-        <header className={styles.header__app}>
+        <header className={styles.header__app}
+            style={!isMobile && {
+                height: '1.5rem'
+            }}
+        >
             {
                 isMobile ? (
                     Object.keys(params).length !== 0 ?
-                    <TaskGroupMenuContainer />
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '1rem'
+                    }}>
+                        <Avatar
+                            sx={{
+                                width: 40,
+                                height: 40
+                            }}
+                            src={userData ? userData.photoURL : null}
+                        />
+                        <SearchRoundedIcon
+                            onClick={() => navigate('/search')}
+                        />
+                        {
+                            params.task_id &&
+                            <TaskGroupMenuContainer />
+                        }
+                    </div>
                     :
-                    <SearchRoundedIcon
-                        onClick={() => navigate('/search')}
-                    />
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '1rem'
+                    }}>
+                        <Avatar
+                            sx={{
+                                width: 40,
+                                height: 40
+                            }}
+                            src={userData ? userData.photoURL : null}
+                        />
+                        <SearchRoundedIcon
+                            onClick={() => navigate('/search')}
+                        />
+                    </div>
                 )
                     :
                 <HamburgerMenu/>

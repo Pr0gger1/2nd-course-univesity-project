@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useToggleIconTheme from '../../../../hooks/useToggleIconTheme';
 
 import { ContextMenuSelect } from '../../customComponents/ContextMenuSelect';
-import { CustomTextField } from "../../customComponents/CustomInputs";
+import { ThemedTextField } from "../../customComponents/CustomInputs";
 
 import { MenuItem, Tooltip } from '@mui/material';
 import { baseGroupIds } from '../../../../store/defaultData/baseGroups';
@@ -143,7 +143,7 @@ const TaskGroupMenuList = () => {
                         {
                             showEditInput ?
                                 <>
-                                    <CustomTextField
+                                    <ThemedTextField
                                         variant='standard'
                                         value={editInputText}
                                         onChange={e => setEditInputText(e.target.value)}

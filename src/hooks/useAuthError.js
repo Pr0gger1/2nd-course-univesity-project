@@ -23,6 +23,10 @@ export const useAuthError = (authError) => {
                 case 'auth/too-many-requests':
                     setErrorMessage('Слишком много запросов!');
                     break;
+
+                case 'auth/requires-recent-login':
+                    setErrorMessage('Необходимо снова авторизоваться в аккаунт');
+                    break;
                 default:
                     setErrorMessage(authError.code);
                     break;
@@ -31,5 +35,5 @@ export const useAuthError = (authError) => {
             setType(snackbarTypes.error);
             setOpen(true);
         }
-    }, [authError, errorMessage]);
+    }, [authError, errorMessage, setMessage, setOpen, setType]);
 }

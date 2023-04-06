@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles';
 import { TextField } from '@mui/material';
 
-export const CustomTextField = styled(TextField)({
+export const ThemedTextField = styled(TextField)({
     '& label': {
         color: 'var(--fontColor)'
     },

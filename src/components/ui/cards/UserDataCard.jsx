@@ -1,8 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { SnackbarContext, snackbarTypes } from "../../../context/SnackbarContext";
+import React, { useEffect, useState} from "react";
 import { useSelector } from "react-redux";
-import { UserService } from "../../../services/user.service";
-
 import { userDataSelector } from "../../../store";
 import { Avatar } from "@mui/material";
 import Skeleton from "@mui/material/Skeleton";
@@ -10,7 +7,6 @@ import Skeleton from "@mui/material/Skeleton";
 import styles from "./styles/UserDataCard.module.scss";
 
 const UserDataCard = () => {
-    const { setOpen, setType, setMessage } = useContext(SnackbarContext);
     const [userAvatar, setUserAvatar] = useState(null);
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -18,33 +14,22 @@ const UserDataCard = () => {
     const userData = useSelector(userDataSelector);
 
     useEffect(() => {
-      const fetchData = async () => {
-          return await UserService.getUserData(userData.uid);
-      }
       if (userData && userData.photoURL) {
           setUserAvatar(userData.photoURL);
       }
 
-      if (userData && userData.uid) {
-          fetchData()
-              .then(res => {
-                  setUsername(res.username);
-                  setEmail(res.email);
-              })
-              .catch(error => {
-                  setMessage(`Произошла неизвестная ошибка\n${error.message}`);
-                  setOpen(true);
-                  setType(snackbarTypes.error);
-              });
+      if (userData && userData.displayName) {
+          setUsername(userData.displayName);
+          setEmail(userData.email);
       }
-    }, [setMessage, setOpen, setType, userData]);
+    }, [userData]);
 
   return (
     <section className={styles.user__card}>
         {
             userData ?
             <Avatar
-                sx={{width: 40, height: 40,}}
+                sx={{width: 40, height: 40}}
                 alt="avatar"
                 src={userAvatar}
             />

@@ -3,7 +3,6 @@
         display: flex;
         align-items: center;
         gap: 0.6rem;
-        background-color: var(--bgColorFirst);
 
         color: var(--fontColor);
         border: 1px solid transparent;
@@ -11,6 +10,8 @@
 
         width: 100%;
         padding: 0.5rem;
+
+        background-color: var(--bgColorThird);
 
         &:hover {
             background-color: var(--bgButtonColorHover);
@@ -23,17 +24,12 @@
         }
 
         &.delete_account {
-
+            &:hover {
+                transition: background-color .5s ease;
+                border: 1px solid #d57a7a;
+            }
         }
     }
 
-    .dangerous__zone {
-        //display: flex;
-        //flex-direction: column;
-        //gap: 0.5rem;
-        padding: 0.5rem;
-        margin-top: 1rem;
-        //border: 1px solid gray;
-    }
 }
 
