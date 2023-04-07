@@ -57,9 +57,9 @@ const Header = () => {
 
     return (
         <header className={styles.header__app}
-            style={!isMobile && {
+            style={!isMobile ? {
                 height: '1.5rem'
-            }}
+            } : {}}
         >
             {
                 isMobile ? (
