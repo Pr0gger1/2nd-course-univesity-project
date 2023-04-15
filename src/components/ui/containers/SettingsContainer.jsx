@@ -112,8 +112,8 @@ const SettingsContainer = () => {
                 setOpen={setEditNameDialogOpen}
             />
             <EditAvatarDialog
-                open={editAvatarDialogOpen}
-                setOpen={setEditAvatarDialogOpen}
+                dialogOpen={editAvatarDialogOpen}
+                setDialogOpen={setEditAvatarDialogOpen}
             />
         </div>
     );

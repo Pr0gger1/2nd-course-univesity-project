@@ -24,7 +24,7 @@ export default configureStore({
         taskStates: taskReducer,
 
         notificationState: notificationReducer,
-        errorState: errorReducer
+        errorState: errorReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

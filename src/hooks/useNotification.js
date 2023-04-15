@@ -42,7 +42,7 @@ const reminderObserver = async (tasks, dispatch) => {
 }
 
 const deadlineObserver = async (tasks, dispatch) => {
-    console.log("observing deadlines")
+    // console.log("observing deadlines")
     tasks.forEach((task) => {
         if (task.isDeadlineNotified !== undefined && task.deadline) {
             const timeDiff = Math.ceil((new Date(task.deadline) - new Date()) / (1000 * 3600 * 24));
@@ -103,7 +103,7 @@ const useNotification = () => {
                         }
                     })
             }
-            console.log('observing notification')
+            // console.log('observing notification')
         }, 10000);
 
         return () => clearInterval(observeTasks)

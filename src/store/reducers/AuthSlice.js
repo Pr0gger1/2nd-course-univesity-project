@@ -1,16 +1,9 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {auth} from '../../firebase.config';
-import {signOut} from "firebase/auth";
-import {AuthService} from "../../services/auth.service";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { auth } from '../../firebase.config';
+import { signOut } from "firebase/auth";
+import { AuthService } from "../../services/auth.service";
 import {UserService} from "../../services/user.service";
 
-export const updateUserProfile = createAsyncThunk(
-    'user/update',
-    async ({username, avatar}, {getState}) => {
-        const user = getState().authStates.userData;
-        return UserService.updateUser(user, username, avatar);
-    }
-)
 
 export const login = createAsyncThunk(
     'auth/login',
@@ -44,7 +37,15 @@ export const deleteUser = createAsyncThunk(
         })
         return response;
     }
-)
+);
+
+export const updateUserProfile = createAsyncThunk(
+    'user/update',
+    async ({username, avatar}, {getState}) => {
+        const user = getState().authStates.userData;
+        return await UserService.updateUser(user, username, avatar);
+    }
+);
 
 const authSlice = createSlice({
     name: 'authStates',
@@ -141,6 +142,7 @@ const authSlice = createSlice({
                 console.log(action)
                 localStorage.setItem('userData', JSON.stringify(action.payload))
                 state.userData = action.payload;
+                window.location.reload();
             })
 
             .addCase(updateUserProfile.rejected, (state, action) => {

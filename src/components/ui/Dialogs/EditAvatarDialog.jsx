@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import { useDispatch } from "react-redux";
 import {
     Button, DialogActions,
@@ -7,13 +7,16 @@ import {
 } from "@mui/material";
 import { ThemedDialog } from "./ThemedDialog";
 import { updateUserProfile } from "../../../store/reducers/AuthSlice";
+import StorageService from "../../../services/storage.service";
+import { SnackbarContext } from "../../../context/SnackbarContext";
 
-const EditAvatarDialog = ({ open, setOpen }) => {
+const EditAvatarDialog = ({ dialogOpen, setDialogOpen }) => {
+    const { setOpen, setType, setMessage } = useContext(SnackbarContext);
     const dispatch = useDispatch();
     const [newAvatar, setNewAvatar] = useState(null);
 
     const onCloseDialogClick = () => {
-        setOpen(false);
+        setDialogOpen(false);
         setNewAvatar(null)
     }
 
@@ -22,22 +25,24 @@ const EditAvatarDialog = ({ open, setOpen }) => {
             dispatch(updateUserProfile({
                 username: null,
                 avatar: newAvatar
-            }))
+            }));
+
+            setDialogOpen(false);
         }
     }
 
-    const onChangeFile = (event) => {
+    const onChangeFile = async event => {
         if (event.target.files) {
             const file = event.target.files[0];
-            console.log(event.target.files)
-            if (/(\.jpg|\.jpeg|\.png)$/.test(file))
-                setNewAvatar(event.target.files[0])
+            setNewAvatar(file);
+
+            await StorageService.uploadAvatar(file)
         }
     }
 
     return (
         <ThemedDialog
-            open={open}
+            open={dialogOpen}
             onClose={onCloseDialogClick}
         >
             <DialogTitle>
@@ -49,8 +54,9 @@ const EditAvatarDialog = ({ open, setOpen }) => {
                 </DialogContentText>
 
                 <input
-                    onChange={onChangeFile}
+                    onChange={async e => await onChangeFile(e)}
                     type='file'
+                    accept='image/png, image/jpg, image/jpeg'
                 />
             </DialogContent>
             <DialogActions>

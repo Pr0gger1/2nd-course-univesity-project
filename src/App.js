@@ -44,6 +44,8 @@ function App() {
             dispatch(setUser({ data: user }));
             dispatch(getUserTasks(user.uid));
             dispatch(getCustomTaskGroups(user.uid));
+
+            console.log(user)
         }
       });
 
