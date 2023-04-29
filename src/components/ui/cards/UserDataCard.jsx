@@ -6,18 +6,13 @@ import Skeleton from "@mui/material/Skeleton";
 
 import styles from "./styles/UserDataCard.module.scss";
 
-const UserDataCard = () => {
-    const [userAvatar, setUserAvatar] = useState(null);
+const UserDataCard = ({ userAvatar }) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
 
     const userData = useSelector(userDataSelector);
 
     useEffect(() => {
-      if (userData && userData.photoURL) {
-          setUserAvatar(userData.photoURL);
-      }
-
       if (userData && userData.displayName) {
           setUsername(userData.displayName);
           setEmail(userData.email);

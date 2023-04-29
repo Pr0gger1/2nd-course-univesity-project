@@ -122,3 +122,7 @@ button {
 input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
+
+input[type="file"] {
+  display: none;
+}

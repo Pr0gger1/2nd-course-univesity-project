@@ -1,23 +1,27 @@
-import React, {useContext, useState} from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import {
     Button, DialogActions,
-    DialogContent, DialogContentText,
+    DialogContent,
+    DialogContentText,
     DialogTitle
 } from "@mui/material";
+
 import { ThemedDialog } from "./ThemedDialog";
 import { updateUserProfile } from "../../../store/reducers/AuthSlice";
 import StorageService from "../../../services/storage.service";
-import { SnackbarContext } from "../../../context/SnackbarContext";
+import UploadFileButton from "../button/UploadFileButton";
+import UserDataCard from "../cards/UserDataCard";
 
 const EditAvatarDialog = ({ dialogOpen, setDialogOpen }) => {
-    const { setOpen, setType, setMessage } = useContext(SnackbarContext);
     const dispatch = useDispatch();
     const [newAvatar, setNewAvatar] = useState(null);
+    const [uploadButtonText, setUploadButtonText] = useState('Загрузить')
 
     const onCloseDialogClick = () => {
         setDialogOpen(false);
-        setNewAvatar(null)
+        setNewAvatar(null);
+        setUploadButtonText('Загрузить');
     }
 
     const onChangeAvatarSubmit = () => {
@@ -34,10 +38,13 @@ const EditAvatarDialog = ({ dialogOpen, setDialogOpen }) => {
     const onChangeFile = async event => {
         if (event.target.files) {
             const file = event.target.files[0];
+            console.log(URL.createObjectURL(file))
             setNewAvatar(file);
+            setUploadButtonText(file.name);
 
             await StorageService.uploadAvatar(file)
         }
+        else setUploadButtonText('Загрузить');
     }
 
     return (
@@ -48,16 +55,28 @@ const EditAvatarDialog = ({ dialogOpen, setDialogOpen }) => {
             <DialogTitle>
                 Изменение аватара пользователя
             </DialogTitle>
-            <DialogContent>
-                <DialogContentText>
+            <DialogContent sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem'
+            }}>
+                <DialogContentText style={{color: '#dcdcdc'}}>
                     Выберите изображение для аватара
                 </DialogContentText>
+                <UploadFileButton
+                    styles={{alignSelf: 'start', justifyContent: 'space-evenly'}}
+                    onChange={onChangeFile}
+                    fileFilter={'image/png, image/jpg, image/jpeg'}
+                >
+                    {uploadButtonText}
+                </UploadFileButton>
 
-                <input
-                    onChange={async e => await onChangeFile(e)}
-                    type='file'
-                    accept='image/png, image/jpg, image/jpeg'
-                />
+                {
+                    newAvatar !== null ?
+                        <UserDataCard userAvatar={URL.createObjectURL(newAvatar)}/>
+                        :
+                        "Здесь будет превью аватара"
+                }
             </DialogContent>
             <DialogActions>
                 <Button
