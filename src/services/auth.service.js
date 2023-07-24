@@ -60,7 +60,7 @@ export class AuthService {
                     await AuthService.createUserCollection(
                         result.user.uid, user.displayName, user.email);
 
-                    return result.user;
+                    return user;
                 }
                 // const credential = GoogleAuthProvider.credentialFromResult(result);
                 // const token = credential.accessToken;

@@ -64,8 +64,8 @@ const authSlice = createSlice({
             );
         },
 
-        async logoutHandler(state) {
-             await signOut(auth)
+        logoutHandler(state) {
+            signOut(auth)
                 .then(() => {
                     state.userData = null;
                     localStorage.removeItem("userData");

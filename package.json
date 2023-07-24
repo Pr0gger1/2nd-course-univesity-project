@@ -1,7 +1,10 @@
 {
-  "name": "todo-app-project",
+  "name": "productify-university-project",
   "version": "1.0.0",
-  "description": "todo app project",
+  "description": "todo app based on React and Firebase",
+  "repository": {
+    "url": "https://github.com/Pr0gger1/productify-university-project.git"
+  },
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -27,8 +30,7 @@
     "react-scripts": "5.0.1",
     "react-transition-group": "^4.4.5",
     "styled-components": "^5.3.6",
-    "util": "^0.12.5",
-    "web-vitals": "^2.1.4"
+    "util": "^0.12.5"
   },
   "devDependencies": {
     "@types/jest": "^29.2.5",
